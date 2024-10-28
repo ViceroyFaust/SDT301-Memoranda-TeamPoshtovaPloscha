@@ -48,9 +48,9 @@ public class History {
         historyBackAction.update();
         historyForwardAction.update();  
         System.out.println();
-        for (int i = 0; i < _list.size(); i++)
+        /*for (int i = 0; i < _list.size(); i++)
             System.out.println(((HistoryItem)_list.get(i)).getDate().toString());
-        System.out.println(item.getDate().toShortString()+ " added");
+        System.out.println(item.getDate().toShortString()+ " added");*/
         if (_list.size() > 99)
             _list.remove(0);     
     }

@@ -14,3 +14,22 @@ dependencies {
   implementation 'net.sourceforge.nekohtml:nekohtml:1.9.+'
 }
 
+task fatJar(type: Jar) {
+  group = 'build'
+  description = 'Creates a fat JAR with all dependencies'
+  archiveFileName = 'asurite_memoranda.jar'
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+  manifest {
+    attributes(
+            'Main-Class': 'main/java/memoranda/Start'  // Replace with your main class if different
+    )
+  }
+
+  from {
+    configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+  }
+
+  with jar
+}
+
