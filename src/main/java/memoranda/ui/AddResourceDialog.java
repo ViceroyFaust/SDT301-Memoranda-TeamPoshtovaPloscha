@@ -177,7 +177,7 @@ public class AddResourceDialog extends JDialog {
         this.getRootPane().setDefaultButton(okB);
         cancelB.setMaximumSize(new Dimension(100, 26));
         cancelB.setMinimumSize(new Dimension(100, 26));
-        cancelB.setPreferredSize(new Dimension(90, 26));
+        cancelB.setPreferredSize(new Dimension(100, 26));
         cancelB.setText(Local.getString("Cancel"));
         cancelB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
