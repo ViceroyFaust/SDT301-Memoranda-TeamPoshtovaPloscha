@@ -13,7 +13,7 @@ body  {
        font-weight: normal;
        margin-left: 0;
        margin-right: 0;
-       color: black}
+       color: blue}
 
 p   {margin-bottom: 10}
 
@@ -187,9 +187,9 @@ var {font-weight: bold;
      font-style: italic}
 
 table {
-	border-color: Gray;
+	border-color: red;
 	border-style: solid;
-	border-width: 1;
+	border-width: 5;
 	margin-bottom:10;
 }
 
@@ -198,16 +198,16 @@ tr {
 }
 
 td {
-	border-color: Gray;
+	border-color: blue;
 	border-style:solid;
-	border-width: 1;
+	border-width: 3;
 	
 }
 
 th {
 	text-align: center;
 	font-weight: bold;
-	border-color: Gray;
+	border-color: blue;
 	border-style: inset;
 	padding-left: 3;
 	padding-right: 3;
