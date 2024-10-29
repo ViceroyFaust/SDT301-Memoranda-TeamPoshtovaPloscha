@@ -200,11 +200,11 @@ public class WorkPanel extends JPanel {
 		this.add(panel, BorderLayout.CENTER);
 		panel.add(dailyItemsPanel, "DAILYITEMS");
 		panel.add(filesPanel, "FILES");
-		toolBar.add(agendaB, null);
 		toolBar.add(eventsB, null);
 		toolBar.add(tasksB, null);
 		toolBar.add(notesB, null);
 		toolBar.add(filesB, null);
+		toolBar.add(agendaB, null);
 		currentB = agendaB;
 		// Default blue color
 		currentB.setBackground(new Color(215, 225, 250));
