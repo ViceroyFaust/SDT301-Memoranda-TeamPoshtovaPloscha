@@ -14,26 +14,24 @@
 ### Sprint Planning (For Sprint 1-3)
 Document your Sprint Planning here. Also check the kickoff document for more details on what needs to be done. This is just the documentation. 
 
-**Sprint Goal:** Your Sprint goal
+**Sprint Goal:** Implement US1 and US2
 
-**How many User Stories did you add to the Product Backlog:**  Number
+**How many User Stories did you add to the Product Backlog:**  3
 
-**How many User Stories did you add to this Sprint:** 
-> Answer the questions below about your Sprint Planning?
+**How many User Stories did you add to this Sprint:** 2
 
 **Why did you add these US, why do you think you can get them done in the next Sprint?**
 
-> Your Answer
+These US will familiarize us with the SCRUM proccess and the legacy code structure.
+We think that we can complete them, because we are creating the basic structure and doing basic UI work.
+These changes don't alter the original code base a lot.
 
 **Why do you think these fit well with your Sprint goal? (details)**
 
-> Your Answer
+Because these USs cover the first half of our project and we only have 2 sprints to finish it.
 
 **Do you have a rough idea what you need to do? (if the answer is no then please let me know on Slack)**
-
-> Your Answer
-
-
+Yes. We will implement basic models that will represent the required information and create GUI visualisation for them withing the legacy Memoranda app.
 
 ## 2: During the Sprint
 > Fill out the Meeting minutes during your Sprint and keep track of things. Update your Quality policies when needed, as explained in the lectures and in the Quality Policy documents on Canvas. 
