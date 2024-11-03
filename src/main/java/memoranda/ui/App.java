@@ -1,4 +1,4 @@
-package main.java.memoranda.ui;
+package memoranda.ui;
 
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -10,8 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
 
-import main.java.memoranda.EventsScheduler;
-import main.java.memoranda.util.Configuration;
+import memoranda.EventsScheduler;
+import memoranda.util.Configuration;
 
 /**
  * 

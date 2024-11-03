@@ -3,7 +3,7 @@ plugins {
   id 'java'
 }
 
-mainClassName = 'main/java/memoranda/Start'
+mainClassName = 'memoranda.Start'
 
 compileJava.options.encoding = 'UTF-8'
 
@@ -19,7 +19,7 @@ dependencies {
 
 jar {
   manifest {
-    attributes "Main-Class": "main.java.memoranda.Start"
+    attributes "Main-Class": "memoranda.Start"
   }
   from {
     configurations.runtimeClasspath.collect {it.isDirectory() ? it : zipTree(it)}
@@ -28,7 +28,7 @@ jar {
 
 task fatJar(type: Jar) {
   manifest {
-    attributes 'Main-Class': 'main.java.memoranda.Start'
+    attributes 'Main-Class': 'memoranda.Start'
   }
   archiveBaseName = 'poshtova_ploscha_memoranda.jar'
   duplicatesStrategy = DuplicatesStrategy.EXCLUDE
