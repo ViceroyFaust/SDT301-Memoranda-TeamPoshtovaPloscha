@@ -665,8 +665,14 @@ public class AppFrame extends JFrame {
     }
 
     public void doMinimize() {
-        exitNotify();
-        App.closeWindow();
+        // Minimize to taskbar
+        this.setExtendedState(JFrame.ICONIFIED);
+
+        // We are not exiting, therefore remove this
+        //exitNotify();
+
+        // Close Window is removed, because it breaks minimization functionality
+        //App.closeWindow();
     }
 
     //Help | About action performed
@@ -687,11 +693,14 @@ public class AppFrame extends JFrame {
             else
                 doMinimize();
         }
+        // Removed the event process below because it deletes the window and the icon in the taskbar
+        // Doing this fixes minimizing to taskbar!!! 2024-11-04 @ Danylo
+        /*
         else if ((e.getID() == WindowEvent.WINDOW_ICONIFIED)) {
             super.processWindowEvent(new WindowEvent(this,
                     WindowEvent.WINDOW_CLOSING));
             doMinimize();
-        }
+        }*/
         else
             super.processWindowEvent(e);
     }
