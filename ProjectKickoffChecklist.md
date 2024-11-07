@@ -1,19 +1,6 @@
 For each of you individually copy the checklist and check them of if it is done. This will be graded.
 
 Andrii Tivonenko
-  
-- [+] Download and install Git
-  
-- [+] I have a GitHub account with a username that we can map to your real name
-
-  - Our course professor told us that we don't have to create a new GitHub account, therefore I am using my personal one
-
-- [+] Filled out the individual survey for group forming
-
-- [+] Received a Taiga invite
-
-- [+] Accepted the Taiga invite
->>>>>>> US1-StoreBusScheduleInformation
 
 - [+] Do you check Slack regularly
 
