@@ -1,6 +1,9 @@
-apply plugin: 'application'
+plugins {
+  id 'application'
+  id 'java'
+}
 
-mainClassName = 'main/java/memoranda/Start'
+mainClassName = 'memoranda.Start'
 
 compileJava.options.encoding = 'UTF-8'
 
@@ -14,7 +17,7 @@ dependencies {
   implementation 'net.sourceforge.nekohtml:nekohtml:1.9.+'
 }
 
-task fatJar(type: Jar) {
+/*task fatJar(type: Jar) {
   group = 'build'
   description = 'Creates a fat JAR with all dependencies'
   archiveFileName = 'asurite_memoranda.jar'
@@ -32,4 +35,23 @@ task fatJar(type: Jar) {
 
   with jar
 }
+*/
 
+jar {
+  manifest {
+    attributes "Main-Class": "memoranda.Start"
+  }
+  from {
+    configurations.runtimeClasspath.collect {it.isDirectory() ? it : zipTree(it)}
+  }
+}
+
+task fatJar(type: Jar) {
+  manifest {
+    attributes 'Main-Class': 'memoranda.Start'
+  }
+  archiveBaseName = 'poshtova_ploscha_memoranda.jar'
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+  from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+  with jar
+}

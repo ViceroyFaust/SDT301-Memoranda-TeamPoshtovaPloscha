@@ -1,4 +1,4 @@
-package main.java.memoranda.ui;
+package memoranda.ui;
 
 import java.awt.AWTEvent;
 import java.awt.BorderLayout;
@@ -34,23 +34,23 @@ import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.text.html.HTMLDocument;
 
-import main.java.memoranda.CurrentProject;
-import main.java.memoranda.History;
-import main.java.memoranda.Note;
-import main.java.memoranda.NoteList;
-import main.java.memoranda.Project;
-import main.java.memoranda.ProjectListener;
-import main.java.memoranda.ResourcesList;
-import main.java.memoranda.TaskList;
-import main.java.memoranda.date.CurrentDate;
-import main.java.memoranda.ui.htmleditor.HTMLEditor;
-import main.java.memoranda.util.Configuration;
-import main.java.memoranda.util.Context;
-import main.java.memoranda.util.CurrentStorage;
-import main.java.memoranda.util.Local;
-import main.java.memoranda.util.ProjectExporter;
-import main.java.memoranda.util.ProjectPackager;
-import main.java.memoranda.util.Util;
+import memoranda.CurrentProject;
+import memoranda.History;
+import memoranda.Note;
+import memoranda.NoteList;
+import memoranda.Project;
+import memoranda.ProjectListener;
+import memoranda.ResourcesList;
+import memoranda.TaskList;
+import memoranda.date.CurrentDate;
+import memoranda.ui.htmleditor.HTMLEditor;
+import memoranda.util.Configuration;
+import memoranda.util.Context;
+import memoranda.util.CurrentStorage;
+import memoranda.util.Local;
+import memoranda.util.ProjectExporter;
+import memoranda.util.ProjectPackager;
+import memoranda.util.Util;
 import nu.xom.Builder;
 import nu.xom.Document;
 import nu.xom.Element;
@@ -665,8 +665,14 @@ public class AppFrame extends JFrame {
     }
 
     public void doMinimize() {
-        exitNotify();
-        App.closeWindow();
+        // Minimize to taskbar
+        this.setExtendedState(JFrame.ICONIFIED);
+
+        // We are not exiting, therefore remove this
+        //exitNotify();
+
+        // Close Window is removed, because it breaks minimization functionality
+        //App.closeWindow();
     }
 
     //Help | About action performed
@@ -687,11 +693,14 @@ public class AppFrame extends JFrame {
             else
                 doMinimize();
         }
+        // Removed the event process below because it deletes the window and the icon in the taskbar
+        // Doing this fixes minimizing to taskbar!!! 2024-11-04 @ Danylo
+        /*
         else if ((e.getID() == WindowEvent.WINDOW_ICONIFIED)) {
             super.processWindowEvent(new WindowEvent(this,
                     WindowEvent.WINDOW_CLOSING));
             doMinimize();
-        }
+        }*/
         else
             super.processWindowEvent(e);
     }

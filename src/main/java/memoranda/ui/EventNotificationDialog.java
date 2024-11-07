@@ -1,4 +1,4 @@
-package main.java.memoranda.ui;
+package memoranda.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,8 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
-import main.java.memoranda.util.Configuration;
-import main.java.memoranda.util.Local;
+import memoranda.util.Configuration;
+import memoranda.util.Local;
 
 import java.applet.Applet;
 import java.applet.AudioClip;
@@ -47,7 +47,7 @@ public class EventNotificationDialog extends JFrame {
       new ExceptionDialog(ex);
     }
     timeLabel.setText(time);
-    timeLabel.setIcon(new ImageIcon(main.java.memoranda.ui.TaskDialog.class.getResource(
+    timeLabel.setIcon(new ImageIcon(memoranda.ui.TaskDialog.class.getResource(
             "/ui/icons/event48.png")));
     textLabel.setText(text);
     this.setSize(300,200);
