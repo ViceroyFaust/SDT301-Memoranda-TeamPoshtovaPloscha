@@ -32,7 +32,7 @@ public class NodeManager {
             serializer.write(doc);
             out.close();
 
-            System.out.println("Node data has been saved to " + filePath);
+            // System.out.println("Node data has been saved to " + filePath);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,43 +57,11 @@ public class NodeManager {
                 nodes.add(node);
             }
 
-            System.out.println("Node data has been loaded from " + filePath);
+            // System.out.println("Node data has been loaded from " + filePath);
         } catch (ParsingException | IOException e) {
             e.printStackTrace();
         }
 
         return nodes;
     }
-
-    /* Commented out, as this is needed only for debug
-    // Method to verify if the node data was stored correctly
-    public static boolean verifyNodeStorage(String filePath, List<Node> originalNodes) {
-        List<Node> loadedNodes = loadNodes(filePath);
-
-        if (loadedNodes.size() != originalNodes.size()) {
-            return false; // Size mismatch
-        }
-
-        for (int i = 0; i < originalNodes.size(); i++) {
-            Node original = originalNodes.get(i);
-            Node loaded = loadedNodes.get(i);
-
-            if (original.getId() != loaded.getId()) {
-                return false; // Mismatch in data
-            }
-        }
-        return true; // Data matches
-    } */
-
-    /* Test code
-    public static void main(String[] args) {
-        List<Node> nodes = new ArrayList<>();
-        nodes.add(new Node(1));
-        nodes.add(new Node(2));
-        nodes.add(new Node(3));
-        nodes.add(new Node(4));
-        nodes.add(new Node(5));
-
-        saveNodes(nodes, "testNodes.xml");
-    } */
 }
