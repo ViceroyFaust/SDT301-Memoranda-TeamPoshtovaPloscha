@@ -5,6 +5,12 @@ public class Bus {
     private int seats;
     private Driver driver;
 
+    public Bus(int id, int seats, Driver driver) {
+        this.id = id;
+        this.seats = seats;
+        this.driver = driver;
+    }
+
     public int getId() {
         return id;
     }

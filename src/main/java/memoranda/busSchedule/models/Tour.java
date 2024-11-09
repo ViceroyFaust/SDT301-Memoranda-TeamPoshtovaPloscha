@@ -6,6 +6,13 @@ public class Tour {
     private Bus bus;
     private Route route;
 
+    public Tour(int id, String name, Bus bus, Route route) {
+        this.id = id;
+        this.name = name;
+        this.bus = bus;
+        this.route = route;
+    }
+
     public int getId() {
         return id;
     }

@@ -5,6 +5,12 @@ public class Driver {
     private String name;
     private String phoneNumber;
 
+    public Driver (int id, String name, String phoneNumber) {
+        this.id = id;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
+
     public int getId() {
         return id;
     }

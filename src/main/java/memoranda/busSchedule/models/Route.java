@@ -2,9 +2,12 @@ package memoranda.busSchedule.models;
 
 public class Route {
     private int id;
-    private float length;
-    private float durationH; //Duration in hours
     private Node[] nodes;
+
+    public Route(int id, Node[] nodes) {
+        this.id = id;
+        this.nodes = nodes;
+    }
 
     public int getId() {
         return id;
@@ -15,19 +18,13 @@ public class Route {
     }
 
     public float getLength() {
-        return length;
-    }
-
-    public void setLength(float length) {
-        this.length = length;
+        // TODO: Implement length calculation based on Nodes
+        return 0;
     }
 
     public float getDurationH() {
-        return durationH;
-    }
-
-    public void setDurationH(float durationH) {
-        this.durationH = durationH;
+        // TODO: Implement duration calculation based on Nodes
+        return 0;
     }
 
     public Node[] getNodes() {
