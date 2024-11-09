@@ -71,15 +71,11 @@ public class TourManager {
             for (int i = 0; i < tourElements.size(); i++) {
                 Element tourElement = tourElements.get(i);
 
-                Tour tour = new Tour();
-
                 // Parse and set ID
                 int id = Integer.parseInt(tourElement.getFirstChildElement("id").getValue());
-                tour.setId(id);
 
                 // Parse and set Name
                 String name = tourElement.getFirstChildElement("name").getValue();
-                tour.setName(name);
 
                 // Parse and set Bus
                 int busId = Integer.parseInt(tourElement.getFirstChildElement("busId").getValue());
@@ -87,7 +83,6 @@ public class TourManager {
                         .filter(b -> b.getId() == busId)
                         .findFirst()
                         .orElse(null);
-                tour.setBus(bus);
 
                 // Parse and set Route
                 int routeId = Integer.parseInt(tourElement.getFirstChildElement("routeId").getValue());
@@ -95,7 +90,8 @@ public class TourManager {
                         .filter(r -> r.getId() == routeId)
                         .findFirst()
                         .orElse(null);
-                tour.setRoute(route);
+
+                Tour tour = new Tour(id, name, bus, route);
 
                 tours.add(tour);
             }
@@ -108,6 +104,7 @@ public class TourManager {
         return tours;
     }
 
+    /* commented out debug code
     // Method to verify if the tour data was stored correctly
     public static boolean verifyTourStorage(String filePath, List<Tour> originalTours, List<Bus> availableBuses, List<Route> availableRoutes) {
         List<Tour> loadedTours = loadTours(filePath, availableBuses, availableRoutes);
@@ -128,5 +125,5 @@ public class TourManager {
             }
         }
         return true; // Data matches
-    }
+    } */
 }

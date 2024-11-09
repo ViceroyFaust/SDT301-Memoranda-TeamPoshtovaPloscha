@@ -15,20 +15,14 @@ public class RouteManager {
         try {
             Element root = new Element("Routes");
 
+            Element routeElement;
             for (Route route : routes) {
-                Element routeElement = new Element("Route");
+                routeElement = new Element("Route");
 
                 Element id = new Element("id");
                 id.appendChild(String.valueOf(route.getId()));
                 routeElement.appendChild(id);
 
-                Element length = new Element("length");
-                length.appendChild(String.valueOf(route.getLength()));
-                routeElement.appendChild(length);
-
-                Element durationH = new Element("durationH");
-                durationH.appendChild(String.valueOf(route.getDurationH()));
-                routeElement.appendChild(durationH);
 
                 root.appendChild(routeElement);
             }
@@ -59,19 +53,10 @@ public class RouteManager {
             for (int i = 0; i < routeElements.size(); i++) {
                 Element routeElement = routeElements.get(i);
 
-                Route route = new Route();
-
                 // Parse and set ID
                 int id = Integer.parseInt(routeElement.getFirstChildElement("id").getValue());
-                route.setId(id);
 
-                // Parse and set Length
-                float length = Float.parseFloat(routeElement.getFirstChildElement("length").getValue());
-                route.setLength(length);
-
-                // Parse and set Duration in Hours
-                float durationH = Float.parseFloat(routeElement.getFirstChildElement("durationH").getValue());
-                route.setDurationH(durationH);
+                Route route = new Route(id, null);
 
                 routes.add(route);
             }

@@ -51,11 +51,8 @@ public class NodeManager {
             for (int i = 0; i < nodeElements.size(); i++) {
                 Element nodeElement = nodeElements.get(i);
 
-                Node node = new Node();
-
-                // Parse and set ID
                 int id = Integer.parseInt(nodeElement.getFirstChildElement("id").getValue());
-                node.setId(id);
+                Node node = new Node(id);
 
                 nodes.add(node);
             }
@@ -68,6 +65,7 @@ public class NodeManager {
         return nodes;
     }
 
+    /* Commented out, as this is needed only for debug
     // Method to verify if the node data was stored correctly
     public static boolean verifyNodeStorage(String filePath, List<Node> originalNodes) {
         List<Node> loadedNodes = loadNodes(filePath);
@@ -85,5 +83,17 @@ public class NodeManager {
             }
         }
         return true; // Data matches
-    }
+    } */
+
+    /* Test code
+    public static void main(String[] args) {
+        List<Node> nodes = new ArrayList<>();
+        nodes.add(new Node(1));
+        nodes.add(new Node(2));
+        nodes.add(new Node(3));
+        nodes.add(new Node(4));
+        nodes.add(new Node(5));
+
+        saveNodes(nodes, "testNodes.xml");
+    } */
 }

@@ -15,8 +15,9 @@ public class DriverManager {
         try {
             Element root = new Element("Drivers");
 
+            Element driverElement;
             for (Driver driver : drivers) {
-                Element driverElement = new Element("Driver");
+                driverElement = new Element("Driver");
 
                 Element id = new Element("id");
                 id.appendChild(String.valueOf(driver.getId()));
@@ -59,19 +60,16 @@ public class DriverManager {
             for (int i = 0; i < driverElements.size(); i++) {
                 Element driverElement = driverElements.get(i);
 
-                Driver driver = new Driver();
-
                 // Parse and set ID
                 int id = Integer.parseInt(driverElement.getFirstChildElement("id").getValue());
-                driver.setId(id);
 
                 // Parse and set Name
                 String name = driverElement.getFirstChildElement("name").getValue();
-                driver.setName(name);
 
                 // Parse and set Phone Number
                 String phoneNumber = driverElement.getFirstChildElement("phoneNumber").getValue();
-                driver.setPhoneNumber(phoneNumber);
+
+                Driver driver = new Driver(id, name, phoneNumber);
 
                 drivers.add(driver);
             }
@@ -84,6 +82,7 @@ public class DriverManager {
         return drivers;
     }
 
+    /* debug code commented out
     // Method to verify if the driver data was stored correctly
     public static boolean verifyDriverStorage(String filePath, List<Driver> originalDrivers) {
         List<Driver> loadedDrivers;
@@ -110,5 +109,5 @@ public class DriverManager {
             }
         }
         return true; // Data matches
-    }
+    } */
 }
