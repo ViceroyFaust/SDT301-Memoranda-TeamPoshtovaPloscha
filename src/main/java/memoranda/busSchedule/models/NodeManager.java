@@ -10,20 +10,48 @@ import java.util.List;
 
 public class NodeManager {
 
+    public static Element nodeXML(Node node) {
+        Element nodeElement = new Element("Node");
+
+        Element id = new Element("id");
+        id.appendChild(String.valueOf(node.getId()));
+        nodeElement.appendChild(id);
+
+        return nodeElement;
+    }
+
+    public static Element nodesXML(List<Node> nodes) {
+        Element root = new Element("Nodes");
+
+        Element nodeElement;
+        for (Node node : nodes) {
+            nodeElement = nodeXML(node);
+            root.appendChild(nodeElement);
+        }
+        return root;
+    }
+
+    public static Node xmlNode(Element nodeElement) {
+        int id = Integer.parseInt(nodeElement.getFirstChildElement("id").getValue());
+        return new Node(id);
+    }
+
+    public static List<Node> xmlNodes(Elements nodeElements) {
+        List<Node> nodes = new ArrayList<>();
+
+        Element nodeElement;
+        for (int i = 0; i < nodeElements.size(); i++) {
+            nodeElement = nodeElements.get(i);
+            nodes.add(xmlNode(nodeElement));
+        }
+
+        return nodes;
+    }
+
     // Method to save a list of Node objects to an XML file
     public static void saveNodes(List<Node> nodes, String filePath) {
         try {
-            Element root = new Element("Nodes");
-
-            for (Node node : nodes) {
-                Element nodeElement = new Element("Node");
-
-                Element id = new Element("id");
-                id.appendChild(String.valueOf(node.getId()));
-                nodeElement.appendChild(id);
-
-                root.appendChild(nodeElement);
-            }
+            Element root = nodesXML(nodes);
 
             Document doc = new Document(root);
             FileOutputStream out = new FileOutputStream(filePath);
@@ -48,15 +76,7 @@ public class NodeManager {
 
             Elements nodeElements = doc.getRootElement().getChildElements("Node");
 
-            for (int i = 0; i < nodeElements.size(); i++) {
-                Element nodeElement = nodeElements.get(i);
-
-                int id = Integer.parseInt(nodeElement.getFirstChildElement("id").getValue());
-                Node node = new Node(id);
-
-                nodes.add(node);
-            }
-
+            nodes = xmlNodes(nodeElements);
             // System.out.println("Node data has been loaded from " + filePath);
         } catch (ParsingException | IOException e) {
             e.printStackTrace();

@@ -9,41 +9,58 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TourManager {
+    public static Element tourXML(Tour tour) {
+        Element tourElement = new Element("Tour");
+
+        Element id = new Element("id");
+        id.appendChild(String.valueOf(tour.getId()));
+        tourElement.appendChild(id);
+
+        Element name = new Element("name");
+        name.appendChild(tour.getName());
+        tourElement.appendChild(name);
+
+        Element bus = BusManager.busXML(tour.getBus());
+        tourElement.appendChild(bus);
+
+        Element route = RouteManager.routeXML(tour.getRoute());
+        tourElement.appendChild(route);
+
+        return tourElement;
+    }
+
+    public static Element toursXML(List<Tour> tours) {
+        Element root = new Element("Tours");
+
+        for (Tour tour : tours) {
+            root.appendChild(tourXML(tour));
+        }
+
+        return root;
+    }
+
+    public static Tour xmlTour(Element tour) {
+        int id = Integer.parseInt(tour.getFirstChildElement("id").getValue());
+        String name = tour.getFirstChildElement("name").getValue();
+        Bus bus = BusManager.xmlBus(tour.getFirstChildElement("Bus"));
+        Route route = RouteManager.xmlRoute(tour.getFirstChildElement("Route"));
+        return new Tour(id, name, bus, route);
+    }
+
+    public static List<Tour> xmlTours(Elements tourElements) {
+        List<Tour> tours = new ArrayList<>();
+
+        for (int i = 0; i < tourElements.size(); i++) {
+            tours.add(xmlTour(tourElements.get(i)));
+        }
+
+        return tours;
+    }
 
     // Method to save a list of Tour objects to an XML file
     public static void saveTours(List<Tour> tours, String filePath) {
         try {
-            Element root = new Element("Tours");
-
-            for (Tour tour : tours) {
-                Element tourElement = new Element("Tour");
-
-                Element id = new Element("id");
-                id.appendChild(String.valueOf(tour.getId()));
-                tourElement.appendChild(id);
-
-                Element name = new Element("name");
-                name.appendChild(tour.getName() != null ? tour.getName() : "Unknown");
-                tourElement.appendChild(name);
-
-                Element busId = new Element("busId");
-                if (tour.getBus() != null) {
-                    busId.appendChild(String.valueOf(tour.getBus().getId()));
-                } else {
-                    busId.appendChild("0"); // Default value if bus is null
-                }
-                tourElement.appendChild(busId);
-
-                Element routeId = new Element("routeId");
-                if (tour.getRoute() != null) {
-                    routeId.appendChild(String.valueOf(tour.getRoute().getId()));
-                } else {
-                    routeId.appendChild("0"); // Default value if route is null
-                }
-                tourElement.appendChild(routeId);
-
-                root.appendChild(tourElement);
-            }
+            Element root = toursXML(tours);
 
             Document doc = new Document(root);
             FileOutputStream out = new FileOutputStream(filePath);
@@ -59,42 +76,15 @@ public class TourManager {
     }
 
     // Method to load a list of Tour objects from an XML file
-    public static List<Tour> loadTours(String filePath, List<Bus> availableBuses, List<Route> availableRoutes) {
+    public static List<Tour> loadTours(String filePath) {
         List<Tour> tours = new ArrayList<>();
-
         try {
             Builder builder = new Builder();
             Document doc = builder.build(new FileInputStream(filePath));
 
             Elements tourElements = doc.getRootElement().getChildElements("Tour");
 
-            for (int i = 0; i < tourElements.size(); i++) {
-                Element tourElement = tourElements.get(i);
-
-                // Parse and set ID
-                int id = Integer.parseInt(tourElement.getFirstChildElement("id").getValue());
-
-                // Parse and set Name
-                String name = tourElement.getFirstChildElement("name").getValue();
-
-                // Parse and set Bus
-                int busId = Integer.parseInt(tourElement.getFirstChildElement("busId").getValue());
-                Bus bus = availableBuses.stream()
-                        .filter(b -> b.getId() == busId)
-                        .findFirst()
-                        .orElse(null);
-
-                // Parse and set Route
-                int routeId = Integer.parseInt(tourElement.getFirstChildElement("routeId").getValue());
-                Route route = availableRoutes.stream()
-                        .filter(r -> r.getId() == routeId)
-                        .findFirst()
-                        .orElse(null);
-
-                Tour tour = new Tour(id, name, bus, route);
-
-                tours.add(tour);
-            }
+            tours = xmlTours(tourElements);
 
             System.out.println("Tour data has been loaded from " + filePath);
         } catch (ParsingException | IOException e) {
@@ -103,27 +93,4 @@ public class TourManager {
 
         return tours;
     }
-
-    /* commented out debug code
-    // Method to verify if the tour data was stored correctly
-    public static boolean verifyTourStorage(String filePath, List<Tour> originalTours, List<Bus> availableBuses, List<Route> availableRoutes) {
-        List<Tour> loadedTours = loadTours(filePath, availableBuses, availableRoutes);
-
-        if (loadedTours.size() != originalTours.size()) {
-            return false; // Size mismatch
-        }
-
-        for (int i = 0; i < originalTours.size(); i++) {
-            Tour original = originalTours.get(i);
-            Tour loaded = loadedTours.get(i);
-
-            if (original.getId() != loaded.getId() ||
-                    !original.getName().equals(loaded.getName()) ||
-                    (original.getBus() != null && loaded.getBus() != null && original.getBus().getId() != loaded.getBus().getId()) ||
-                    (original.getRoute() != null && loaded.getRoute() != null && original.getRoute().getId() != loaded.getRoute().getId())) {
-                return false; // Mismatch in data
-            }
-        }
-        return true; // Data matches
-    } */
 }
