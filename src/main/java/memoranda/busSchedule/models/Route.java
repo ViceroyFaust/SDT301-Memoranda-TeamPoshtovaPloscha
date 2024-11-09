@@ -4,6 +4,7 @@ public class Route {
     private int id;
     private float length;
     private float durationH; //Duration in hours
+    private Node[] nodes;
 
     public int getId() {
         return id;
@@ -27,5 +28,13 @@ public class Route {
 
     public void setDurationH(float durationH) {
         this.durationH = durationH;
+    }
+
+    public Node[] getNodes() {
+        return nodes;
+    }
+
+    public void setNodes(Node[] nodes) {
+        this.nodes = nodes;
     }
 }
