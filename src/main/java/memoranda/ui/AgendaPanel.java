@@ -310,10 +310,12 @@ public class AgendaPanel extends JPanel {
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
 		// Resize icons
-		ImageIcon busIcon = resizeIcon("memoranda/resources/ui/icons/busIcon.png", 20, 20);
-		ImageIcon seatsIcon = resizeIcon("memoranda/resources/ui/icons/seatIcon", 20, 20);
-		ImageIcon driverIcon = resizeIcon("driver", 20, 20);
-		ImageIcon phoneIcon = new ImageIcon("driverIcon.png");
+		// (memoranda.ui.EditTypeDialog.class.getResource(
+		//            "/ui/icons/resource48.png")
+		ImageIcon busIcon = resizeIcon("/ui/icons/busIcon.png", 20, 20);
+		ImageIcon seatsIcon = resizeIcon("/ui/icons/seatIcon", 20, 20);
+		ImageIcon driverIcon = resizeIcon("/ui/icons/driverIcon", 20, 20);
+		ImageIcon phoneIcon = new ImageIcon("/ui/icons/driverIcon.png");
 
 		// Bus information with icon (no icon visible)
 		JLabel busIdLabel = new JLabel("Bus ID: " + sampleBus.getId(), busIcon, JLabel.LEFT);
