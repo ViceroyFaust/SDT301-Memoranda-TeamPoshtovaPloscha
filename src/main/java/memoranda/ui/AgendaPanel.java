@@ -1,21 +1,11 @@
 package memoranda.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Point;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
-import javax.swing.JButton;
-import javax.swing.JEditorPane;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JToolBar;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
@@ -30,6 +20,8 @@ import memoranda.ProjectListener;
 import memoranda.ProjectManager;
 import memoranda.ResourcesList;
 import memoranda.TaskList;
+import memoranda.busSchedule.models.Bus;
+import memoranda.busSchedule.models.Driver;
 import memoranda.date.CalendarDate;
 import memoranda.date.CurrentDate;
 import memoranda.date.DateListener;
@@ -37,8 +29,6 @@ import memoranda.util.AgendaGenerator;
 import memoranda.util.CurrentStorage;
 import memoranda.util.Local;
 import memoranda.util.Util;
-
-import javax.swing.JOptionPane;
 
 import nu.xom.Element;
 
@@ -63,6 +53,9 @@ public class AgendaPanel extends JPanel {
 
 	boolean isActive = true;
 
+	JButton showDataButton = new JButton("Show Bus and Driver Data"); // New Button
+
+
 	public AgendaPanel(DailyItemsPanel _parentPanel) {
 		try {
 			parentPanel = _parentPanel;
@@ -78,6 +71,17 @@ public class AgendaPanel extends JPanel {
 		toolBar.setFloatable(false);
 		viewer.setEditable(false);
 		viewer.setOpaque(false);
+
+		// Adding new button to show data.
+		showDataButton.setFocusable(false);
+		showDataButton.setPreferredSize(new Dimension(200, 24));
+		showDataButton.setToolTipText("Show Bus and Driver Information");
+
+		showDataButton.addActionListener(e -> dataDisplayFrame());
+
+		toolBar.add(showDataButton, null);
+		toolBar.addSeparator(new Dimension(8, 24));
+
 		viewer.addHyperlinkListener(new HyperlinkListener() {
 
 			public void hyperlinkUpdate(HyperlinkEvent e) {
@@ -293,6 +297,57 @@ public class AgendaPanel extends JPanel {
 		//		toggleShowActiveOnly_actionPerformed(null);		
 	}
 
+	// Frame to display data of the bus and driver when clicked on button/
+	private void dataDisplayFrame() {
+		JFrame dataFrame = new JFrame("Bus and Driver Data");
+		dataFrame.setSize(400, 250);
+		dataFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+		Driver sampleDriver = new Driver(1, "John Doe", "123-456-7890");
+		Bus sampleBus = new Bus(101, 50, sampleDriver);
+
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+		// Resize icons
+		// (memoranda.ui.EditTypeDialog.class.getResource(
+		//            "/ui/icons/resource48.png")
+		ImageIcon busIcon = resizeIcon("/ui/icons/busIcon.png", 20, 20);
+		ImageIcon seatsIcon = resizeIcon("/ui/icons/seatIcon", 20, 20);
+		ImageIcon driverIcon = resizeIcon("/ui/icons/driverIcon", 20, 20);
+		ImageIcon phoneIcon = new ImageIcon("/ui/icons/driverIcon.png");
+
+		// Bus information with icon (no icon visible)
+		JLabel busIdLabel = new JLabel("Bus ID: " + sampleBus.getId(), busIcon, JLabel.LEFT);
+		busIdLabel.setHorizontalTextPosition(JLabel.RIGHT);
+
+		JLabel busSeatsLabel = new JLabel("Seats: " + sampleBus.getSeats(), seatsIcon, JLabel.LEFT);
+		busSeatsLabel.setHorizontalTextPosition(JLabel.RIGHT);
+
+		// Driver information with  icon (no icon visible)
+		JLabel driverIdLabel = new JLabel("Driver ID: " + sampleBus.getDriver().getId(), driverIcon, JLabel.LEFT);
+		driverIdLabel.setHorizontalTextPosition(JLabel.RIGHT);
+
+		JLabel driverNameLabel = new JLabel("Driver Name: " + sampleBus.getDriver().getName(), driverIcon, JLabel.LEFT);
+		driverNameLabel.setHorizontalTextPosition(JLabel.RIGHT);
+
+		JLabel driverPhoneLabel = new JLabel("Driver Phone: " + sampleBus.getDriver().getPhoneNumber(), phoneIcon, JLabel.LEFT);
+		driverPhoneLabel.setHorizontalTextPosition(JLabel.RIGHT);
+
+		// Add labels to panel
+		panel.add(busIdLabel);
+		panel.add(busSeatsLabel);
+		panel.add(new JLabel("Driver Information:"));  // Section title without icon
+		panel.add(driverIdLabel);
+		panel.add(driverNameLabel);
+		panel.add(driverPhoneLabel);
+
+		// Add panel to the frame
+		dataFrame.add(panel);
+		dataFrame.setLocationRelativeTo(this);
+		dataFrame.setVisible(true);
+	}
+
 	public void refresh(CalendarDate date) {
 		viewer.setText(AgendaGenerator.getAgenda(date,expandedTasks));
 		SwingUtilities.invokeLater(new Runnable() {
@@ -307,7 +362,11 @@ public class AgendaPanel extends JPanel {
 
 		Util.debug("Summary updated.");
 	}
-
+	private ImageIcon resizeIcon(String path, int width, int height) {
+		ImageIcon originalIcon = new ImageIcon(path);
+		Image scaledImage = originalIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		return new ImageIcon(scaledImage);
+	}
 	public void setActive(boolean isa) {
 		isActive = isa;
 	}
