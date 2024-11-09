@@ -81,33 +81,4 @@ public class DriverManager {
 
         return drivers;
     }
-
-    /* debug code commented out
-    // Method to verify if the driver data was stored correctly
-    public static boolean verifyDriverStorage(String filePath, List<Driver> originalDrivers) {
-        List<Driver> loadedDrivers;
-
-        try {
-            loadedDrivers = loadDrivers(filePath);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false; // Return false if loading failed
-        }
-
-        if (loadedDrivers.size() != originalDrivers.size()) {
-            return false; // Size mismatch
-        }
-
-        for (int i = 0; i < originalDrivers.size(); i++) {
-            Driver original = originalDrivers.get(i);
-            Driver loaded = loadedDrivers.get(i);
-
-            if (original.getId() != loaded.getId() ||
-                    (original.getName() != null && !original.getName().equals(loaded.getName())) ||
-                    (original.getPhoneNumber() != null && !original.getPhoneNumber().equals(loaded.getPhoneNumber()))) {
-                return false; // Mismatch in data
-            }
-        }
-        return true; // Data matches
-    } */
 }
