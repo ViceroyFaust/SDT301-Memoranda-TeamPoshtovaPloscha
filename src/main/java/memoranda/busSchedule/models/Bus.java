@@ -34,4 +34,9 @@ public class Bus {
     public void setDriver(Driver driver) {
         this.driver = driver;
     }
+
+    @Override
+    public String toString() {
+        return "Bus(id: " + id + ", seats: " + seats + ", Driver: " + driver.toString() + ")";
+    }
 }

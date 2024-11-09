@@ -44,4 +44,9 @@ public class Tour {
     public void setRoute(Route route) {
         this.route = route;
     }
+
+    @Override
+    public String toString() {
+        return "Tour(id: " + id + ", name: " + name + ", bus: " + bus.toString() + ", route: " + route.toString() + ")";
+    }
 }

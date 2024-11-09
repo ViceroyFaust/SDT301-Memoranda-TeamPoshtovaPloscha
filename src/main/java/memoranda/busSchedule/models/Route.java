@@ -1,5 +1,7 @@
 package memoranda.busSchedule.models;
 
+import java.util.Arrays;
+
 public class Route {
     private int id;
     private Node[] nodes;
@@ -33,5 +35,10 @@ public class Route {
 
     public void setNodes(Node[] nodes) {
         this.nodes = nodes;
+    }
+
+    @Override
+    public String toString() {
+        return "Route(id: " + id + ", nodes: " + Arrays.toString(nodes) + ")";
     }
 }

@@ -34,4 +34,9 @@ public class Driver {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    @Override
+    public String toString() {
+        return "Driver(id: " + id + ", name: " + name + ", phone: " + phoneNumber + ")";
+    }
 }
