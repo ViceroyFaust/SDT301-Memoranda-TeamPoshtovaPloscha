@@ -8,14 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
-import javax.swing.JButton;
-import javax.swing.JEditorPane;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JToolBar;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
@@ -37,8 +30,6 @@ import memoranda.util.AgendaGenerator;
 import memoranda.util.CurrentStorage;
 import memoranda.util.Local;
 import memoranda.util.Util;
-
-import javax.swing.JOptionPane;
 
 import nu.xom.Element;
 
@@ -63,6 +54,9 @@ public class AgendaPanel extends JPanel {
 
 	boolean isActive = true;
 
+	JButton showDataButton = new JButton("Show Bus and Driver Data"); // New Button
+
+
 	public AgendaPanel(DailyItemsPanel _parentPanel) {
 		try {
 			parentPanel = _parentPanel;
@@ -78,6 +72,19 @@ public class AgendaPanel extends JPanel {
 		toolBar.setFloatable(false);
 		viewer.setEditable(false);
 		viewer.setOpaque(false);
+
+		// Initialize the new button
+		showDataButton.setFocusable(false);
+		showDataButton.setPreferredSize(new Dimension(200, 24));
+		showDataButton.setToolTipText("Show Bus and Driver Information");
+
+		// Add action listener to the button
+		showDataButton.addActionListener(e -> dataDisplayFrame());
+
+		// Add the new button to the toolbar
+		toolBar.add(showDataButton, null);
+		toolBar.addSeparator(new Dimension(8, 24)); // Separator for spacing
+
 		viewer.addHyperlinkListener(new HyperlinkListener() {
 
 			public void hyperlinkUpdate(HyperlinkEvent e) {
@@ -291,6 +298,19 @@ public class AgendaPanel extends JPanel {
 		//				&& (Context.get("SHOW_ACTIVE_TASKS_ONLY").equals("true"));
 		//		ppShowActiveOnlyChB.setSelected(isShao);
 		//		toggleShowActiveOnly_actionPerformed(null);		
+	}
+
+	private void dataDisplayFrame() {
+		JFrame dataFrame = new JFrame("Bus and Driver Data");
+		dataFrame.setSize(500, 300);
+		dataFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+		JPanel panel = new JPanel();
+		panel.add(new JLabel("Bus and Driver data will be displayed here."));
+
+		dataFrame.add(panel);
+		dataFrame.setLocationRelativeTo(this);
+		dataFrame.setVisible(true);
 	}
 
 	public void refresh(CalendarDate date) {
