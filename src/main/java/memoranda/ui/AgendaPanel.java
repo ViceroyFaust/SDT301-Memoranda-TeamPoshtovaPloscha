@@ -1,6 +1,7 @@
 package memoranda.ui;
 
 import java.awt.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
@@ -310,12 +311,11 @@ public class AgendaPanel extends JPanel {
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
 		// Resize icons
-		// (memoranda.ui.EditTypeDialog.class.getResource(
-		//            "/ui/icons/resource48.png")
-		ImageIcon busIcon = resizeIcon("/ui/icons/busIcon.png", 20, 20);
-		ImageIcon seatsIcon = resizeIcon("/ui/icons/seatIcon", 20, 20);
-		ImageIcon driverIcon = resizeIcon("/ui/icons/driverIcon", 20, 20);
-		ImageIcon phoneIcon = new ImageIcon("/ui/icons/driverIcon.png");
+		// Icons for better data visualization.
+		ImageIcon busIcon =  resizeIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/busIcon.png"), 35, 35);
+		ImageIcon seatsIcon = resizeIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/seatIcon.png"), 35, 35);
+		ImageIcon driverIcon =resizeIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/driverIcon.png"), 35, 35);
+		ImageIcon phoneIcon = resizeIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/phoneIcon.png"), 35, 35);
 
 		// Bus information with icon (no icon visible)
 		JLabel busIdLabel = new JLabel("Bus ID: " + sampleBus.getId(), busIcon, JLabel.LEFT);
@@ -362,7 +362,7 @@ public class AgendaPanel extends JPanel {
 
 		Util.debug("Summary updated.");
 	}
-	private ImageIcon resizeIcon(String path, int width, int height) {
+	private ImageIcon resizeIcon(URL path, int width, int height) {
 		ImageIcon originalIcon = new ImageIcon(path);
 		Image scaledImage = originalIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
 		return new ImageIcon(scaledImage);
