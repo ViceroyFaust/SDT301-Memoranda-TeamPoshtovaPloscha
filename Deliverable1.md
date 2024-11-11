@@ -40,11 +40,10 @@ I would also advise you to already fill out the Contributions section (End of sp
 ### Meeting minutes of your Daily Scrums (3 per week, should not take longer than 10 minutes):
 > Add as many rows as needed and fill out the table. (Burndown starts with Sprint 2 and Travis CI starts with Sprint 3, not needed before that). 
 
-| Date  | Who did not attend  |Meeting notes (very brief)   | Burndown Info (on track, ahead behind is enough) | TravisCI info (does the master pass) | Additional Info  |
-|---|---|---|---|--|--|
-|   |   |   |   |  |  |
-|   |   |   |   |  |  |
-|   |   |   |   |  |  |
+| Date  | Who did not attend | Meeting notes (very brief)                                                | Burndown Info (on track, ahead behind is enough) | TravisCI info (does the master pass) | Additional Info       |
+|-------|--------------------|---------------------------------------------------------------------------|--------------------------------------------------|--------------------------------------|-----------------------|
+|11/01  | Mykhailo           | Initial meeting with discussing implementation of models and further work | not needed                                       | not needed                           | 15m long - in voice   |
+|11/08  | Mykhailo           | Discussing branching and commit strategy, discussing development of UI    | not needed                                       | not needed                           | 18m long - in voice   |
 
 ### Meeting Summary:
 
@@ -60,21 +59,22 @@ I would also advise you to already fill out the Contributions section (End of sp
 ### Sprint Review
 Answer as a team!
 
-**Screen Cast link**: Your link
+**Screen Cast link**: We didn't know that we were supposed to record our sprints
 
-> Answer the following questions as a team. 
+- Answer the following questions as a team. 
 
 **What do you think is the value you created this Sprint?**
-
-> Your Answer
+- We started learning the foundations of Agile development.
+- We fixed a lot of bugs.
+- We created models, IO and basic visualisation.
 
 **Do you think you worked enough and that you did what was expected of you?**
 
-> Your Answer
+- Most of the team worked well enough considering our circumstances. Howewer, some of the team members did not read documentation.
 
 **Would you say you met the customers’ expectations? Why, why not?**
 
-> Your Answer
+- We met the learning outcome expectation, but we weren't able to fully implement our ideas that could satisfy the product owner.
 
 
 ### Sprint Retrospective
@@ -83,71 +83,63 @@ Answer as a team!
 
 **Did you meet your sprint goal?**
 
-> Your Answer
+- We met most of our goals. But we were not able to fully finish our User stories, because:
+    - There was too much work and too little time.
+    - Due to the war, one of our group member was unable to work and attend our meetings.
+    - Some of our partners did not have experience with gradle and git which gave us some setbacks.
 
 **Did you complete all stories on your Spring Backlog?**
 
-> Your Answer
+- We almost completed both of our US.
 
 **If not, what went wrong?**
 
-> Your Answer
+- We summarized it above
 
 **Did you work at a consistent rate of speed, or velocity? (Meaning did you work during the whole Sprint or did you start working when the deadline approached.)**
 
-> Your Answer
+- It depends on a team member.
 
 **Did you deliver business value?**
 
-> Your Answer
+-  We fixed several severe bugs related to opening and closing the application. Otherwise, our features are still in development stage.
 
 **Are there things the team thinks it can do better in the next Sprint?**
 
-> Your Answer
+- Learn git best practices. 
+    - Branching
+    - Commiting
+    - Pulling and Pushing
+
+- design before the coding
+- more consistend standup planning.
 
 **How do you feel at this point? Get a pulse on the optimism of the team.**
 
-> Your Answer
+The team feels a bit pessimistic because of the amount of work and limited time and because of difficult of organization. 
 
 ### Contributions:
 
 > In this section I want you to point me to your main contributions (each of you individually). Some of the topcs are not needed for the first deliverables (you should know which things you should have done in this Sprint, if you don't then you have probably missed something):
 
-#### Team member A -- replace this with your name:
-  **Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
+#### Team member Danylo
+**Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
+    - https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/f9e1cf5a8b3b295d0eb9e2cece25ef4f6709601d
+    - https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/72ef920b8240b20aaf24ef70e1db3b6941827cc6
 
+**What was your main contribution to the Quality Policy documentation?:
+    - GitHub workflow and simple code review
+
+#### Team member Vladyslav
+**Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
+    - Class Diagram
+    - https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/2437070cfa8e6b68e1cf26a87e23988915aae3e0
+#### Team member Oleksandr
+**Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
     - link1
     - link2
-
-   **GitHub links to your Unit Tests (up to 3 links) -- Sprint 2 and 3:
-
-    - link1
-    - link2
-
-  **GitHub links to your Code Reviews (up to 3 links) -- Sprint 2 and 3:
-
-    - link1
-    - link2
-
-  **How did you contribute to Static Analysis -- Sprint 3:
-
-    - link1
-    - link2
- 
- **What was your main contribution to the Quality Policy documentation?:
-
-    - info
-  
-## 4: Checklist for you to see if you are done (optional just a reminder)
-- [ ] Filled out the complete form from above, all fields are filled and written in full sentences
-- [ ] Read the kickoff again to make sure you have all the details
-- [ ] User Stories that were not completed, were left in the Sprint and a copy created
-- [ ] Your Quality Policies are accurate and up to date
-- [ ] **Individual** Survey was submitted **individually** (create checkboxes below -- see Canvas to get link)
-  - [ ] Team member 1
-  - [ ] Team member 2
-- [ ] The original of this file was copied for the next Sprint (needed for all but last Sprint where you do not need to copy it anymore)
-  - [ ] Basic information (part 1) for next Sprint was included (meaning Spring Planning is complete)
-  - [ ] All User Stories have acceptance tests
-  - [ ] User Stories in your new Sprint Backlog have initial tasks which are in New
-  - [ ] You know how to proceed
+#### Team member Andrii
+**Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
+    - https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/6ac131ee8f73a164d07909950dac5147af53c7cd
+    - https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/f36e043dc577774824c4c2ad23e07164984a587f
+    - https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/4e3c6224bc6f1c1a49c01f75bdbfe577af26a5d7
