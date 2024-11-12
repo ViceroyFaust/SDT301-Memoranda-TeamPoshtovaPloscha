@@ -134,7 +134,7 @@ public class WorkPanel extends JPanel {
 			}
 		});
 		tasksB.setVerticalAlignment(SwingConstants.TOP);
-		tasksB.setText(Local.getString("Tasks"));
+		tasksB.setText(Local.getString("Tours"));
 		tasksB.setHorizontalTextPosition(SwingConstants.CENTER);
 		tasksB.setFocusPainted(false);
 		tasksB.setBorderPainted(false);
