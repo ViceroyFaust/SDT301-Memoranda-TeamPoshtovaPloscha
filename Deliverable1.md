@@ -136,8 +136,7 @@ The team feels a bit pessimistic because of the amount of work and limited time 
     - https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/2437070cfa8e6b68e1cf26a87e23988915aae3e0
 #### Team member Oleksandr
 **Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
-    - link1
-    - link2
+    - https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/ed8187fff1d8d672ae7591188fda7e8bd67618ae 
 #### Team member Andrii
 **Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
     - https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/6ac131ee8f73a164d07909950dac5147af53c7cd
