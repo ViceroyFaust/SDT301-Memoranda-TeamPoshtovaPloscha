@@ -1,6 +1,5 @@
 plugins {
-  id 'application'
-  id 'java'
+    id 'application'
 }
 
 mainClassName = 'memoranda.Start'
@@ -9,29 +8,41 @@ compileJava.options.encoding = 'UTF-8'
 
 // Repositories and dependencies for code go here
 repositories {
-  mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-  implementation 'com.io7m.xom:xom:1.2.+'
-  implementation 'net.sourceforge.nekohtml:nekohtml:1.9.+'
+    // Dependencies related to legacy code in this project
+    implementation 'com.io7m.xom:xom:1.2.+'
+    implementation 'net.sourceforge.nekohtml:nekohtml:1.9.+'
+    // Test dependencies
+    testImplementation(platform('org.junit:junit-bom:5.11.3'))
+	testImplementation('org.junit.jupiter:junit-jupiter')
+	testRuntimeOnly('org.junit.platform:junit-platform-launcher')
+}
+
+test {
+	useJUnitPlatform()
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
 }
 
 jar {
-  manifest {
-    attributes "Main-Class": "memoranda.Start"
-  }
-  from {
-    configurations.runtimeClasspath.collect {it.isDirectory() ? it : zipTree(it)}
-  }
+    manifest {
+        attributes "Main-Class": "memoranda.Start"
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
 
 task fatJar(type: Jar) {
-  manifest {
-    attributes 'Main-Class': 'memoranda.Start'
-  }
-  archiveBaseName = 'poshtova_ploscha_memoranda.jar'
-  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-  from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
-  with jar
+    manifest {
+        attributes 'Main-Class': 'memoranda.Start'
+    }
+    archiveBaseName = 'poshtova_ploscha_memoranda.jar'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }
