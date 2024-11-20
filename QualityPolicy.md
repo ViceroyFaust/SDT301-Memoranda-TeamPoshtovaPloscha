@@ -32,10 +32,6 @@ This change
   - If the Git Master submits a pull request, then it must be reviewed by the SCRUM Master
 - We are _not_ allowed to delete branches
 
-
-**Simple Code Review** (start in Sprint 1)
-- In Sprint 1, code review is done manually. The reviewee will read the code, compile, and run it. They will do basic tests to see whether the changes are reflected in the functioning of the program (e.g. the GUI).
-
 **Unit Tests Blackbox** (start in Sprint 2)
 - It is preferred that you whitebox test your code, but you can also use blackbox testing techniques on your code. More
 detailed descriptions are provided in whitebox.
@@ -52,3 +48,5 @@ detailed descriptions are provided in whitebox.
 - Code must be able to be merged via fast-forward
 - Code should not break other functionality
 - If functionality can be demonstrated through the GUI, it must work
+- All public functions have JavaDoc comments, either based on previously established documentation or documented by the
+programmer
