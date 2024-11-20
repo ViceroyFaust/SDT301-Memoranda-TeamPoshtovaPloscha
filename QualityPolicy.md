@@ -10,7 +10,7 @@
   - e.g. US1-DevelopModels
 - Use the template described in this article "[How to Write a Git Commit Message](https://cbea.ms/git-commit/)" to write proper git commit messages
   - Commit messages must include User Story and Task numbers
-  - Please set the following as your commit message template
+  - Please set the following as your commit message template (The Lines with # are comments)
 ```markdown
 # 50 characters ##################################
 # If applied, this commit will...
@@ -37,20 +37,18 @@ This change
 - In Sprint 1, code review is done manually. The reviewee will read the code, compile, and run it. They will do basic tests to see whether the changes are reflected in the functioning of the program (e.g. the GUI).
 
 **Unit Tests Blackbox** (start in Sprint 2)
-  > Your Blackbox testing policy 
+- It is preferred that you whitebox test your code, but you can also use blackbox testing techniques on your code. More
+detailed descriptions are provided in whitebox.
 
- **Unit Tests Whitebox** (online: start in Sprint 2, campus: start in Sprint 3)
-  > Your Whitebox testing policy 
+**Unit Tests Whitebox** (online: start in Sprint 2, campus: start in Sprint 3)
+- You need to make sure that your whitebox tests are testing the full requirements of your class' public functionality
+  - Test only public functions
+  - Test the full scope of your functionality as designed
+  - Make sure that there are no bugs in your tests
+  - Try to use test-driven development whenever possible
 
 **Code Review** (online: start in Sprint 2, campus: start Sprint 3)
-  > Your Code Review policy   
-
-  > Include a checklist/questions list which every developer will need to fill out/answe when creating a Pull Request to the Dev branch. 
-
-  > Include a checklist/question list which every reviewer will need to fill out/anser when conducting a review, this checklist (and the answers of course) need to be put into the Pull Request review.
-
-**Static Analysis**  (online: start in Sprint 3, campus: start Sprint 3)
-  > Your Static Analysis policy   
-
-**Continuous Integration**  (start in Sprint 3)
-  > Your Continuous Integration policy
+- Code must compile
+- Code must be able to be merged via fast-forward
+- Code should not break other functionality
+- If functionality can be demonstrated through the GUI, it must work
