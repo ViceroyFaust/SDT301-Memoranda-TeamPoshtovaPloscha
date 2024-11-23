@@ -23,6 +23,21 @@ public class ForeignKeyParser {
             if (!PrimaryKeyParser.ensureThatPrimaryKeyPresent(fk.referencedClass()))
                 throw new IllegalArgumentException("Primary key is not present in referenced class of foreign key");
 
+            Class<?> referencedClass = fk.referencedClass();
+            String lazyLoadField = fk.lazyLoadField();
+
+            //Checks if the lazy load field is specified
+            try {
+                Field lField = model.getClass().getDeclaredField(lazyLoadField);
+
+                if(!Collection.class.isAssignableFrom(lField.getType()) && lField.getType() != referencedClass)
+                    throw new IllegalArgumentException(" Model -> " + model.getClass().getName() +
+                            " Lazy load field is not of the same type as referenced class or is not a collection");
+
+            }catch (NoSuchFieldException e){
+                throw new IllegalArgumentException(" Model -> " + model.getClass().getName() +
+                        " Lazy load field is not specified");
+            }
             //Add foreign key to XML
             field.setAccessible(true);
             //If we have a list of foreign keys
@@ -70,8 +85,8 @@ public class ForeignKeyParser {
             return false;
 
         //Check if foreign key is of type Integer or Collection
-        if(!(AnnotationUtils.checkIfFieldIsInteger(field)) || Collection.class.isAssignableFrom(field.getType()))
-            throw new IllegalArgumentException("Foreign key must be of type Integer or Collection");
+        if(!(AnnotationUtils.checkIfFieldIsInteger(field) || Collection.class.isAssignableFrom(field.getType())))
+            throw new IllegalArgumentException(field.getName() +  " Foreign key must be of type Integer or Collection");
 
         //If we have a list of foreign keys
         if(Collection.class.isAssignableFrom(field.getType()))

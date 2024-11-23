@@ -65,6 +65,13 @@ public class ModelsSubset<T extends XMLable & IModel> {
     }
 
     /**
+     * Clear subset
+     */
+    public void clear() {
+        models.clear();
+    }
+
+    /**
      * Convert subset to XML element
      * @return XML element with all models in subset or null if subset is empty
      */
