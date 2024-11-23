@@ -15,12 +15,9 @@ public class PrimaryKeyParser {
             if(!field.isAnnotationPresent(PrimaryKey.class))
                 continue;
 
-            try {
-                AnnotationUtils.checkIfFieldIsInteger(field);
+            if(AnnotationUtils.checkIfFieldIsInteger(field))
                 return true;
-            }catch (IllegalArgumentException e){
-                throw new IllegalArgumentException(classToParse.getName() +  ": Primary key in referenced class must be Integer");
-            }
+            throw new IllegalArgumentException(classToParse.getName() +  ": Primary key in referenced class must be Integer");
 
         }
         return false;

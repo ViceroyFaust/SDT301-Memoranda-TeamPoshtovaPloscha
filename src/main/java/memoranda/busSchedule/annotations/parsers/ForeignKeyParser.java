@@ -4,11 +4,13 @@ import memoranda.busSchedule.annotations.ForeignKey;
 import nu.xom.Element;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class ForeignKeyParser {
-    public static <T> Element parseForeignKeys(T model) throws IllegalAccessException {
-        Element root = new Element("ForeignKeys");
+
+    public static <T> ArrayList<Field> getForeignKeys(T model){
+        ArrayList<Field> validForeignKeys = new ArrayList<>();
         for(Field field : model.getClass().getDeclaredFields()) {
             if(!checkIfFieldIsAValidForeignKey(field, model))
                 continue;
@@ -22,9 +24,17 @@ public class ForeignKeyParser {
                 throw new IllegalArgumentException("Primary key is not present in referenced class of foreign key");
 
             //Add foreign key to XML
-            //Element fkElement = new Element(field.getName());
             field.setAccessible(true);
             //If we have a list of foreign keys
+            validForeignKeys.add(field);
+        }
+        return validForeignKeys;
+    }
+    public static <T> Element getXmlForeignKeys(T model) throws IllegalAccessException {
+        Element root = new Element("ForeignKeys");
+        //Element fkElement = new Element(field.getName());
+
+        for(Field field : getForeignKeys(model)){
             if (Collection.class.isAssignableFrom(field.getType())) {
                 try {
                     Collection<?> collection = (Collection<?>) field.get(model);
@@ -44,6 +54,7 @@ public class ForeignKeyParser {
                 root.appendChild(fkElement);
             }
         }
+
         return root;
     }
 
@@ -59,7 +70,7 @@ public class ForeignKeyParser {
             return false;
 
         //Check if foreign key is of type Integer or Collection
-        if(!(field.getType().equals(Integer.class) || (field.getType().equals(int.class)) || Collection.class.isAssignableFrom(field.getType())))
+        if(!(AnnotationUtils.checkIfFieldIsInteger(field)) || Collection.class.isAssignableFrom(field.getType()))
             throw new IllegalArgumentException("Foreign key must be of type Integer or Collection");
 
         //If we have a list of foreign keys
@@ -87,9 +98,9 @@ public class ForeignKeyParser {
             field.setAccessible(true);
             Collection<?> collection = (Collection<?>) field.get(model);
 
-            //Empty collection is not a valid foreign key
+            //Empty collection is allowed
             if(collection.isEmpty())
-                return false;
+                return true;
 
             //Check if all elements in collection are of type Integer
             for(Object obj : collection) {

@@ -79,7 +79,7 @@ public class ModelsSubset<T extends XMLable & IModel> {
             for (T model : models.values()) {
                 Element currentObject = new Element("SubsetObject");
                 currentObject.appendChild(model.toXML());
-                currentObject.appendChild(ForeignKeyParser.parseForeignKeys(model));
+                currentObject.appendChild(ForeignKeyParser.getXmlForeignKeys(model));
                 root.appendChild(currentObject);
             }
             return root;
