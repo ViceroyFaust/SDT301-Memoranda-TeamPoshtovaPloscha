@@ -3,8 +3,8 @@ package memoranda.busSchedule.managers;
 import memoranda.busSchedule.annotations.ForeignKey;
 import memoranda.busSchedule.annotations.parsers.AnnotationUtils;
 import memoranda.busSchedule.annotations.parsers.ForeignKeyParser;
-import memoranda.busSchedule.models.Bus;
-import memoranda.busSchedule.models.Driver;
+import memoranda.busSchedule.models.*;
+import memoranda.busSchedule.models.Node;
 import nu.xom.*;
 
 import java.io.FileInputStream;
@@ -15,29 +15,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 
-public class ModelsContext {
-    //region Singleton Implementation
-    private static ModelsContext instance;
-    private static final String filePath = "/home/vladyslav/Projects/uni/test/data.xml";
+public abstract class ModelsContext {
+    public ModelsContext() {
 
-    private ModelsContext() {
-        this.load(filePath);
-        this.lazyLoadModels();
     }
-
-    public static ModelsContext getInstance() {
-        if (instance == null) {
-            instance = new ModelsContext();
-        }
-        return instance;
-    }
-    //endregion
-
-    //region ModelsSubsets
-    public ModelsSubset<Bus> buses = new ModelsSubset<>(Bus.class);
-    public ModelsSubset<Driver> drivers = new ModelsSubset<>(Driver.class);
-    //endregion
-
 
     /**
      * Save all subsets to xml file
@@ -92,6 +73,12 @@ public class ModelsContext {
         }
 
         lazyLoadModels();
+    }
+
+    public void erase(){
+        for(ModelsSubset<?> subset : getSubsets()){
+            subset.clear();
+        }
     }
 
     /**
