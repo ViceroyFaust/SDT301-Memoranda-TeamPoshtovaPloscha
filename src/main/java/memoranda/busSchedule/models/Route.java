@@ -1,14 +1,26 @@
 package memoranda.busSchedule.models;
 
+import memoranda.busSchedule.annotations.ForeignKey;
+import memoranda.busSchedule.annotations.PrimaryKey;
+import nu.xom.Element;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
-public class Route {
+public class Route implements XMLable, IModel {
+    @PrimaryKey
     private int id;
-    private Node[] nodes;
+    private LinkedList<Node> nodes = new LinkedList<>();
+    @ForeignKey(lazyLoadField = "nodes", referencedClass = Node.class)
+    List<Integer> nodesIds = new ArrayList<>();
 
-    public Route(int id, Node[] nodes) {
-        this.id = id;
-        this.nodes = nodes;
+    public Route() {
+
+    }
+    public Route(LinkedList<Node> nodes) {
+        this.setNodes(nodes);
     }
 
     public int getId() {
@@ -29,16 +41,43 @@ public class Route {
         return 0;
     }
 
-    public Node[] getNodes() {
+    public LinkedList<Node> getNodes() {
         return nodes;
     }
 
-    public void setNodes(Node[] nodes) {
-        this.nodes = nodes;
+    public void addNode(Node node) {
+        nodesIds.add(node.getId());
+        nodes.add(node);
+    }
+
+    public void setNodes(List<Node> nodes) {
+        for (Node node : nodes) {
+            nodesIds.add(node.getId());
+        }
+
+        this.nodes = new LinkedList<>(nodes);
     }
 
     @Override
     public String toString() {
-        return "Route(id: " + id + ", nodes: " + Arrays.toString(nodes) + ")";
+        return "Route(id: " + id + ", nodes size: " + nodes.size() + ")";
+    }
+
+    @Override
+    public Element toXML() {
+        Element routeElement = new Element("Route");
+
+        Element id = new Element("id");
+        id.appendChild(String.valueOf(this.getId()));
+        routeElement.appendChild(id);
+
+        //routeElement.appendChild(nodes);
+
+        return routeElement;
+    }
+
+    @Override
+    public void fromXML(Element xlmElement) {
+        id = Integer.parseInt(xlmElement.getFirstChildElement("id").getValue());
     }
 }
