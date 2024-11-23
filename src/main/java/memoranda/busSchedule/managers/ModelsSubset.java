@@ -9,10 +9,12 @@ import nu.xom.Elements;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ModelsSubset<T extends XMLable & IModel> {
+    private int lastId = 0;
     private final Class<T> modelClass;
     Map<Integer,T> models = new HashMap<>();
     public ModelsSubset(Class<T> modelClass) {
@@ -35,7 +37,9 @@ public class ModelsSubset<T extends XMLable & IModel> {
      * @param model model to add
      */
     public void add(T model) {
-        models.put(model.getId(), model);
+        lastId++;
+        model.setId(lastId);
+        models.put(lastId, model);
     }
 
     /**
@@ -101,7 +105,7 @@ public class ModelsSubset<T extends XMLable & IModel> {
      * @param subset XML element with subset data (memoranda.busSchedule.models.*)
      */
     public void fromXML(Element subset){
-
+        models.clear();
         //Getting all subset object
         Elements subsetsList = subset.getChildElements("SubsetObject");
         for(int i = 0; i < subsetsList.size(); i++) {
@@ -135,6 +139,8 @@ public class ModelsSubset<T extends XMLable & IModel> {
                 e.printStackTrace();
             }
         }
+        if(!models.isEmpty())
+            lastId = Collections.max(models.keySet());
     }
 
     private void attachForeignKeysToModel(Element foreignKeys, T model){
