@@ -80,7 +80,6 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 			int returnValue = fileChooser.showSaveDialog(ProjectsPanel.this);
 			if (returnValue == JFileChooser.APPROVE_OPTION) {
 				File file = fileChooser.getSelectedFile();
-				// Currently no logic, just GUI.
 			}
 		}
 	};
@@ -92,12 +91,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 			int dialogReturnStatus = fileChooser.showOpenDialog(ProjectsPanel.this);
 			if (dialogReturnStatus == JFileChooser.APPROVE_OPTION) {
 				File file = fileChooser.getSelectedFile();
-                try {
-                    ApplicationContext.getInstance().save(file.toString());
-                } catch (IOException e) {
-					System.out.println("IO ERROR: Failed to model files!");
-					e.printStackTrace();
-                }
+				ApplicationContext.getInstance().load(file.toString());
             }
 		}
 	};
