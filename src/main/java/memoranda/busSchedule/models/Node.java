@@ -1,11 +1,15 @@
 package memoranda.busSchedule.models;
 
-public class Node {
+import memoranda.busSchedule.annotations.PrimaryKey;
+import nu.xom.Element;
+
+public class Node implements XMLable, IModel {
+    @PrimaryKey
     private int id;
     // TODO: Implement node implementation in US3
 
-    public Node(int id) {
-        this.id = id;
+    public Node() {
+
     }
 
     public int getId() {
@@ -19,5 +23,21 @@ public class Node {
     @Override
     public String toString() {
         return "Node(id: " + id + ")";
+    }
+
+    @Override
+    public Element toXML() {
+        Element nodeElement = new Element("Node");
+
+        Element id = new Element("id");
+        id.appendChild(String.valueOf(this.getId()));
+        nodeElement.appendChild(id);
+
+        return nodeElement;
+    }
+
+    @Override
+    public void fromXML(Element xlmElement) {
+        id = Integer.parseInt(xlmElement.getFirstChildElement("id").getValue());
     }
 }

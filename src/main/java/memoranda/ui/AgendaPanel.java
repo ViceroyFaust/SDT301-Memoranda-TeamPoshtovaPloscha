@@ -304,8 +304,8 @@ public class AgendaPanel extends JPanel {
 		dataFrame.setSize(400, 250);
 		dataFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-		Driver sampleDriver = new Driver(1, "John Doe", "123-456-7890");
-		Bus sampleBus = new Bus(101, 50, sampleDriver);
+		Driver sampleDriver = new Driver("John Doe", "123-456-7890");
+		Bus sampleBus = new Bus( 50, sampleDriver);
 
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
