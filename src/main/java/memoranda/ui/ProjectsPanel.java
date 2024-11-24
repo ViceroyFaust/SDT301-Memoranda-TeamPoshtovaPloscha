@@ -14,22 +14,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.Date;
 import java.util.Vector;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.Box;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JLabel;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JToolBar;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -84,6 +73,21 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 
 		public void actionPerformed(ActionEvent e) {
 			ppNewProject_actionPerformed(e);
+		}
+	};
+
+
+	public Action saveAction = new AbstractAction("Save", new ImageIcon(
+				memoranda.ui.AppFrame.class.getResource(
+					"/ui/icons/saveIcon.png"))) {
+
+		public void actionPerformed(ActionEvent e) {
+			JFileChooser fileChooser = new JFileChooser();
+			int returnValue = fileChooser.showSaveDialog(ProjectsPanel.this);
+			if (returnValue == JFileChooser.APPROVE_OPTION) {
+				File file = fileChooser.getSelectedFile();
+				// Currently no logic, just GUI.
+			}
 		}
 	};
 
