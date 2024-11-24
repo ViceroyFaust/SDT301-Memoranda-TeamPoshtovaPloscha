@@ -60,7 +60,7 @@ public class Tour implements XMLable, IModel {
 
     @Override
     public String toString() {
-        return "Tour(id: " + id + ", name: " + name + ", bus: " + bus.toString() + ", route: " + route.toString() + ")";
+        return "Tour(id: " + id + ", name: " + name + ", busId: " + busId + ", routeId: " + routeId +")";
     }
 
     @Override
