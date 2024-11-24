@@ -29,6 +29,8 @@ public class IoTests {
         Tour onWeGo = new Tour("On we go!", maryJane, forwards);
         Tour bonVoyage = new Tour("Bon Voyage!", titanicBus, backwards);
 
+        context.buses.add(maryJane);
+        context.buses.add(titanicBus);
         context.drivers.add(daniel);
         context.drivers.add(johnnie);
         context.nodes.add(node1);
@@ -63,6 +65,8 @@ public class IoTests {
         Tour onWeGo = new Tour("On we go!", maryJane, forwards);
         Tour bonVoyage = new Tour("Bon Voyage!", titanicBus, backwards);
 
+        context.buses.add(maryJane);
+        context.buses.add(titanicBus);
         context.drivers.add(daniel);
         context.drivers.add(johnnie);
         context.nodes.add(node1);
