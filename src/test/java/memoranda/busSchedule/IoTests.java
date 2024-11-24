@@ -12,71 +12,43 @@ public class IoTests {
         ApplicationContext context = new ApplicationContext();
         Driver daniel = new Driver("Daniel Danielson", "067 555 6666");
         Driver johnnie = new Driver("Johnnie Dowel", "+1 535 125 6486");
+        context.drivers.add(daniel);
+        context.drivers.add(johnnie);
 
         Bus maryJane = new Bus(9, daniel);
         Bus titanicBus = new Bus(50, johnnie);
+        context.buses.add(maryJane);
+        context.buses.add(titanicBus);
 
         Node node1 = new Node();
         Node node2 = new Node();
+        context.nodes.add(node1);
+        context.nodes.add(node2);
 
-        Route forwards = new Route();
-        forwards.addNode(node1);
-        forwards.addNode(node2);
         Route backwards = new Route();
         backwards.addNode(node2);
         backwards.addNode(node1);
 
-        Tour onWeGo = new Tour("On we go!", maryJane, forwards);
-        Tour bonVoyage = new Tour("Bon Voyage!", titanicBus, backwards);
-
-        context.buses.add(maryJane);
-        context.buses.add(titanicBus);
-        context.drivers.add(daniel);
-        context.drivers.add(johnnie);
-        context.nodes.add(node1);
-        context.nodes.add(node2);
+        Route forwards = new Route();
         context.routes.add(forwards);
         context.routes.add(backwards);
+
+        forwards.addNode(node1);
+        forwards.addNode(node2);
+
+
+        Tour onWeGo = new Tour("On we go!", maryJane, forwards);
+        Tour bonVoyage = new Tour("Bon Voyage!", titanicBus, backwards);
         context.tours.add(onWeGo);
         context.tours.add(bonVoyage);
+
 
         context.save("save.xml");
     }
 
     @Test
     public void basicSaveTest() throws IOException {
-        ApplicationContext context = new ApplicationContext();
-        Driver daniel = new Driver("Daniel Danielson", "067 555 6666");
-        Driver johnnie = new Driver("Johnnie Dowel", "+1 535 125 6486");
 
-        Bus maryJane = new Bus(9, daniel);
-        Bus titanicBus = new Bus(50, johnnie);
-
-        Node node1 = new Node();
-        Node node2 = new Node();
-
-        Route forwards = new Route();
-        forwards.addNode(node1);
-        forwards.addNode(node2);
-        Route backwards = new Route();
-        backwards.addNode(node2);
-        backwards.addNode(node1);
-
-        Tour onWeGo = new Tour("On we go!", maryJane, forwards);
-        Tour bonVoyage = new Tour("Bon Voyage!", titanicBus, backwards);
-
-        context.buses.add(maryJane);
-        context.buses.add(titanicBus);
-        context.drivers.add(daniel);
-        context.drivers.add(johnnie);
-        context.nodes.add(node1);
-        context.nodes.add(node2);
-        context.routes.add(forwards);
-        context.routes.add(backwards);
-        context.tours.add(onWeGo);
-        context.tours.add(bonVoyage);
-
-        context.save("save.xml");
     }
 
     @Test
