@@ -9,7 +9,7 @@ import java.io.IOException;
 public class IoTests {
     @BeforeAll
     public static void init() throws IOException {
-        ApplicationContext context = new ApplicationContext();
+        ApplicationContext context = ApplicationContext.getInstance();
         Driver daniel = new Driver("Daniel Danielson", "067 555 6666");
         Driver johnnie = new Driver("Johnnie Dowel", "+1 535 125 6486");
         context.drivers.add(daniel);
@@ -53,7 +53,7 @@ public class IoTests {
 
     @Test
     public void basicLoadTest() {
-        ApplicationContext context = new ApplicationContext();
+        ApplicationContext context = ApplicationContext.getInstance();
         context.load("save.xml");
 
         for (Driver driver : context.drivers.getAll().values()) {
