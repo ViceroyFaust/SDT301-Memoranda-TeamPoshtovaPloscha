@@ -141,6 +141,8 @@ public class AppFrame extends JFrame {
     JMenuItem jMenuFileNewPrj = new JMenuItem();
         JMenuItem jMenuFileNewNote = new JMenuItem(workPanel.dailyItemsPanel.editorPanel.newAction);
     JMenuItem jMenuFilePackPrj = new JMenuItem(prjPackAction);
+    JMenuItem jMenuFileSave = new JMenuItem();
+
     JMenuItem jMenuFileUnpackPrj = new JMenuItem(prjUnpackAction);
     JMenuItem jMenuFileExportPrj = new JMenuItem(exportNotesAction);
     JMenuItem jMenuFileImportPrj = new JMenuItem(importNotesAction);
@@ -330,8 +332,10 @@ public class AppFrame extends JFrame {
          });
          */
         jMenuFileNewPrj.setAction(projectsPanel.newProjectAction);
-
         jMenuFileUnpackPrj.setText(Local.getString("Unpack project") + "...");
+
+        jMenuFileSave.setAction(projectsPanel.saveAction); // Adding  save button.
+
         jMenuFileExportNote.setText(Local.getString("Export current note")
                 + "...");
         jMenuFileImportNote.setText(Local.getString("Import one note")
@@ -446,8 +450,12 @@ public class AppFrame extends JFrame {
 
         toolBar.add(jButton3);
         jMenuFile.add(jMenuFileNewPrj);
-                jMenuFile.add(jMenuFileNewNote);
+        jMenuFile.add(jMenuFileNewNote);
+
         jMenuFile.addSeparator();
+        jMenuFile.add(jMenuFileSave); // Adding save file button.
+        jMenuFile.addSeparator();
+
         jMenuFile.add(jMenuFilePackPrj);
         jMenuFile.add(jMenuFileUnpackPrj);
         jMenuFile.addSeparator();
