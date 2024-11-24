@@ -1,13 +1,6 @@
 package memoranda.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Insets;
-import java.awt.Point;
-import java.awt.SystemColor;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -76,10 +69,9 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		}
 	};
 
-
-	public Action saveAction = new AbstractAction("Save", new ImageIcon(
-				memoranda.ui.AppFrame.class.getResource(
-					"/ui/icons/saveIcon.png"))) {
+	// Save action. Save panes and chose file.
+	public Action saveAction = new AbstractAction("Save", getResizedIcon(
+			"/ui/icons/saveIcon.png", 16, 16)) {
 
 		public void actionPerformed(ActionEvent e) {
 			JFileChooser fileChooser = new JFileChooser();
@@ -90,6 +82,17 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 			}
 		}
 	};
+
+	// Method to resize icon. Couldnt find previous resize method.
+	// It is not on this branch.
+	private ImageIcon getResizedIcon(String resourcePath, int width, int height) {
+		ImageIcon originalIcon = new ImageIcon(
+				memoranda.ui.AppFrame.class.getResource(resourcePath)
+		);
+		Image originalImage = originalIcon.getImage();
+		Image resizedImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		return new ImageIcon(resizedImage);
+	}
 
 	
 	public ProjectsPanel() {
