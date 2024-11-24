@@ -1,35 +1,17 @@
 package memoranda.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Insets;
-import java.awt.Point;
-import java.awt.SystemColor;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.Date;
 import java.util.Vector;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.Box;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JLabel;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JToolBar;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -86,6 +68,31 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 			ppNewProject_actionPerformed(e);
 		}
 	};
+
+	// Save action. Save panes and chose file.
+	public Action saveAction = new AbstractAction("Save models", getResizedIcon(
+			"/ui/icons/saveIcon.png", 16, 16)) {
+
+		public void actionPerformed(ActionEvent e) {
+			JFileChooser fileChooser = new JFileChooser();
+			int returnValue = fileChooser.showSaveDialog(ProjectsPanel.this);
+			if (returnValue == JFileChooser.APPROVE_OPTION) {
+				File file = fileChooser.getSelectedFile();
+				// Currently no logic, just GUI.
+			}
+		}
+	};
+
+	// Method to resize icon. Couldnt find previous resize method.
+	// It is not on this branch.
+	private ImageIcon getResizedIcon(String resourcePath, int width, int height) {
+		ImageIcon originalIcon = new ImageIcon(
+				memoranda.ui.AppFrame.class.getResource(resourcePath)
+		);
+		Image originalImage = originalIcon.getImage();
+		Image resizedImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		return new ImageIcon(resizedImage);
+	}
 
 	
 	public ProjectsPanel() {
