@@ -70,7 +70,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 	};
 
 	// Save action. Save panes and chose file.
-	public Action saveAction = new AbstractAction("Save", getResizedIcon(
+	public Action saveAction = new AbstractAction("Save models", getResizedIcon(
 			"/ui/icons/saveIcon.png", 16, 16)) {
 
 		public void actionPerformed(ActionEvent e) {
