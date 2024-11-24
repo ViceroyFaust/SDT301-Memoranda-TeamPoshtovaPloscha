@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.Vector;
 
@@ -22,6 +23,7 @@ import memoranda.ProjectListener;
 import memoranda.ProjectManager;
 import memoranda.ResourcesList;
 import memoranda.TaskList;
+import memoranda.busSchedule.ApplicationContext;
 import memoranda.date.CalendarDate;
 import memoranda.date.CurrentDate;
 import memoranda.date.DateListener;
@@ -80,6 +82,23 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 				File file = fileChooser.getSelectedFile();
 				// Currently no logic, just GUI.
 			}
+		}
+	};
+
+	public Action loadAction = new AbstractAction("Load models") {
+		@Override
+		public void actionPerformed(ActionEvent actionEvent) {
+			JFileChooser fileChooser = new JFileChooser();
+			int dialogReturnStatus = fileChooser.showOpenDialog(ProjectsPanel.this);
+			if (dialogReturnStatus == JFileChooser.APPROVE_OPTION) {
+				File file = fileChooser.getSelectedFile();
+                try {
+                    ApplicationContext.getInstance().save(file.toString());
+                } catch (IOException e) {
+					System.out.println("IO ERROR: Failed to model files!");
+					e.printStackTrace();
+                }
+            }
 		}
 	};
 

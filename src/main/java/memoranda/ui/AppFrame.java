@@ -72,6 +72,7 @@ public class AppFrame extends JFrame {
     JMenuItem jMenuFileExit = new JMenuItem();
 
     JMenuItem jMenuFileSave = new JMenuItem();
+    JMenuItem jMenuFileLoad = new JMenuItem();
 
     JToolBar toolBar = new JToolBar();
     JButton jButton3 = new JButton();
@@ -336,6 +337,7 @@ public class AppFrame extends JFrame {
         jMenuFileUnpackPrj.setText(Local.getString("Unpack project") + "...");
 
         jMenuFileSave.setAction(projectsPanel.saveAction); // Adding  save button.
+        jMenuFileLoad.setAction(projectsPanel.loadAction);
 
         jMenuFileExportNote.setText(Local.getString("Export current note")
                 + "...");
@@ -454,6 +456,7 @@ public class AppFrame extends JFrame {
         jMenuFile.add(jMenuFileNewNote);
         jMenuFile.addSeparator();
         jMenuFile.add(jMenuFileSave); // Adding save file button.
+        jMenuFile.add(jMenuFileLoad); // Adding file load button.
         jMenuFile.addSeparator();
         jMenuFile.add(jMenuFilePackPrj);
         jMenuFile.add(jMenuFileUnpackPrj);
