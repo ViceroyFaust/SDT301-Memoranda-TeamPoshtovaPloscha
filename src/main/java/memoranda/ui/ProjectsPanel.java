@@ -80,7 +80,12 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 			int returnValue = fileChooser.showSaveDialog(ProjectsPanel.this);
 			if (returnValue == JFileChooser.APPROVE_OPTION) {
 				File file = fileChooser.getSelectedFile();
-			}
+                try {
+                    ApplicationContext.getInstance().save(file.toString());
+                } catch (IOException ex) {
+					System.out.println("IO ERROR: Could not save models to xml file");
+                }
+            }
 		}
 	};
 
