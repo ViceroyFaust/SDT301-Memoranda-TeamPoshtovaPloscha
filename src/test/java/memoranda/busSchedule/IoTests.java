@@ -1,11 +1,45 @@
 package memoranda.busSchedule;
 
 import memoranda.busSchedule.models.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
 public class IoTests {
+    @BeforeAll
+    public static void init() throws IOException {
+        ApplicationContext context = new ApplicationContext();
+        Driver daniel = new Driver("Daniel Danielson", "067 555 6666");
+        Driver johnnie = new Driver("Johnnie Dowel", "+1 535 125 6486");
+
+        Bus maryJane = new Bus(9, daniel);
+        Bus titanicBus = new Bus(50, johnnie);
+
+        Node node1 = new Node();
+        Node node2 = new Node();
+
+        Route forwards = new Route();
+        forwards.addNode(node1);
+        forwards.addNode(node2);
+        Route backwards = new Route();
+        backwards.addNode(node2);
+        backwards.addNode(node1);
+
+        Tour onWeGo = new Tour("On we go!", maryJane, forwards);
+        Tour bonVoyage = new Tour("Bon Voyage!", titanicBus, backwards);
+
+        context.drivers.add(daniel);
+        context.drivers.add(johnnie);
+        context.nodes.add(node1);
+        context.nodes.add(node2);
+        context.routes.add(forwards);
+        context.routes.add(backwards);
+        context.tours.add(onWeGo);
+        context.tours.add(bonVoyage);
+
+        context.save("save.xml");
+    }
 
     @Test
     public void basicSaveTest() throws IOException {
