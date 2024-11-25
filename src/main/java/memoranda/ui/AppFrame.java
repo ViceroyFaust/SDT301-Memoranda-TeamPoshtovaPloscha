@@ -343,6 +343,12 @@ public class AppFrame extends JFrame {
         jMenuFileSave.setAction(projectsPanel.saveAction); // Adding  save button.
         jMenuFileLoad.setAction(projectsPanel.loadAction);
 
+        jViewNodes.setAction(projectsPanel.showNodeAction);
+        jViewDrivers.setAction(projectsPanel.showDriverAction);
+        jViewBuses.setAction(projectsPanel.showBusesAction);
+        jViewRoutes.setAction(projectsPanel.showRoutesAction);
+        jViewTours.setAction(projectsPanel.showToursAction);
+
         jMenuFileExportNote.setText(Local.getString("Export current note")
                 + "...");
         jMenuFileImportNote.setText(Local.getString("Import one note")

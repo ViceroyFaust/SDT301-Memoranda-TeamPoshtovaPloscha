@@ -24,6 +24,7 @@ import memoranda.ProjectManager;
 import memoranda.ResourcesList;
 import memoranda.TaskList;
 import memoranda.busSchedule.ApplicationContext;
+import memoranda.busSchedule.models.*;
 import memoranda.date.CalendarDate;
 import memoranda.date.CurrentDate;
 import memoranda.date.DateListener;
@@ -98,6 +99,66 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 				File file = fileChooser.getSelectedFile();
 				ApplicationContext.getInstance().load(file.toString());
             }
+		}
+	};
+
+	public Action showNodeAction = new AbstractAction("View Nodes") {
+		@Override
+		public void actionPerformed(ActionEvent actionEvent) {
+			StringBuilder sb = new StringBuilder();
+			for (Node node : ApplicationContext.getInstance().nodes.getAll().values()) {
+				sb.append(node).append("\n");
+			}
+			JOptionPane.showMessageDialog(ProjectsPanel.this, sb.toString(), "Nodes",
+					JOptionPane.INFORMATION_MESSAGE);
+		}
+	};
+
+	public Action showDriverAction = new AbstractAction("View Drivers") {
+		@Override
+		public void actionPerformed(ActionEvent actionEvent) {
+			StringBuilder sb = new StringBuilder();
+			for (Driver driver : ApplicationContext.getInstance().drivers.getAll().values()) {
+				sb.append(driver).append("\n");
+			}
+			JOptionPane.showMessageDialog(ProjectsPanel.this, sb.toString(), "Drivers",
+					JOptionPane.INFORMATION_MESSAGE);
+		}
+	};
+
+	public Action showBusesAction = new AbstractAction("View Buses") {
+		@Override
+		public void actionPerformed(ActionEvent actionEvent) {
+			StringBuilder sb = new StringBuilder();
+			for (Bus bus : ApplicationContext.getInstance().buses.getAll().values()) {
+				sb.append(bus).append("\n");
+			}
+			JOptionPane.showMessageDialog(ProjectsPanel.this, sb.toString(), "Buses",
+					JOptionPane.INFORMATION_MESSAGE);
+		}
+	};
+
+	public Action showRoutesAction = new AbstractAction("View Routes") {
+		@Override
+		public void actionPerformed(ActionEvent actionEvent) {
+			StringBuilder sb = new StringBuilder();
+			for (Route route : ApplicationContext.getInstance().routes.getAll().values()) {
+				sb.append(route).append("\n");
+			}
+			JOptionPane.showMessageDialog(ProjectsPanel.this, sb.toString(), "Routes",
+					JOptionPane.INFORMATION_MESSAGE);
+		}
+	};
+
+	public Action showToursAction = new AbstractAction("View Tours") {
+		@Override
+		public void actionPerformed(ActionEvent actionEvent) {
+			StringBuilder sb = new StringBuilder();
+			for (Tour tour : ApplicationContext.getInstance().tours.getAll().values()) {
+				sb.append(tour).append("\n");
+			}
+			JOptionPane.showMessageDialog(ProjectsPanel.this, sb.toString(), "Tours",
+					JOptionPane.INFORMATION_MESSAGE);
 		}
 	};
 
