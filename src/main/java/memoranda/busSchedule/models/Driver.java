@@ -9,10 +9,11 @@ public class Driver implements XMLable, IModel {
     private String name;
     private String phoneNumber;
 
-    public Driver(){
+    public Driver() {
 
     }
-    public Driver (String name, String phoneNumber) {
+
+    public Driver(String name, String phoneNumber) {
         this.name = name;
         this.phoneNumber = phoneNumber;
     }

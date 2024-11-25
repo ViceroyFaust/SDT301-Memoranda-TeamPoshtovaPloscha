@@ -9,10 +9,10 @@ import java.util.Collection;
 
 public class ForeignKeyParser {
 
-    public static <T> ArrayList<Field> getForeignKeys(T model){
+    public static <T> ArrayList<Field> getForeignKeys(T model) {
         ArrayList<Field> validForeignKeys = new ArrayList<>();
-        for(Field field : model.getClass().getDeclaredFields()) {
-            if(!checkIfFieldIsAValidForeignKey(field, model))
+        for (Field field : model.getClass().getDeclaredFields()) {
+            if (!checkIfFieldIsAValidForeignKey(field, model))
                 continue;
 
             //Only changes the behaviour of AccessibleObject
@@ -30,11 +30,11 @@ public class ForeignKeyParser {
             try {
                 Field lField = model.getClass().getDeclaredField(lazyLoadField);
 
-                if(!Collection.class.isAssignableFrom(lField.getType()) && lField.getType() != referencedClass)
+                if (!Collection.class.isAssignableFrom(lField.getType()) && lField.getType() != referencedClass)
                     throw new IllegalArgumentException(" Model -> " + model.getClass().getName() +
                             " Lazy load field is not of the same type as referenced class or is not a collection");
 
-            }catch (NoSuchFieldException e){
+            } catch (NoSuchFieldException e) {
                 throw new IllegalArgumentException(" Model -> " + model.getClass().getName() +
                         " Lazy load field is not specified");
             }
@@ -45,11 +45,12 @@ public class ForeignKeyParser {
         }
         return validForeignKeys;
     }
+
     public static <T> Element getXmlForeignKeys(T model) throws IllegalAccessException {
         Element root = new Element("ForeignKeys");
         //Element fkElement = new Element(field.getName());
 
-        for(Field field : getForeignKeys(model)){
+        for (Field field : getForeignKeys(model)) {
             if (Collection.class.isAssignableFrom(field.getType())) {
                 try {
                     Collection<?> collection = (Collection<?>) field.get(model);
@@ -62,7 +63,7 @@ public class ForeignKeyParser {
                 } catch (IllegalAccessException e) {
                     e.printStackTrace(); // Handle the exception appropriately
                 }
-            } else{ //If we have a single foreign key
+            } else { //If we have a single foreign key
                 //Add foreign key to XML
                 Element fkElement = new Element(field.getName());
                 fkElement.appendChild(String.valueOf(field.get(model)));
@@ -75,21 +76,22 @@ public class ForeignKeyParser {
 
     /**
      * Check if field is a valid foreign key
+     *
      * @param field Field to check
      * @param model Model object. Needed to get the value of the field
+     * @param <T>   Type of model object
      * @return True if field is a valid foreign key, false otherwise
-     * @param <T> Type of model object
      */
     public static <T> boolean checkIfFieldIsAValidForeignKey(Field field, T model) {
         if (!field.isAnnotationPresent(ForeignKey.class))
             return false;
 
         //Check if foreign key is of type Integer or Collection
-        if(!(AnnotationUtils.checkIfFieldIsInteger(field) || Collection.class.isAssignableFrom(field.getType())))
-            throw new IllegalArgumentException(field.getName() +  " Foreign key must be of type Integer or Collection");
+        if (!(AnnotationUtils.checkIfFieldIsInteger(field) || Collection.class.isAssignableFrom(field.getType())))
+            throw new IllegalArgumentException(field.getName() + " Foreign key must be of type Integer or Collection");
 
         //If we have a list of foreign keys
-        if(Collection.class.isAssignableFrom(field.getType()))
+        if (Collection.class.isAssignableFrom(field.getType()))
             return checkIfCollectionIsAValidForeignKey(field, model);
 
         return true;
@@ -97,16 +99,17 @@ public class ForeignKeyParser {
 
     /**
      * Check if collection is a valid foreign key
+     *
      * @param field Field to check
      * @param model Model object. Needed to get the value of the field
+     * @param <T>   Type of model object
      * @return True if collection is a valid foreign key, false otherwise
-     * @param <T> Type of model object
      */
     protected static <T> boolean checkIfCollectionIsAValidForeignKey(Field field, T model) {
         if (!field.isAnnotationPresent(ForeignKey.class))
             return false;
 
-        if(!Collection.class.isAssignableFrom(field.getType()))
+        if (!Collection.class.isAssignableFrom(field.getType()))
             throw new IllegalArgumentException("Foreign key must be of type Collection");
 
         try {
@@ -114,16 +117,16 @@ public class ForeignKeyParser {
             Collection<?> collection = (Collection<?>) field.get(model);
 
             //Empty collection is allowed
-            if(collection.isEmpty())
+            if (collection.isEmpty())
                 return true;
 
             //Check if all elements in collection are of type Integer
-            for(Object obj : collection) {
-                if(!(obj instanceof Integer))
+            for (Object obj : collection) {
+                if (!(obj instanceof Integer))
                     throw new IllegalArgumentException("Foreign key must be of type Integer");
             }
 
-        }catch (IllegalAccessException e) {
+        } catch (IllegalAccessException e) {
             e.printStackTrace(); // Handle the exception appropriately
         }
         return true;

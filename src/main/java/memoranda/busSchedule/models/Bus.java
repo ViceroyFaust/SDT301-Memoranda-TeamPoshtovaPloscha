@@ -4,7 +4,7 @@ import memoranda.busSchedule.annotations.ForeignKey;
 import memoranda.busSchedule.annotations.PrimaryKey;
 import nu.xom.Element;
 
-public class Bus implements XMLable,IModel {
+public class Bus implements XMLable, IModel {
     @PrimaryKey
     private int id;
     private int seats;
@@ -13,9 +13,10 @@ public class Bus implements XMLable,IModel {
     @ForeignKey(lazyLoadField = "driver", referencedClass = Driver.class)
     private int driverId;
 
-    public Bus(){
+    public Bus() {
 
     }
+
     public Bus(int seats, Driver driver) {
         this.seats = seats;
         this.setDriver(driver);
@@ -45,13 +46,14 @@ public class Bus implements XMLable,IModel {
         this.driver = driver;
         this.driverId = driver.getId();
     }
-    public int getDriverId(){
+
+    public int getDriverId() {
         return driverId;
     }
 
     @Override
     public String toString() {
-        if(driver !=null)
+        if (driver != null)
             return "Bus(id: " + id + ", seats: " + seats + ", DriverID: " + driverId + ", Driver: " + driver.toString() + ")";
         else
             return "Bus(id: " + id + ", seats: " + seats + ", DriverID: " + driverId + ")";

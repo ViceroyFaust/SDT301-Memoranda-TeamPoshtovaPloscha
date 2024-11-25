@@ -15,9 +15,10 @@ public class Tour implements XMLable, IModel {
     @ForeignKey(lazyLoadField = "route", referencedClass = Route.class)
     private int routeId;
 
-    public Tour(){
+    public Tour() {
 
     }
+
     public Tour(String name, Bus bus, Route route) {
         this.name = name;
         setBus(bus);
@@ -60,7 +61,7 @@ public class Tour implements XMLable, IModel {
 
     @Override
     public String toString() {
-        return "Tour(id: " + id + ", name: " + name + ", busId: " + busId + ", routeId: " + routeId +")";
+        return "Tour(id: " + id + ", name: " + name + ", busId: " + busId + ", routeId: " + routeId + ")";
     }
 
     @Override

@@ -3,9 +3,12 @@ package memoranda.busSchedule.managers;
 import memoranda.busSchedule.annotations.ForeignKey;
 import memoranda.busSchedule.annotations.parsers.AnnotationUtils;
 import memoranda.busSchedule.annotations.parsers.ForeignKeyParser;
-import memoranda.busSchedule.models.*;
-import memoranda.busSchedule.models.Node;
-import nu.xom.*;
+import nu.xom.Builder;
+import nu.xom.Document;
+import nu.xom.Element;
+import nu.xom.Elements;
+import nu.xom.Serializer;
+import nu.xom.ParsingException;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -22,13 +25,14 @@ public abstract class ModelsContext {
 
     /**
      * Save all subsets to xml file
+     *
      * @param filePath path to file to save
      * @throws IOException if path is invalid file is not writable, etc.
      */
     public void save(String filePath) throws IOException {
         Element root = new Element("root");
         for (ModelsSubset<?> subset : getSubsets()) {
-            if(subset == null || subset.isEmpty())
+            if (subset == null || subset.isEmpty())
                 continue;
             root.appendChild(subset.toXML());
         }
@@ -40,9 +44,9 @@ public abstract class ModelsContext {
         out.close();
     }
 
-    public void load(String filePath) throws RuntimeException{
+    public void load(String filePath) throws RuntimeException {
 
-        for(ModelsSubset<?> subset : getSubsets()){
+        for (ModelsSubset<?> subset : getSubsets()) {
             subset.clear();
         }
 
@@ -59,7 +63,7 @@ public abstract class ModelsContext {
                 Class<?> subsetModelClass = Class.forName(subset.getLocalName());
 
                 ModelsSubset<?> subsetForModel = getSubsetForModel(subsetModelClass);
-                if(subsetForModel == null)
+                if (subsetForModel == null)
                     throw new RuntimeException("Subset for model " + subsetModelClass.getName() + " was not found");
 
                 subsetForModel.fromXML(subset);
@@ -75,8 +79,8 @@ public abstract class ModelsContext {
         lazyLoadModels();
     }
 
-    public void erase(){
-        for(ModelsSubset<?> subset : getSubsets()){
+    public void erase() {
+        for (ModelsSubset<?> subset : getSubsets()) {
             subset.clear();
         }
     }
@@ -84,13 +88,13 @@ public abstract class ModelsContext {
     /**
      * This class initializes lazy loading of foreign keys for all subsets
      */
-    private void lazyLoadModels(){
+    private void lazyLoadModels() {
         //Get all subsets
         ArrayList<ModelsSubset<?>> subsets = getSubsets();
         //Iterate over all subsets
         for (ModelsSubset<?> subset : subsets) {
             //Iterate through subset models
-            for(Object objectModel : subset.getAll().values()){
+            for (Object objectModel : subset.getAll().values()) {
                 processLazyLoadField(objectModel, subset.getModelClass());
             }
         }
@@ -98,17 +102,18 @@ public abstract class ModelsContext {
 
     /**
      * Process lazy load for all foreign keys in subset models
-     * @param objectModel subset model object to process
+     *
+     * @param objectModel  subset model object to process
      * @param classOfModel class of model object
      */
-    private void processLazyLoadField(Object objectModel, Class<?> classOfModel){
-        if(!classOfModel.isAssignableFrom(objectModel.getClass()))
+    private void processLazyLoadField(Object objectModel, Class<?> classOfModel) {
+        if (!classOfModel.isAssignableFrom(objectModel.getClass()))
             throw new IllegalArgumentException("Model class is not assignable from model object");
 
-        for(Field field : ForeignKeyParser.getForeignKeys(objectModel)){
+        for (Field field : ForeignKeyParser.getForeignKeys(objectModel)) {
             try {
                 lazyLoadField(field, objectModel);
-            }catch (IllegalArgumentException | IllegalAccessException e) {
+            } catch (IllegalArgumentException | IllegalAccessException e) {
                 System.out.println("Failed to lazy load field " + field.getName() + " for model " + objectModel.getClass().getName());
                 e.printStackTrace();
             }
@@ -117,16 +122,17 @@ public abstract class ModelsContext {
 
     /**
      * Takes field and tries to lazy load field finding the appropriate object in subsets
+     *
      * @param field field to lazy load
      * @param model model object to lazy load field for
      * @throws IllegalArgumentException if field is not a valid foreign key
-     * @throws IllegalAccessException if field is not accessible
+     * @throws IllegalAccessException   if field is not accessible
      */
     private void lazyLoadField(Field field, Object model) throws IllegalArgumentException, IllegalAccessException {
 
         //If field is a single foreign key
         if (AnnotationUtils.checkIfFieldIsInteger(field)) {
-         lazyLoadSingleField(field, model);
+            lazyLoadSingleField(field, model);
             return;
         }
         //If field is a collection
@@ -139,10 +145,11 @@ public abstract class ModelsContext {
 
     /**
      * Lazy loads single field
+     *
      * @param field field to lazy load (a foreign key)
      * @param model model object to lazy load field for
      * @throws IllegalArgumentException if field is not a valid foreign key
-     * @throws IllegalAccessException if field is not accessible
+     * @throws IllegalAccessException   if field is not accessible
      */
     private void lazyLoadSingleField(Field field, Object model) throws IllegalArgumentException, IllegalAccessException {
         Class<?> referencedClass = field.getAnnotation(ForeignKey.class).referencedClass();
@@ -167,6 +174,7 @@ public abstract class ModelsContext {
 
     /**
      * Lazy loads collection field
+     *
      * @param field field to lazy load (a foreign key)
      * @param model model object to lazy load field for
      * @throws IllegalAccessException if field is not accessible
@@ -210,6 +218,7 @@ public abstract class ModelsContext {
 
     /**
      * Get all subsets in current context
+     *
      * @return list of all subsets
      */
     private ArrayList<ModelsSubset<?>> getSubsets() {
@@ -223,7 +232,7 @@ public abstract class ModelsContext {
                     subsets.add((ModelsSubset<?>) field.get(this));
                 }
             }
-        }catch (IllegalAccessException e){
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
         return subsets;
@@ -231,6 +240,7 @@ public abstract class ModelsContext {
 
     /**
      * Get subset for specified model class
+     *
      * @param modelClass model class to get subset for
      * @return subset for model class or null if subset was not found
      */

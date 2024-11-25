@@ -16,7 +16,8 @@ import java.util.Map;
 public class ModelsSubset<T extends XMLable & IModel> {
     private int lastId = 0;
     private final Class<T> modelClass;
-    Map<Integer,T> models = new HashMap<>();
+    Map<Integer, T> models = new HashMap<>();
+
     public ModelsSubset(Class<T> modelClass) {
         this.modelClass = modelClass;
     }
@@ -24,8 +25,10 @@ public class ModelsSubset<T extends XMLable & IModel> {
     public Class<T> getModelClass() {
         return modelClass;
     }
+
     /**
      * Get all models in subset
+     *
      * @return map of models with id as key
      */
     public Map<Integer, T> getAll() {
@@ -34,6 +37,7 @@ public class ModelsSubset<T extends XMLable & IModel> {
 
     /**
      * Add model to subset. In case if model with same id already exists, it will be replaced
+     *
      * @param model model to add
      */
     public void add(T model) {
@@ -44,15 +48,17 @@ public class ModelsSubset<T extends XMLable & IModel> {
 
     /**
      * Remove model from subset
+     *
      * @param model model to remove
      * @return true if model was removed, false if model was not found
      */
-    public boolean remove(T model){
+    public boolean remove(T model) {
         return models.remove(model.getId()) == null;
     }
 
     /**
      * Get model by id
+     *
      * @param id id of model
      * @return model with specified id or null if model was not found
      */
@@ -62,6 +68,7 @@ public class ModelsSubset<T extends XMLable & IModel> {
 
     /**
      * Check if subset is empty
+     *
      * @return true if subset is empty, false otherwise
      */
     public boolean isEmpty() {
@@ -77,10 +84,11 @@ public class ModelsSubset<T extends XMLable & IModel> {
 
     /**
      * Convert subset to XML element
+     *
      * @return XML element with all models in subset or null if subset is empty
      */
-    public Element toXML(){
-        if(models == null || models.isEmpty())
+    public Element toXML() {
+        if (models == null || models.isEmpty())
             return null;
 
         String classToCreateName = models.values().iterator().next().getClass().getName();
@@ -94,7 +102,7 @@ public class ModelsSubset<T extends XMLable & IModel> {
                 root.appendChild(currentObject);
             }
             return root;
-        }catch (IllegalAccessException e){
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
         return null;
@@ -102,13 +110,14 @@ public class ModelsSubset<T extends XMLable & IModel> {
 
     /**
      * Parse subset from XML element and add all models to subset
+     *
      * @param subset XML element with subset data (memoranda.busSchedule.models.*)
      */
-    public void fromXML(Element subset){
+    public void fromXML(Element subset) {
         models.clear();
         //Getting all subset object
         Elements subsetsList = subset.getChildElements("SubsetObject");
-        for(int i = 0; i < subsetsList.size(); i++) {
+        for (int i = 0; i < subsetsList.size(); i++) {
             //Getting single <SubsetObject> for parsing
             try {
                 Element subsetObject = subsetsList.get(i);
@@ -124,37 +133,37 @@ public class ModelsSubset<T extends XMLable & IModel> {
                 try {
                     //Get foreign keys element
                     foreignKeys = subsetObject.getChildElements("ForeignKeys").get(0);
-                }catch (IndexOutOfBoundsException e){
+                } catch (IndexOutOfBoundsException e) {
                     //If no foreign keys found
                     foreignKeys = null;
                 }
                 //Attach foreign keys to model
-                if(foreignKeys != null && foreignKeys.getChildElements().size() != 0)
+                if (foreignKeys != null && foreignKeys.getChildElements().size() != 0)
                     attachForeignKeysToModel(foreignKeys, model);
 
                 this.add(model);
 
-            }catch (IndexOutOfBoundsException e){
+            } catch (IndexOutOfBoundsException e) {
                 System.out.println("Subset for " + modelClass.getName() + " has failed\n No model element found in subset object");
                 e.printStackTrace();
             }
         }
-        if(!models.isEmpty())
+        if (!models.isEmpty())
             lastId = Collections.max(models.keySet());
     }
 
-    private void attachForeignKeysToModel(Element foreignKeys, T model){
+    private void attachForeignKeysToModel(Element foreignKeys, T model) {
         Elements keys = foreignKeys.getChildElements();
-        for(int i = 0; i < keys.size(); i++){
+        for (int i = 0; i < keys.size(); i++) {
             Element key = keys.get(i);
             Field modelKey = getModelKey(key.getLocalName(), model);
-            if(modelKey == null){
-                System.out.println("Subset for: "+ modelClass.getSimpleName() + " has failed\n Failed to find model key");
+            if (modelKey == null) {
+                System.out.println("Subset for: " + modelClass.getSimpleName() + " has failed\n Failed to find model key");
                 continue;
             }
 
             //Attach in case if key is a single value
-            if(modelKey.getType() == Integer.class || modelKey.getType() == int.class) {
+            if (modelKey.getType() == Integer.class || modelKey.getType() == int.class) {
                 try {
                     modelKey.set(model, Integer.parseInt(key.getValue()));
                 } catch (IllegalAccessException e) {
@@ -163,18 +172,18 @@ public class ModelsSubset<T extends XMLable & IModel> {
                 }
             }
             //Attach in case if key is a collection
-            if(Collection.class.isAssignableFrom(modelKey.getType())){
+            if (Collection.class.isAssignableFrom(modelKey.getType())) {
                 try {
                     @SuppressWarnings("unchecked") //That is ok if cast fails, we will catch it
                     Collection<Integer> collection = (Collection<Integer>) modelKey.get(model);
 
                     collection.add(Integer.parseInt(key.getValue()));
                 } catch (IllegalAccessException e) {
-                    System.out.println("Subset for: "+ modelClass.getSimpleName() +
+                    System.out.println("Subset for: " + modelClass.getSimpleName() +
                             " has failed\n Failed to set model key");
                     e.printStackTrace();
-                } catch (ClassCastException e){
-                    System.out.println("Subset for: "+ modelClass.getSimpleName() +
+                } catch (ClassCastException e) {
+                    System.out.println("Subset for: " + modelClass.getSimpleName() +
                             " has failed\n Type mismatch, " +
                             "it looks like Foreign key is not an Integer collection");
                     e.printStackTrace();
@@ -187,31 +196,35 @@ public class ModelsSubset<T extends XMLable & IModel> {
 
     /**
      * Get model key by name
-     * @param key key name
+     *
+     * @param key   key name
      * @param model model to get key from
      * @return field with key or null if key was not found
      */
-    private Field getModelKey(String key, T model){
-        for(Field field : model.getClass().getDeclaredFields()){
-            if(field.getName().equals(key)){
+    private Field getModelKey(String key, T model) {
+        for (Field field : model.getClass().getDeclaredFields()) {
+            if (field.getName().equals(key)) {
                 field.setAccessible(true);
                 return field;
             }
         }
-    return null;
+        return null;
     }
+
     /**
      * Create model instance from XML element
+     *
      * @param modelElement XML element with model data
      * @return model instance or null if failed to create instance
      */
-     private T getModelInstance(Element modelElement){
+    private T getModelInstance(Element modelElement) {
         try {
             T model = modelClass.getDeclaredConstructor().newInstance();
             model.fromXML(modelElement);
             return model;
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            System.out.println("Subset for: "+ modelClass.getSimpleName() + " has failed\n Failed to create model class instance");
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                 NoSuchMethodException e) {
+            System.out.println("Subset for: " + modelClass.getSimpleName() + " has failed\n Failed to create model class instance");
             e.printStackTrace();
         }
         return null;

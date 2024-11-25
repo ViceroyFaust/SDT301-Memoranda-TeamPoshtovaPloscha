@@ -5,7 +5,6 @@ import memoranda.busSchedule.annotations.PrimaryKey;
 import nu.xom.Element;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,6 +18,7 @@ public class Route implements XMLable, IModel {
     public Route() {
 
     }
+
     public Route(LinkedList<Node> nodes) {
         this.setNodes(nodes);
     }
