@@ -117,6 +117,11 @@ public class AppFrame extends JFrame {
             showPreferences();
         }
     };
+    public Action preferencesAction2 = new AbstractAction("New Bus") {
+        public void actionPerformed(ActionEvent e) {
+            showPreferences();
+        }
+    };
     
     public Action exportNotesAction =
                 new AbstractAction(Local.getString("Export notes") + "...") {
@@ -237,6 +242,7 @@ public class AppFrame extends JFrame {
             workPanel.dailyItemsPanel.calendar.todayAction);
 
     JMenuItem jMenuEditPref = new JMenuItem(preferencesAction);
+    JMenuItem jMenuEditPref2 = new JMenuItem(preferencesAction2);
 
     JMenu jMenuInsertSpecial = new JMenu();
     
@@ -367,6 +373,7 @@ public class AppFrame extends JFrame {
         jMenuEditFind.setText(Local.getString("Find & replace") + "...");
 
         jMenuEditPref.setText(Local.getString("Preferences") + "...");
+        jMenuEditPref2.setText(Local.getString("New Bus") + "...");
 
         jMenuInsert.setText(Local.getString("Insert"));
 
@@ -467,6 +474,7 @@ public class AppFrame extends JFrame {
         jMenuFile.add(jMenuFileImportPrj);
         jMenuFile.addSeparator();
         jMenuFile.add(jMenuEditPref);
+        jMenuFile.add(jMenuEditPref2);
         jMenuFile.addSeparator();
         jMenuFile.add(jMenuFileMin);
         jMenuFile.addSeparator();

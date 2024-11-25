@@ -52,6 +52,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 	Component component1;
 	JPopupMenu projectsPPMenu = new JPopupMenu();
 	JMenuItem ppNewProject = new JMenuItem();
+	JMenuItem ppNewProject2 = new JMenuItem();
 	JMenuItem ppProperties = new JMenuItem();
 	JMenuItem ppDeleteProject = new JMenuItem();
 	JMenuItem ppOpenProject = new JMenuItem();	
@@ -70,6 +71,17 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 			ppNewProject_actionPerformed(e);
 		}
 	};
+	public Action newProjectAction2 =
+	new AbstractAction(
+		Local.getString("New Bus") + "...",
+		new ImageIcon(
+			memoranda.ui.AppFrame.class.getResource(
+				"/ui/icons/newproject.png"))) {
+
+	public void actionPerformed(ActionEvent e) {
+		ppNewProject2_actionPerformed(e);
+	}
+};
 
 	// Save action. Save panes and chose file.
 	public Action saveAction = new AbstractAction("Save models", getResizedIcon(
@@ -175,6 +187,8 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		 */
 		ppNewProject.setFont(new java.awt.Font("Dialog", 1, 11));
 		ppNewProject.setAction(newProjectAction);
+		ppNewProject2.setFont(new java.awt.Font("Dialog", 1, 11));
+		ppNewProject2.setAction(newProjectAction2);
 
 		ppProperties.setFont(new java.awt.Font("Dialog", 1, 11));
 		ppProperties.setText(Local.getString("Project properties"));
@@ -255,6 +269,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		projectsPPMenu.add(ppOpenProject);
 		projectsPPMenu.addSeparator();
 		projectsPPMenu.add(ppNewProject);
+		projectsPPMenu.add(ppNewProject2);
 		projectsPPMenu.add(ppDeleteProject);
 		projectsPPMenu.addSeparator();
 		projectsPPMenu.add(ppProperties);
@@ -367,6 +382,10 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 	}
 
 	void ppNewProject_actionPerformed(ActionEvent e) {
+		ProjectDialog.newProject();
+		prjTablePanel.updateUI();
+	}
+	void ppNewProject2_actionPerformed(ActionEvent e) {
 		ProjectDialog.newProject();
 		prjTablePanel.updateUI();
 	}
