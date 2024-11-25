@@ -76,9 +76,6 @@ public class AppFrame extends JFrame {
 
     JToolBar toolBar = new JToolBar();
     JButton jButton3 = new JButton();
-    ImageIcon image1;
-    ImageIcon image2;
-    ImageIcon image3;
     JLabel statusBar = new JLabel();
     BorderLayout borderLayout1 = new BorderLayout();
     JSplitPane splitPane = new JSplitPane();
@@ -88,6 +85,13 @@ public class AppFrame extends JFrame {
     JMenu jMenuEdit = new JMenu();
     JMenu jMenuFormat = new JMenu();
     JMenu jMenuInsert = new JMenu();
+
+    JMenu jMenuView = new JMenu("View");
+    JMenuItem jViewDrivers = new JMenuItem("View Drivers");
+    JMenuItem jViewBuses = new JMenuItem("View Buses");
+    JMenuItem jViewNodes = new JMenuItem("View Nodes");
+    JMenuItem jViewRoutes = new JMenuItem("View Routes");
+    JMenuItem jViewTours = new JMenuItem("View Tours");
 
     public WorkPanel workPanel = new WorkPanel();
     HTMLEditor editor = workPanel.dailyItemsPanel.editorPanel.editor;
@@ -339,6 +343,12 @@ public class AppFrame extends JFrame {
         jMenuFileSave.setAction(projectsPanel.saveAction); // Adding  save button.
         jMenuFileLoad.setAction(projectsPanel.loadAction);
 
+        jViewNodes.setAction(projectsPanel.showNodeAction);
+        jViewDrivers.setAction(projectsPanel.showDriverAction);
+        jViewBuses.setAction(projectsPanel.showBusesAction);
+        jViewRoutes.setAction(projectsPanel.showRoutesAction);
+        jViewTours.setAction(projectsPanel.showToursAction);
+
         jMenuFileExportNote.setText(Local.getString("Export current note")
                 + "...");
         jMenuFileImportNote.setText(Local.getString("Import one note")
@@ -471,15 +481,22 @@ public class AppFrame extends JFrame {
         jMenuFile.add(jMenuFileMin);
         jMenuFile.addSeparator();
         jMenuFile.add(jMenuFileExit);
-        
+
+        jMenuView.add(jViewDrivers);
+        jMenuView.add(jViewBuses);
+        jMenuView.add(jViewNodes);
+        jMenuView.add(jViewRoutes);
+        jMenuView.add(jViewTours);
+
         jMenuHelp.add(jMenuHelpGuide);
         jMenuHelp.add(jMenuHelpWeb);
         jMenuHelp.add(jMenuHelpBug);
         jMenuHelp.addSeparator();
         jMenuHelp.add(jMenuHelpAbout);
-        
+
         menuBar.add(jMenuFile);
         menuBar.add(jMenuEdit);
+        menuBar.add(jMenuView);
         menuBar.add(jMenuInsert);
         menuBar.add(jMenuFormat);
         menuBar.add(jMenuGo);
