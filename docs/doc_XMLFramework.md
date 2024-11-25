@@ -30,7 +30,7 @@ This is your main class that you will be working with. It stores the *ModelsSubs
 # Manipulating with the existings sets
 - To access your models in the context you should use ApplicationContext 
 ```java
-ApplicationContext applicationContext  = new ApplicationContext();
+ApplicationContext applicationContext  = ApplicationContext.getInstance();
 ``` 
 - To add new object to the context subset you can use
 ```java
