@@ -36,6 +36,7 @@ public class WorkPanel extends JPanel {
 	public ResourcesPanel filesPanel = new ResourcesPanel();
 	public JButton agendaB = new JButton();
 	public JButton tasksB = new JButton();
+	public JButton driverB = new JButton();
 	public JButton eventsB = new JButton();
 	public JButton filesB = new JButton();
 	JButton currentB = null;
@@ -144,6 +145,31 @@ public class WorkPanel extends JPanel {
 		tasksB.setOpaque(false);
 		tasksB.setMaximumSize(new Dimension(60, 80));
 		tasksB.setBackground(Color.white);
+		
+		driverB.setSelected(true);
+		driverB.setFont(new java.awt.Font("Dialog", 1, 10));
+		driverB.setMargin(new Insets(0, 0, 0, 0));
+		driverB.setIcon(
+			new ImageIcon(
+				memoranda.ui.AppFrame.class.getResource(
+					"/ui/icons/tasks.png")));
+		driverB.setVerticalTextPosition(SwingConstants.BOTTOM);
+		driverB.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				driverB_actionPerformed(e);
+			}
+		});
+		driverB.setVerticalAlignment(SwingConstants.TOP);
+		driverB.setText(Local.getString("Drivers"));
+		driverB.setHorizontalTextPosition(SwingConstants.CENTER);
+		driverB.setFocusPainted(false);
+		driverB.setBorderPainted(false);
+		driverB.setContentAreaFilled(false);
+		driverB.setPreferredSize(new Dimension(50, 50));
+		driverB.setMinimumSize(new Dimension(30, 30));
+		driverB.setOpaque(false);
+		driverB.setMaximumSize(new Dimension(60, 80));
+		driverB.setBackground(Color.white);
 
 		notesB.setFont(new java.awt.Font("Dialog", 1, 10));
 		notesB.setBackground(Color.white);
@@ -203,6 +229,7 @@ public class WorkPanel extends JPanel {
 		toolBar.add(agendaB, null);
 		toolBar.add(eventsB, null);
 		toolBar.add(tasksB, null);
+		toolBar.add(driverB, null);
 		toolBar.add(notesB, null);
 		toolBar.add(filesB, null);
 		currentB = agendaB;
@@ -227,6 +254,8 @@ public class WorkPanel extends JPanel {
 				eventsB_actionPerformed(null);
 			else if (pan.equals("FILES"))
 				filesB_actionPerformed(null);
+				else if (pan.equals("DRIVERS"))
+				driverB_actionPerformed(null);
 		}
 	}
 
@@ -250,7 +279,12 @@ public class WorkPanel extends JPanel {
 		setCurrentButton(tasksB);
 		Context.put("CURRENT_PANEL", "TASKS");
 	}
-
+	public void driverB_actionPerformed(ActionEvent e) {
+		cardLayout1.show(panel, "DAILYITEMS");
+		dailyItemsPanel.selectPanel("DRIVERS");
+		setCurrentButton(driverB);
+		Context.put("CURRENT_PANEL", "DRIVERS");
+	}
 	public void eventsB_actionPerformed(ActionEvent e) {
 		cardLayout1.show(panel, "DAILYITEMS");
 		dailyItemsPanel.selectPanel("EVENTS");

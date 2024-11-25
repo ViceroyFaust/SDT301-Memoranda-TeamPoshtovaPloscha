@@ -89,7 +89,14 @@ public class TaskDialog extends JDialog {
     JPanel jPanel3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
     JPanel jPanelEffort = new JPanel(new FlowLayout(FlowLayout.LEFT));
 //    JPanel jPanelNotes = new JPanel(new FlowLayout(FlowLayout.LEFT));
-    
+// Text fields for the new inputs
+JTextField driverField;  // Driver input
+    JTextField busField;     // Bus input
+    JTextField tourField;    // Tour input
+    JTextField routeField;   // Route input
+    JTextField nodeField;    // Node input
+
+
     JButton setNotifB = new JButton();
     JComboBox priorityCB = new JComboBox(priority);
     JLabel jLabel7 = new JLabel();
@@ -126,7 +133,7 @@ public class TaskDialog extends JDialog {
         border2 = BorderFactory.createEtchedBorder(Color.white, 
             new Color(142, 142, 142));
         border3 = new TitledBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0), 
-        Local.getString("Bus Route"), TitledBorder.LEFT, TitledBorder.BELOW_TOP);
+        Local.getString("Driver Name"), TitledBorder.LEFT, TitledBorder.BELOW_TOP);
         border4 = BorderFactory.createEmptyBorder(0, 5, 0, 5);
 //        border5 = BorderFactory.createEmptyBorder();
 //        border6 = BorderFactory.createBevelBorder(BevelBorder.LOWERED,
@@ -198,13 +205,13 @@ public class TaskDialog extends JDialog {
         gbLayout.setConstraints(jLabelDescription,gbCon);
 
         descriptionField.setBorder(border8);
-        descriptionField.setPreferredSize(new Dimension(375, 387)); // 3 additional pixels from 384 so that the last line is not cut off
+        descriptionField.setPreferredSize(new Dimension(375, 24)); // 3 additional pixels from 384 so that the last line is not cut off
         descriptionField.setLineWrap(true);
         descriptionField.setWrapStyleWord(true);
         gbCon = new GridBagConstraints();
         gbCon.gridwidth = GridBagConstraints.REMAINDER;
         gbCon.weighty = 3;
-        descriptionScrollPane.setPreferredSize(new Dimension(375,96));
+        descriptionScrollPane.setPreferredSize(new Dimension(375,24));
         gbLayout.setConstraints(descriptionScrollPane,gbCon);
 
         jLabelEffort.setMaximumSize(new Dimension(100, 16));
