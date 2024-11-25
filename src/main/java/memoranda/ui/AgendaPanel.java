@@ -54,9 +54,6 @@ public class AgendaPanel extends JPanel {
 
 	boolean isActive = true;
 
-	JButton showDataButton = new JButton("Show Bus and Driver Data"); // New Button
-
-
 	public AgendaPanel(DailyItemsPanel _parentPanel) {
 		try {
 			parentPanel = _parentPanel;
@@ -72,16 +69,6 @@ public class AgendaPanel extends JPanel {
 		toolBar.setFloatable(false);
 		viewer.setEditable(false);
 		viewer.setOpaque(false);
-
-		// Adding new button to show data.
-		showDataButton.setFocusable(false);
-		showDataButton.setPreferredSize(new Dimension(200, 24));
-		showDataButton.setToolTipText("Show Bus and Driver Information");
-
-		showDataButton.addActionListener(e -> dataDisplayFrame());
-
-		toolBar.add(showDataButton, null);
-		toolBar.addSeparator(new Dimension(8, 24));
 
 		viewer.addHyperlinkListener(new HyperlinkListener() {
 
@@ -296,56 +283,6 @@ public class AgendaPanel extends JPanel {
 		//				&& (Context.get("SHOW_ACTIVE_TASKS_ONLY").equals("true"));
 		//		ppShowActiveOnlyChB.setSelected(isShao);
 		//		toggleShowActiveOnly_actionPerformed(null);		
-	}
-
-	// Frame to display data of the bus and driver when clicked on button/
-	private void dataDisplayFrame() {
-		JFrame dataFrame = new JFrame("Bus and Driver Data");
-		dataFrame.setSize(400, 250);
-		dataFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-		Driver sampleDriver = new Driver("John Doe", "123-456-7890");
-		Bus sampleBus = new Bus( 50, sampleDriver);
-
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-		// Resize icons
-		// Icons for better data visualization.
-		ImageIcon busIcon =  resizeIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/busIcon.png"), 35, 35);
-		ImageIcon seatsIcon = resizeIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/seatIcon.png"), 35, 35);
-		ImageIcon driverIcon =resizeIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/driverIcon.png"), 35, 35);
-		ImageIcon phoneIcon = resizeIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/phoneIcon.png"), 35, 35);
-
-		// Bus information with icon (no icon visible)
-		JLabel busIdLabel = new JLabel("Bus ID: " + sampleBus.getId(), busIcon, JLabel.LEFT);
-		busIdLabel.setHorizontalTextPosition(JLabel.RIGHT);
-
-		JLabel busSeatsLabel = new JLabel("Seats: " + sampleBus.getSeats(), seatsIcon, JLabel.LEFT);
-		busSeatsLabel.setHorizontalTextPosition(JLabel.RIGHT);
-
-		// Driver information with  icon (no icon visible)
-		JLabel driverIdLabel = new JLabel("Driver ID: " + sampleBus.getDriver().getId(), driverIcon, JLabel.LEFT);
-		driverIdLabel.setHorizontalTextPosition(JLabel.RIGHT);
-
-		JLabel driverNameLabel = new JLabel("Driver Name: " + sampleBus.getDriver().getName(), driverIcon, JLabel.LEFT);
-		driverNameLabel.setHorizontalTextPosition(JLabel.RIGHT);
-
-		JLabel driverPhoneLabel = new JLabel("Driver Phone: " + sampleBus.getDriver().getPhoneNumber(), phoneIcon, JLabel.LEFT);
-		driverPhoneLabel.setHorizontalTextPosition(JLabel.RIGHT);
-
-		// Add labels to panel
-		panel.add(busIdLabel);
-		panel.add(busSeatsLabel);
-		panel.add(new JLabel("Driver Information:"));  // Section title without icon
-		panel.add(driverIdLabel);
-		panel.add(driverNameLabel);
-		panel.add(driverPhoneLabel);
-
-		// Add panel to the frame
-		dataFrame.add(panel);
-		dataFrame.setLocationRelativeTo(this);
-		dataFrame.setVisible(true);
 	}
 
 	public void refresh(CalendarDate date) {
