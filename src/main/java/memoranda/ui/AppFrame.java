@@ -354,6 +354,7 @@ public class AppFrame extends JFrame {
         jCreateDriver.setAction(projectsPanel.createDriverAction);
         jCreateBus.setAction(projectsPanel.createBusAction);
         jCreateRoute.setAction(projectsPanel.createRouteAction);
+        jCreateTour.setAction(projectsPanel.createTourAction);
 
         jViewNodes.setAction(projectsPanel.showNodeAction);
         jViewDrivers.setAction(projectsPanel.showDriverAction);

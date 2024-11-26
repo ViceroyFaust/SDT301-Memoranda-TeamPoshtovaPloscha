@@ -270,6 +270,49 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		}
 	};
 
+	public Action createTourAction = new AbstractAction("Create Tour") {
+		@Override
+		public void actionPerformed(ActionEvent actionEvent) {
+			ApplicationContext context = ApplicationContext.getInstance();
+
+			Object[] options = {"Create Tour", "Cancel"};
+			JPanel dialogPanel = new JPanel(new GridLayout(0, 1));
+
+			String defaultSelectionMessage = "--- Make Selection ---";
+			JTextField nameField = new JTextField();
+
+			JComboBox<Object> busCombo = new JComboBox<>();
+			busCombo.addItem(defaultSelectionMessage);
+			for (Bus bus : context.buses.getAll().values()) {
+				busCombo.addItem(bus);
+			}
+
+			JComboBox<Object> routeCombo = new JComboBox<>();
+			routeCombo.addItem(defaultSelectionMessage);
+			for (Route route : context.routes.getAll().values()) {
+				routeCombo.addItem(route);
+			}
+
+			dialogPanel.add(new JLabel("Tour Name:"));
+			dialogPanel.add(nameField);
+			dialogPanel.add(new JLabel("Tour Bus:"));
+			dialogPanel.add(busCombo);
+			dialogPanel.add(new JLabel("Tour Route:"));
+			dialogPanel.add(routeCombo);
+
+			int n = JOptionPane.showOptionDialog(ProjectsPanel.this, dialogPanel, "Create Tour",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+			if (n == 0) {
+				if (nameField.getText().isEmpty() || busCombo.getSelectedIndex() == 0 ||
+				routeCombo.getSelectedIndex() == 0) {
+					return;
+				}
+				context.tours.add(new Tour(nameField.getText(), (Bus) busCombo.getSelectedItem(),
+						(Route) routeCombo.getSelectedItem()));
+			}
+		}
+	};
+
 	public Action createNodeAction = new AbstractAction("Create Node") {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
