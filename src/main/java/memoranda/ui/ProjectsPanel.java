@@ -184,6 +184,37 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		}
 	};
 
+	public Action createBusAcction = new AbstractAction("Create Bus") {
+		@Override
+		public void actionPerformed(ActionEvent actionEvent) {
+			ApplicationContext context = ApplicationContext.getInstance();
+
+			Object[] options = {"Create Bus", "Cancel"};
+			JPanel dialogPanel = new JPanel(new GridLayout(0, 1));
+			SpinnerModel numberSpinnerModel = new SpinnerNumberModel(0, 0, 256, 1);
+			JSpinner seatsSpinner = new JSpinner(numberSpinnerModel);
+
+			String defaultComboChoice = "--- Make a Selection ---";
+			JComboBox<Object> driversBox = new JComboBox<>();
+			driversBox.addItem(defaultComboChoice);
+			for (Driver driver : context.drivers.getAll().values()) {
+				driversBox.addItem(driver);
+			}
+
+			dialogPanel.add(new JLabel("Number of Seats:"));
+			dialogPanel.add(seatsSpinner);
+			dialogPanel.add(new JLabel("Driver:"));
+			dialogPanel.add(driversBox);
+
+			int n = JOptionPane.showOptionDialog(ProjectsPanel.this, dialogPanel, "Create Bus",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+			if (n == 0 && driversBox.getSelectedIndex() != 0) {
+				context.buses.add(new Bus((int) seatsSpinner.getValue(), (Driver) driversBox.getSelectedItem()));
+			}
+		}
+	};
+
 	public Action createNodeAction = new AbstractAction("Create Node") {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
