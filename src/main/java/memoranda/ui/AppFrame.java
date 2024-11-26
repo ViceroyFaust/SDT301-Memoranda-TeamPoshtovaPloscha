@@ -122,6 +122,11 @@ public class AppFrame extends JFrame {
             showDriverCreate();
         }
     };
+    public Action preferencesAction3 = new AbstractAction("New Bus") {
+        public void actionPerformed(ActionEvent e) {
+            showBusCreate();
+        }
+    };
     
     public Action exportNotesAction =
                 new AbstractAction(Local.getString("Export notes") + "...") {
@@ -243,6 +248,7 @@ public class AppFrame extends JFrame {
 
     JMenuItem jMenuEditPref = new JMenuItem(preferencesAction);
     JMenuItem jMenuEditPref2 = new JMenuItem(preferencesAction2);
+    JMenuItem jMenuEditPref3 = new JMenuItem(preferencesAction3);
 
     JMenu jMenuInsertSpecial = new JMenu();
     
@@ -374,6 +380,7 @@ public class AppFrame extends JFrame {
 
         jMenuEditPref.setText(Local.getString("Preferences") + "...");
         jMenuEditPref2.setText(Local.getString("New Driver") + "...");
+        jMenuEditPref3.setText(Local.getString("New Bus") + "...");
 
         jMenuInsert.setText(Local.getString("Insert"));
 
@@ -475,6 +482,7 @@ public class AppFrame extends JFrame {
         jMenuFile.addSeparator();
         jMenuFile.add(jMenuEditPref);
         jMenuFile.add(jMenuEditPref2);
+        jMenuFile.add(jMenuEditPref3);
         jMenuFile.addSeparator();
         jMenuFile.add(jMenuFileMin);
         jMenuFile.addSeparator();
@@ -865,6 +873,12 @@ public class AppFrame extends JFrame {
     }
     public void showDriverCreate() {
         DriverCreateDialog dlg = new DriverCreateDialog(this);
+        dlg.pack();
+        dlg.setLocationRelativeTo(this);
+        dlg.setVisible(true);
+    }
+    public void showBusCreate() {
+        BusCreateDialog dlg = new BusCreateDialog(this);
         dlg.pack();
         dlg.setLocationRelativeTo(this);
         dlg.setVisible(true);
