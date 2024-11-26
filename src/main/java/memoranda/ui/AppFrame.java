@@ -93,6 +93,13 @@ public class AppFrame extends JFrame {
     JMenuItem jViewRoutes = new JMenuItem("View Routes");
     JMenuItem jViewTours = new JMenuItem("View Tours");
 
+    JMenu jMenuCreate = new JMenu("Create");
+    JMenuItem jCreateDriver = new JMenuItem("Create Driver");
+    JMenuItem jCreateBus = new JMenuItem("Create Bus");
+    JMenuItem jCreateNode = new JMenuItem("Create Node");
+    JMenuItem jCreateRoute = new JMenuItem("Create Route");
+    JMenuItem jCreateTour = new JMenuItem("Create Tour");
+
     public WorkPanel workPanel = new WorkPanel();
     HTMLEditor editor = workPanel.dailyItemsPanel.editorPanel.editor;
 
@@ -488,6 +495,12 @@ public class AppFrame extends JFrame {
         jMenuView.add(jViewRoutes);
         jMenuView.add(jViewTours);
 
+        jMenuCreate.add(jCreateDriver);
+        jMenuCreate.add(jCreateBus);
+        jMenuCreate.add(jCreateNode);
+        jMenuCreate.add(jCreateRoute);
+        jMenuCreate.add(jCreateTour);
+
         jMenuHelp.add(jMenuHelpGuide);
         jMenuHelp.add(jMenuHelpWeb);
         jMenuHelp.add(jMenuHelpBug);
@@ -498,6 +511,7 @@ public class AppFrame extends JFrame {
         menuBar.add(jMenuEdit);
         menuBar.add(jMenuView);
         menuBar.add(jMenuInsert);
+        menuBar.add(jMenuCreate);
         menuBar.add(jMenuFormat);
         menuBar.add(jMenuGo);
         menuBar.add(jMenuHelp);
