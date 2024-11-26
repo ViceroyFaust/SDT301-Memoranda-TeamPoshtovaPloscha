@@ -350,6 +350,8 @@ public class AppFrame extends JFrame {
         jMenuFileSave.setAction(projectsPanel.saveAction); // Adding  save button.
         jMenuFileLoad.setAction(projectsPanel.loadAction);
 
+        jCreateNode.setAction(projectsPanel.createNodeAction);
+
         jViewNodes.setAction(projectsPanel.showNodeAction);
         jViewDrivers.setAction(projectsPanel.showDriverAction);
         jViewBuses.setAction(projectsPanel.showBusesAction);

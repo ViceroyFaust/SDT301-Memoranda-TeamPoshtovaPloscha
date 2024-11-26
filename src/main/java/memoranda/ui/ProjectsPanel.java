@@ -162,6 +162,19 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		}
 	};
 
+	public Action createNodeAction = new AbstractAction("Create Node") {
+		@Override
+		public void actionPerformed(ActionEvent actionEvent) {
+			Object[] options = {"Create Node", "Cancel"};
+			int n = JOptionPane.showOptionDialog(ProjectsPanel.this, "Create Node?",
+					"Node Creation",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+			if (n == 0) {
+				ApplicationContext.getInstance().nodes.add(new Node());
+			}
+		}
+	};
+
 	// Method to resize icon. Couldnt find previous resize method.
 	// It is not on this branch.
 	private ImageIcon getResizedIcon(String resourcePath, int width, int height) {
