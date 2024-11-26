@@ -184,7 +184,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		}
 	};
 
-	public Action createBusAcction = new AbstractAction("Create Bus") {
+	public Action createBusAction = new AbstractAction("Create Bus") {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
 			ApplicationContext context = ApplicationContext.getInstance();
