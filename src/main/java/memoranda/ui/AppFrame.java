@@ -117,9 +117,9 @@ public class AppFrame extends JFrame {
             showPreferences();
         }
     };
-    public Action preferencesAction2 = new AbstractAction("New Bus") {
+    public Action preferencesAction2 = new AbstractAction("New Driver") {
         public void actionPerformed(ActionEvent e) {
-            showPreferences();
+            showDriverCreate();
         }
     };
     
@@ -373,7 +373,7 @@ public class AppFrame extends JFrame {
         jMenuEditFind.setText(Local.getString("Find & replace") + "...");
 
         jMenuEditPref.setText(Local.getString("Preferences") + "...");
-        jMenuEditPref2.setText(Local.getString("New Bus") + "...");
+        jMenuEditPref2.setText(Local.getString("New Driver") + "...");
 
         jMenuInsert.setText(Local.getString("Insert"));
 
@@ -859,6 +859,12 @@ public class AppFrame extends JFrame {
 
     public void showPreferences() {
         PreferencesDialog dlg = new PreferencesDialog(this);
+        dlg.pack();
+        dlg.setLocationRelativeTo(this);
+        dlg.setVisible(true);
+    }
+    public void showDriverCreate() {
+        DriverCreateDialog dlg = new DriverCreateDialog(this);
         dlg.pack();
         dlg.setLocationRelativeTo(this);
         dlg.setVisible(true);
