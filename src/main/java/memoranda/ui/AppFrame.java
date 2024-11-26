@@ -351,6 +351,7 @@ public class AppFrame extends JFrame {
         jMenuFileLoad.setAction(projectsPanel.loadAction);
 
         jCreateNode.setAction(projectsPanel.createNodeAction);
+        jCreateDriver.setAction(projectsPanel.createDriverAction);
 
         jViewNodes.setAction(projectsPanel.showNodeAction);
         jViewDrivers.setAction(projectsPanel.showDriverAction);

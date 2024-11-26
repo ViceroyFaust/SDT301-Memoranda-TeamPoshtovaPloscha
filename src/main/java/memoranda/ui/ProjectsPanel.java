@@ -162,6 +162,28 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		}
 	};
 
+	public Action createDriverAction = new AbstractAction("Create Driver") {
+		@Override
+		public void actionPerformed(ActionEvent actionEvent) {
+			Object[] options = {"Create Driver", "Cancel"};
+			JPanel dialogPanel = new JPanel(new GridLayout(0, 1));
+			JTextField nameField = new JTextField();
+			JTextField phoneField = new JTextField();
+			dialogPanel.add(new JLabel("Driver Name:"));
+			dialogPanel.add(nameField);
+			dialogPanel.add(new JLabel("Phone Number:"));
+			dialogPanel.add(phoneField);
+
+			int n = JOptionPane.showOptionDialog(ProjectsPanel.this, dialogPanel, "Create Driver",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+					options, options[0]);
+
+			if (n == 0) {
+				ApplicationContext.getInstance().drivers.add(new Driver(nameField.getText(), phoneField.getText()));
+			}
+		}
+	};
+
 	public Action createNodeAction = new AbstractAction("Create Node") {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
