@@ -225,23 +225,26 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 			JPanel dialogPanel = new JPanel(new GridLayout(0, 1));
 
 			String defaultListChoice = "--- Make Selection ---";
-			Object[] allChoices = new Object[1 + context.nodes.getAll().size()];
-			allChoices[0] = defaultListChoice;
-			int index = 1;
+			DefaultListModel<Object> listModel = new DefaultListModel<>();
+			listModel.addElement(defaultListChoice);
 			for (Node node : context.nodes.getAll().values()) {
-				allChoices[index] = node;
-				index++;
+				listModel.addElement(node);
 			}
 
-			JList<Object> list = new JList<>(allChoices);
+			JList<Object> list = new JList<>(listModel);
 			list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 			DefaultListModel<Object> selectionListModel = new DefaultListModel<>();
 			JList<Object> selectionList = new JList<>(selectionListModel);
 
 			Button selectButton = new Button("Make Selection");
-			selectButton.addActionListener(actionEvent1 ->
-					selectionListModel.addElement(list.getSelectedValue()));
+			selectButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent actionEvent) {
+					selectionListModel.addElement(list.getSelectedValue());
+					listModel.removeElement(list.getSelectedValue());
+				}
+			});
 
 			JScrollPane scrollPaneSelect = new JScrollPane();
 			scrollPaneSelect.setViewportView(list);
