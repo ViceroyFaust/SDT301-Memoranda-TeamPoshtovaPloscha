@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.Vector;
 
 import javax.swing.*;
@@ -212,6 +213,60 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 			if (n == 0 && driversBox.getSelectedIndex() != 0) {
 				context.buses.add(new Bus((int) seatsSpinner.getValue(), (Driver) driversBox.getSelectedItem()));
 			}
+		}
+	};
+
+	public Action createRouteAction = new AbstractAction("Create Route") {
+		@Override
+		public void actionPerformed(ActionEvent actionEvent) {
+			ApplicationContext context = ApplicationContext.getInstance();
+
+			Object[] options = {"Create Route", "Cancel"};
+			JPanel dialogPanel = new JPanel(new GridLayout(0, 1));
+
+			String defaultListChoice = "--- Make Selection ---";
+			Object[] allChoices = new Object[1 + context.nodes.getAll().size()];
+			allChoices[0] = defaultListChoice;
+			int index = 1;
+			for (Node node : context.nodes.getAll().values()) {
+				allChoices[index] = node;
+				index++;
+			}
+
+			JList<Object> list = new JList<>(allChoices);
+			list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+			DefaultListModel<Object> selectionListModel = new DefaultListModel<>();
+			JList<Object> selectionList = new JList<>(selectionListModel);
+
+			Button selectButton = new Button("Make Selection");
+			selectButton.addActionListener(actionEvent1 ->
+					selectionListModel.addElement(list.getSelectedValue()));
+
+			JScrollPane scrollPaneSelect = new JScrollPane();
+			scrollPaneSelect.setViewportView(list);
+
+			JScrollPane scrollPaneSelected = new JScrollPane();
+			scrollPaneSelected.setViewportView(selectionList);
+
+			dialogPanel.add(new JLabel("Select Nodes:"));
+			dialogPanel.add(scrollPaneSelected);
+			dialogPanel.add(selectButton);
+			dialogPanel.add(scrollPaneSelect);
+
+			int n = JOptionPane.showOptionDialog(ProjectsPanel.this, dialogPanel, "Create Route",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+			if (n == 0) {
+				if (selectionListModel.contains(defaultListChoice)) {
+					return;
+				}
+				LinkedList<Node> nodes = new LinkedList<>();
+				for (Object nodeObject : selectionListModel.toArray()) {
+					nodes.add((Node) nodeObject);
+				}
+				context.routes.add(new Route(nodes));
+			}
+
 		}
 	};
 
