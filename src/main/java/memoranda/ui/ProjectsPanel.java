@@ -220,46 +220,71 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
 			ApplicationContext context = ApplicationContext.getInstance();
-
+	
 			Object[] options = {"Create Route", "Cancel"};
-			JPanel dialogPanel = new JPanel(new GridLayout(0, 1));
-
+	
+			// Main Panel with BoxLayout
+			JPanel dialogPanel = new JPanel();
+			dialogPanel.setLayout(new BoxLayout(dialogPanel, BoxLayout.Y_AXIS));
+			dialogPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+	
+			// Selection Section
+			JPanel selectionPanel = new JPanel(new BorderLayout());
+			selectionPanel.setBorder(BorderFactory.createTitledBorder("Available Nodes"));
+	
 			String defaultListChoice = "--- Make Selection ---";
 			DefaultListModel<Object> listModel = new DefaultListModel<>();
 			listModel.addElement(defaultListChoice);
 			for (Node node : context.nodes.getAll().values()) {
 				listModel.addElement(node);
 			}
-
 			JList<Object> list = new JList<>(listModel);
 			list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
+			JScrollPane scrollPaneSelect = new JScrollPane(list);
+			selectionPanel.add(scrollPaneSelect, BorderLayout.CENTER);
+	
+			// Selected Nodes Section
+			JPanel selectedPanel = new JPanel(new BorderLayout());
+			selectedPanel.setBorder(BorderFactory.createTitledBorder("Selected Nodes"));
+	
 			DefaultListModel<Object> selectionListModel = new DefaultListModel<>();
 			JList<Object> selectionList = new JList<>(selectionListModel);
-
-			Button selectButton = new Button("Make Selection");
-			selectButton.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent actionEvent) {
-					selectionListModel.addElement(list.getSelectedValue());
-					listModel.removeElement(list.getSelectedValue());
+			JScrollPane scrollPaneSelected = new JScrollPane(selectionList);
+			selectedPanel.add(scrollPaneSelected, BorderLayout.CENTER);
+	
+			// Button Panel for Selection
+			JPanel buttonPanel = new JPanel();
+			buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+			JButton selectButton = new JButton("Add Node");
+			selectButton.addActionListener(e -> {
+				Object selectedValue = list.getSelectedValue();
+				if (selectedValue != null && !selectedValue.equals(defaultListChoice)) {
+					selectionListModel.addElement(selectedValue);
+					listModel.removeElement(selectedValue);
 				}
 			});
-
-			JScrollPane scrollPaneSelect = new JScrollPane();
-			scrollPaneSelect.setViewportView(list);
-
-			JScrollPane scrollPaneSelected = new JScrollPane();
-			scrollPaneSelected.setViewportView(selectionList);
-
-			dialogPanel.add(new JLabel("Select Nodes:"));
-			dialogPanel.add(scrollPaneSelected);
-			dialogPanel.add(selectButton);
-			dialogPanel.add(scrollPaneSelect);
-
+			JButton removeButton = new JButton("Remove Node");
+			removeButton.addActionListener(e -> {
+				Object selectedValue = selectionList.getSelectedValue();
+				if (selectedValue != null) {
+					listModel.addElement(selectedValue);
+					selectionListModel.removeElement(selectedValue);
+				}
+			});
+			buttonPanel.add(selectButton);
+			buttonPanel.add(removeButton);
+	
+			// Add components to main dialog
+			dialogPanel.add(selectionPanel);
+			dialogPanel.add(Box.createVerticalStrut(10));
+			dialogPanel.add(selectedPanel);
+			dialogPanel.add(Box.createVerticalStrut(10));
+			dialogPanel.add(buttonPanel);
+	
+			// Show Dialog
 			int n = JOptionPane.showOptionDialog(ProjectsPanel.this, dialogPanel, "Create Route",
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-			if (n == 0) {
+			if (n == JOptionPane.YES_OPTION) {
 				if (selectionListModel.contains(defaultListChoice)) {
 					return;
 				}
@@ -269,9 +294,9 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 				}
 				context.routes.add(new Route(nodes));
 			}
-
 		}
 	};
+	
 
 	public Action createTourAction = new AbstractAction("Create Tour") {
 		@Override
