@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.Vector;
 
 import javax.swing.*;
@@ -159,6 +160,197 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 			}
 			JOptionPane.showMessageDialog(ProjectsPanel.this, sb.toString(), "Tours",
 					JOptionPane.INFORMATION_MESSAGE);
+		}
+	};
+
+	public Action createDriverAction = new AbstractAction("Create Driver") {
+		@Override
+		public void actionPerformed(ActionEvent actionEvent) {
+			Object[] options = {"Create Driver", "Cancel"};
+			JPanel dialogPanel = new JPanel(new GridLayout(0, 1));
+			JTextField nameField = new JTextField();
+			JTextField phoneField = new JTextField();
+			dialogPanel.add(new JLabel("Driver Name:"));
+			dialogPanel.add(nameField);
+			dialogPanel.add(new JLabel("Phone Number:"));
+			dialogPanel.add(phoneField);
+
+			int n = JOptionPane.showOptionDialog(ProjectsPanel.this, dialogPanel, "Create Driver",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+					options, options[0]);
+
+			if (n == 0) {
+				ApplicationContext.getInstance().drivers.add(new Driver(nameField.getText(), phoneField.getText()));
+			}
+		}
+	};
+
+	public Action createBusAction = new AbstractAction("Create Bus") {
+		@Override
+		public void actionPerformed(ActionEvent actionEvent) {
+			ApplicationContext context = ApplicationContext.getInstance();
+
+			Object[] options = {"Create Bus", "Cancel"};
+			JPanel dialogPanel = new JPanel(new GridLayout(0, 1));
+			SpinnerModel numberSpinnerModel = new SpinnerNumberModel(0, 0, 256, 1);
+			JSpinner seatsSpinner = new JSpinner(numberSpinnerModel);
+
+			String defaultComboChoice = "--- Make a Selection ---";
+			JComboBox<Object> driversBox = new JComboBox<>();
+			driversBox.addItem(defaultComboChoice);
+			for (Driver driver : context.drivers.getAll().values()) {
+				driversBox.addItem(driver);
+			}
+
+			dialogPanel.add(new JLabel("Number of Seats:"));
+			dialogPanel.add(seatsSpinner);
+			dialogPanel.add(new JLabel("Driver:"));
+			dialogPanel.add(driversBox);
+
+			int n = JOptionPane.showOptionDialog(ProjectsPanel.this, dialogPanel, "Create Bus",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+			if (n == 0 && driversBox.getSelectedIndex() != 0) {
+				context.buses.add(new Bus((int) seatsSpinner.getValue(), (Driver) driversBox.getSelectedItem()));
+			}
+		}
+	};
+
+	public Action createRouteAction = new AbstractAction("Create Route") {
+		@Override
+		public void actionPerformed(ActionEvent actionEvent) {
+			ApplicationContext context = ApplicationContext.getInstance();
+	
+			Object[] options = {"Create Route", "Cancel"};
+	
+			// Main Panel with BoxLayout
+			JPanel dialogPanel = new JPanel();
+			dialogPanel.setLayout(new BoxLayout(dialogPanel, BoxLayout.Y_AXIS));
+			dialogPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+	
+			// Selection Section
+			JPanel selectionPanel = new JPanel(new BorderLayout());
+			selectionPanel.setBorder(BorderFactory.createTitledBorder("Available Nodes"));
+	
+			String defaultListChoice = "--- Make Selection ---";
+			DefaultListModel<Object> listModel = new DefaultListModel<>();
+			listModel.addElement(defaultListChoice);
+			for (Node node : context.nodes.getAll().values()) {
+				listModel.addElement(node);
+			}
+			JList<Object> list = new JList<>(listModel);
+			list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			JScrollPane scrollPaneSelect = new JScrollPane(list);
+			selectionPanel.add(scrollPaneSelect, BorderLayout.CENTER);
+	
+			// Selected Nodes Section
+			JPanel selectedPanel = new JPanel(new BorderLayout());
+			selectedPanel.setBorder(BorderFactory.createTitledBorder("Selected Nodes"));
+	
+			DefaultListModel<Object> selectionListModel = new DefaultListModel<>();
+			JList<Object> selectionList = new JList<>(selectionListModel);
+			JScrollPane scrollPaneSelected = new JScrollPane(selectionList);
+			selectedPanel.add(scrollPaneSelected, BorderLayout.CENTER);
+	
+			// Button Panel for Selection
+			JPanel buttonPanel = new JPanel();
+			buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+			JButton selectButton = new JButton("Add Node");
+			selectButton.addActionListener(e -> {
+				Object selectedValue = list.getSelectedValue();
+				if (selectedValue != null && !selectedValue.equals(defaultListChoice)) {
+					selectionListModel.addElement(selectedValue);
+					listModel.removeElement(selectedValue);
+				}
+			});
+			JButton removeButton = new JButton("Remove Node");
+			removeButton.addActionListener(e -> {
+				Object selectedValue = selectionList.getSelectedValue();
+				if (selectedValue != null) {
+					listModel.addElement(selectedValue);
+					selectionListModel.removeElement(selectedValue);
+				}
+			});
+			buttonPanel.add(selectButton);
+			buttonPanel.add(removeButton);
+	
+			// Add components to main dialog
+			dialogPanel.add(selectionPanel);
+			dialogPanel.add(Box.createVerticalStrut(10));
+			dialogPanel.add(selectedPanel);
+			dialogPanel.add(Box.createVerticalStrut(10));
+			dialogPanel.add(buttonPanel);
+	
+			// Show Dialog
+			int n = JOptionPane.showOptionDialog(ProjectsPanel.this, dialogPanel, "Create Route",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+			if (n == JOptionPane.YES_OPTION) {
+				if (selectionListModel.contains(defaultListChoice)) {
+					return;
+				}
+				LinkedList<Node> nodes = new LinkedList<>();
+				for (Object nodeObject : selectionListModel.toArray()) {
+					nodes.add((Node) nodeObject);
+				}
+				context.routes.add(new Route(nodes));
+			}
+		}
+	};
+	
+
+	public Action createTourAction = new AbstractAction("Create Tour") {
+		@Override
+		public void actionPerformed(ActionEvent actionEvent) {
+			ApplicationContext context = ApplicationContext.getInstance();
+
+			Object[] options = {"Create Tour", "Cancel"};
+			JPanel dialogPanel = new JPanel(new GridLayout(0, 1));
+
+			String defaultSelectionMessage = "--- Make Selection ---";
+			JTextField nameField = new JTextField();
+
+			JComboBox<Object> busCombo = new JComboBox<>();
+			busCombo.addItem(defaultSelectionMessage);
+			for (Bus bus : context.buses.getAll().values()) {
+				busCombo.addItem(bus);
+			}
+
+			JComboBox<Object> routeCombo = new JComboBox<>();
+			routeCombo.addItem(defaultSelectionMessage);
+			for (Route route : context.routes.getAll().values()) {
+				routeCombo.addItem(route);
+			}
+
+			dialogPanel.add(new JLabel("Tour Name:"));
+			dialogPanel.add(nameField);
+			dialogPanel.add(new JLabel("Tour Bus:"));
+			dialogPanel.add(busCombo);
+			dialogPanel.add(new JLabel("Tour Route:"));
+			dialogPanel.add(routeCombo);
+
+			int n = JOptionPane.showOptionDialog(ProjectsPanel.this, dialogPanel, "Create Tour",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+			if (n == 0) {
+				if (nameField.getText().isEmpty() || busCombo.getSelectedIndex() == 0 ||
+				routeCombo.getSelectedIndex() == 0) {
+					return;
+				}
+				context.tours.add(new Tour(nameField.getText(), (Bus) busCombo.getSelectedItem(),
+						(Route) routeCombo.getSelectedItem()));
+			}
+		}
+	};
+
+	public Action createNodeAction = new AbstractAction("Create Node") {
+		@Override
+		public void actionPerformed(ActionEvent actionEvent) {
+			Object[] options = {"Create Node", "Cancel"};
+			int n = JOptionPane.showOptionDialog(ProjectsPanel.this, "Create Node?",
+					"Node Creation",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+			if (n == 0) {
+				ApplicationContext.getInstance().nodes.add(new Node());
+			}
 		}
 	};
 
