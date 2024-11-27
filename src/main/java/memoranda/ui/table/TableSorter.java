@@ -1,4 +1,4 @@
-package main.java.memoranda.ui.table;
+package memoranda.ui.table;
 
 /**
  * A sorter for TableModels. The sorter has a model (conforming to TableModel) 
@@ -30,13 +30,13 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
-import main.java.memoranda.util.Local;
+import memoranda.util.Local;
 
 /*$Id: TableSorter.java,v 1.7 2004/10/07 08:52:32 ivanrise Exp $*/
 public class TableSorter extends TableMap {
-    int             indexes[];
-    Vector          sortingColumns = new Vector();
-    boolean         ascending = true;
+    int indexes[];
+    Vector sortingColumns = new Vector();
+    boolean ascending = true;
     int compares;
     int sortBy = 0;
 

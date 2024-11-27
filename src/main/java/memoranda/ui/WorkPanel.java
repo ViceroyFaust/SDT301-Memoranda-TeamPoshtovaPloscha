@@ -1,4 +1,4 @@
-package main.java.memoranda.ui;
+package memoranda.ui;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -16,8 +16,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
-import main.java.memoranda.util.Context;
-import main.java.memoranda.util.Local;
+import memoranda.util.Context;
+import memoranda.util.Local;
 
 /**
  * 
@@ -88,7 +88,7 @@ public class WorkPanel extends JPanel {
 		});
 		agendaB.setIcon(
 			new ImageIcon(
-				main.java.memoranda.ui.AppFrame.class.getResource(
+				memoranda.ui.AppFrame.class.getResource(
 					"/ui/icons/agenda.png")));
 		agendaB.setOpaque(false);
 		agendaB.setMargin(new Insets(0, 0, 0, 0));
@@ -114,7 +114,7 @@ public class WorkPanel extends JPanel {
 		});
 		eventsB.setIcon(
 			new ImageIcon(
-				main.java.memoranda.ui.AppFrame.class.getResource(
+				memoranda.ui.AppFrame.class.getResource(
 					"/ui/icons/events.png")));
 		eventsB.setOpaque(false);
 		eventsB.setMargin(new Insets(0, 0, 0, 0));
@@ -125,7 +125,7 @@ public class WorkPanel extends JPanel {
 		tasksB.setMargin(new Insets(0, 0, 0, 0));
 		tasksB.setIcon(
 			new ImageIcon(
-				main.java.memoranda.ui.AppFrame.class.getResource(
+				memoranda.ui.AppFrame.class.getResource(
 					"/ui/icons/tasks.png")));
 		tasksB.setVerticalTextPosition(SwingConstants.BOTTOM);
 		tasksB.addActionListener(new java.awt.event.ActionListener() {
@@ -134,7 +134,7 @@ public class WorkPanel extends JPanel {
 			}
 		});
 		tasksB.setVerticalAlignment(SwingConstants.TOP);
-		tasksB.setText(Local.getString("Tasks"));
+		tasksB.setText(Local.getString("Tours"));
 		tasksB.setHorizontalTextPosition(SwingConstants.CENTER);
 		tasksB.setFocusPainted(false);
 		tasksB.setBorderPainted(false);
@@ -166,7 +166,7 @@ public class WorkPanel extends JPanel {
 		});
 		notesB.setIcon(
 			new ImageIcon(
-				main.java.memoranda.ui.AppFrame.class.getResource(
+				memoranda.ui.AppFrame.class.getResource(
 					"/ui/icons/notes.png")));
 		notesB.setMargin(new Insets(0, 0, 0, 0));
 		notesB.setSelected(true);
@@ -176,7 +176,7 @@ public class WorkPanel extends JPanel {
 		filesB.setMargin(new Insets(0, 0, 0, 0));
 		filesB.setIcon(
 			new ImageIcon(
-				main.java.memoranda.ui.AppFrame.class.getResource(
+				memoranda.ui.AppFrame.class.getResource(
 					"/ui/icons/files.png")));
 		filesB.setVerticalTextPosition(SwingConstants.BOTTOM);
 		filesB.addActionListener(new java.awt.event.ActionListener() {

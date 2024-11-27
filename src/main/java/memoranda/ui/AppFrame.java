@@ -1,4 +1,4 @@
-package main.java.memoranda.ui;
+package memoranda.ui;
 
 import java.awt.AWTEvent;
 import java.awt.BorderLayout;
@@ -34,23 +34,23 @@ import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.text.html.HTMLDocument;
 
-import main.java.memoranda.CurrentProject;
-import main.java.memoranda.History;
-import main.java.memoranda.Note;
-import main.java.memoranda.NoteList;
-import main.java.memoranda.Project;
-import main.java.memoranda.ProjectListener;
-import main.java.memoranda.ResourcesList;
-import main.java.memoranda.TaskList;
-import main.java.memoranda.date.CurrentDate;
-import main.java.memoranda.ui.htmleditor.HTMLEditor;
-import main.java.memoranda.util.Configuration;
-import main.java.memoranda.util.Context;
-import main.java.memoranda.util.CurrentStorage;
-import main.java.memoranda.util.Local;
-import main.java.memoranda.util.ProjectExporter;
-import main.java.memoranda.util.ProjectPackager;
-import main.java.memoranda.util.Util;
+import memoranda.CurrentProject;
+import memoranda.History;
+import memoranda.Note;
+import memoranda.NoteList;
+import memoranda.Project;
+import memoranda.ProjectListener;
+import memoranda.ResourcesList;
+import memoranda.TaskList;
+import memoranda.date.CurrentDate;
+import memoranda.ui.htmleditor.HTMLEditor;
+import memoranda.util.Configuration;
+import memoranda.util.Context;
+import memoranda.util.CurrentStorage;
+import memoranda.util.Local;
+import memoranda.util.ProjectExporter;
+import memoranda.util.ProjectPackager;
+import memoranda.util.Util;
 import nu.xom.Builder;
 import nu.xom.Document;
 import nu.xom.Element;
@@ -71,11 +71,11 @@ public class AppFrame extends JFrame {
     JMenu jMenuFile = new JMenu();
     JMenuItem jMenuFileExit = new JMenuItem();
 
+    JMenuItem jMenuFileSave = new JMenuItem();
+    JMenuItem jMenuFileLoad = new JMenuItem();
+
     JToolBar toolBar = new JToolBar();
     JButton jButton3 = new JButton();
-    ImageIcon image1;
-    ImageIcon image2;
-    ImageIcon image3;
     JLabel statusBar = new JLabel();
     BorderLayout borderLayout1 = new BorderLayout();
     JSplitPane splitPane = new JSplitPane();
@@ -85,6 +85,20 @@ public class AppFrame extends JFrame {
     JMenu jMenuEdit = new JMenu();
     JMenu jMenuFormat = new JMenu();
     JMenu jMenuInsert = new JMenu();
+
+    JMenu jMenuView = new JMenu("View");
+    JMenuItem jViewDrivers = new JMenuItem("View Drivers");
+    JMenuItem jViewBuses = new JMenuItem("View Buses");
+    JMenuItem jViewNodes = new JMenuItem("View Nodes");
+    JMenuItem jViewRoutes = new JMenuItem("View Routes");
+    JMenuItem jViewTours = new JMenuItem("View Tours");
+
+    JMenu jMenuCreate = new JMenu("Create");
+    JMenuItem jCreateDriver = new JMenuItem("Create Driver");
+    JMenuItem jCreateBus = new JMenuItem("Create Bus");
+    JMenuItem jCreateNode = new JMenuItem("Create Node");
+    JMenuItem jCreateRoute = new JMenuItem("Create Route");
+    JMenuItem jCreateTour = new JMenuItem("Create Tour");
 
     public WorkPanel workPanel = new WorkPanel();
     HTMLEditor editor = workPanel.dailyItemsPanel.editorPanel.editor;
@@ -332,6 +346,22 @@ public class AppFrame extends JFrame {
         jMenuFileNewPrj.setAction(projectsPanel.newProjectAction);
 
         jMenuFileUnpackPrj.setText(Local.getString("Unpack project") + "...");
+
+        jMenuFileSave.setAction(projectsPanel.saveAction); // Adding  save button.
+        jMenuFileLoad.setAction(projectsPanel.loadAction);
+
+        jCreateNode.setAction(projectsPanel.createNodeAction);
+        jCreateDriver.setAction(projectsPanel.createDriverAction);
+        jCreateBus.setAction(projectsPanel.createBusAction);
+        jCreateRoute.setAction(projectsPanel.createRouteAction);
+        jCreateTour.setAction(projectsPanel.createTourAction);
+
+        jViewNodes.setAction(projectsPanel.showNodeAction);
+        jViewDrivers.setAction(projectsPanel.showDriverAction);
+        jViewBuses.setAction(projectsPanel.showBusesAction);
+        jViewRoutes.setAction(projectsPanel.showRoutesAction);
+        jViewTours.setAction(projectsPanel.showToursAction);
+
         jMenuFileExportNote.setText(Local.getString("Export current note")
                 + "...");
         jMenuFileImportNote.setText(Local.getString("Import one note")
@@ -446,7 +476,10 @@ public class AppFrame extends JFrame {
 
         toolBar.add(jButton3);
         jMenuFile.add(jMenuFileNewPrj);
-                jMenuFile.add(jMenuFileNewNote);
+        jMenuFile.add(jMenuFileNewNote);
+        jMenuFile.addSeparator();
+        jMenuFile.add(jMenuFileSave); // Adding save file button.
+        jMenuFile.add(jMenuFileLoad); // Adding file load button.
         jMenuFile.addSeparator();
         jMenuFile.add(jMenuFilePackPrj);
         jMenuFile.add(jMenuFileUnpackPrj);
@@ -461,16 +494,30 @@ public class AppFrame extends JFrame {
         jMenuFile.add(jMenuFileMin);
         jMenuFile.addSeparator();
         jMenuFile.add(jMenuFileExit);
-        
+
+        jMenuView.add(jViewDrivers);
+        jMenuView.add(jViewBuses);
+        jMenuView.add(jViewNodes);
+        jMenuView.add(jViewRoutes);
+        jMenuView.add(jViewTours);
+
+        jMenuCreate.add(jCreateDriver);
+        jMenuCreate.add(jCreateBus);
+        jMenuCreate.add(jCreateNode);
+        jMenuCreate.add(jCreateRoute);
+        jMenuCreate.add(jCreateTour);
+
         jMenuHelp.add(jMenuHelpGuide);
         jMenuHelp.add(jMenuHelpWeb);
         jMenuHelp.add(jMenuHelpBug);
         jMenuHelp.addSeparator();
         jMenuHelp.add(jMenuHelpAbout);
-        
+
         menuBar.add(jMenuFile);
         menuBar.add(jMenuEdit);
+        menuBar.add(jMenuView);
         menuBar.add(jMenuInsert);
+        menuBar.add(jMenuCreate);
         menuBar.add(jMenuFormat);
         menuBar.add(jMenuGo);
         menuBar.add(jMenuHelp);
@@ -665,8 +712,14 @@ public class AppFrame extends JFrame {
     }
 
     public void doMinimize() {
-        exitNotify();
-        App.closeWindow();
+        // Minimize to taskbar
+        this.setExtendedState(JFrame.ICONIFIED);
+
+        // We are not exiting, therefore remove this
+        //exitNotify();
+
+        // Close Window is removed, because it breaks minimization functionality
+        //App.closeWindow();
     }
 
     //Help | About action performed
@@ -687,11 +740,14 @@ public class AppFrame extends JFrame {
             else
                 doMinimize();
         }
+        // Removed the event process below because it deletes the window and the icon in the taskbar
+        // Doing this fixes minimizing to taskbar!!! 2024-11-04 @ Danylo
+        /*
         else if ((e.getID() == WindowEvent.WINDOW_ICONIFIED)) {
             super.processWindowEvent(new WindowEvent(this,
                     WindowEvent.WINDOW_CLOSING));
             doMinimize();
-        }
+        }*/
         else
             super.processWindowEvent(e);
     }

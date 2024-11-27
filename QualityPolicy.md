@@ -3,26 +3,50 @@
 > Check in Project: Module Concepts document on Canvas in the Project module for more details 
 
 **GitHub Workflow** (start in Sprint 1)
-  > Your Workflow
+- The main branch is the default branch which should contain stable releases
+- The development branch is the stable development branch, which contains only tested code
+- User Story branches should have the following format:
+  - US#-[short description]
+  - e.g. US1-DevelopModels
+- Use the template described in this article "[How to Write a Git Commit Message](https://cbea.ms/git-commit/)" to write proper git commit messages
+  - Commit messages must include User Story and Task numbers
+  - Please set the following as your commit message template (The Lines with # are comments)
+```markdown
+# 50 characters ##################################
+# If applied, this commit will...
 
-**Simple Code Review** (start in Sprint 1)
-  > A simple policy what you will review in a PullRequest, this can still be a simple review since we did not cover Code Reviews in detail yet. 
+
+# 72 characters ########################################################
+# Why is this change needed?
+Prior to this change, 
+
+# How does it address the issue?
+This change
+
+# Provide links to any relevant tickets, articles or other resources
+```
+- If you want to merge with Development after you completed your User Story, please submit a pull request
+- Pull requests should be fast forwards
+  - In order to achieve a fast-forward, merge the development branch _into_ your User Story branch _before_ submitting the pull request
+- Pull Requests are approved by the Git Master
+  - If the Git Master submits a pull request, then it must be reviewed by the SCRUM Master
+- We are _not_ allowed to delete branches
 
 **Unit Tests Blackbox** (start in Sprint 2)
-  > Your Blackbox testing policy 
+- It is preferred that you whitebox test your code, but you can also use blackbox testing techniques on your code. More
+detailed descriptions are provided in whitebox.
 
- **Unit Tests Whitebox** (online: start in Sprint 2, campus: start in Sprint 3)
-  > Your Whitebox testing policy 
+**Unit Tests Whitebox** (online: start in Sprint 2, campus: start in Sprint 3)
+- You need to make sure that your whitebox tests are testing the full requirements of your class' public functionality
+  - Test only public functions
+  - Test the full scope of your functionality as designed
+  - Make sure that there are no bugs in your tests
+  - Try to use test-driven development whenever possible
 
 **Code Review** (online: start in Sprint 2, campus: start Sprint 3)
-  > Your Code Review policy   
-
-  > Include a checklist/questions list which every developer will need to fill out/answe when creating a Pull Request to the Dev branch. 
-
-  > Include a checklist/question list which every reviewer will need to fill out/anser when conducting a review, this checklist (and the answers of course) need to be put into the Pull Request review.
-
-**Static Analysis**  (online: start in Sprint 3, campus: start Sprint 3)
-  > Your Static Analysis policy   
-
-**Continuous Integration**  (start in Sprint 3)
-  > Your Continuous Integration policy
+- Code must compile
+- Code must be able to be merged via fast-forward
+- Code should not break other functionality
+- If functionality can be demonstrated through the GUI, it must work
+- All public functions have JavaDoc comments, either based on previously established documentation or documented by the
+programmer

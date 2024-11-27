@@ -1,44 +1,35 @@
-package main.java.memoranda.ui;
+package memoranda.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Point;
+import java.awt.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
-import javax.swing.JButton;
-import javax.swing.JEditorPane;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JToolBar;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
-import main.java.memoranda.CurrentProject;
-import main.java.memoranda.EventNotificationListener;
-import main.java.memoranda.EventsManager;
-import main.java.memoranda.EventsScheduler;
-import main.java.memoranda.History;
-import main.java.memoranda.NoteList;
-import main.java.memoranda.Project;
-import main.java.memoranda.ProjectListener;
-import main.java.memoranda.ProjectManager;
-import main.java.memoranda.ResourcesList;
-import main.java.memoranda.TaskList;
-import main.java.memoranda.date.CalendarDate;
-import main.java.memoranda.date.CurrentDate;
-import main.java.memoranda.date.DateListener;
-import main.java.memoranda.util.AgendaGenerator;
-import main.java.memoranda.util.CurrentStorage;
-import main.java.memoranda.util.Local;
-import main.java.memoranda.util.Util;
-
-import javax.swing.JOptionPane;
+import memoranda.CurrentProject;
+import memoranda.EventNotificationListener;
+import memoranda.EventsManager;
+import memoranda.EventsScheduler;
+import memoranda.History;
+import memoranda.NoteList;
+import memoranda.Project;
+import memoranda.ProjectListener;
+import memoranda.ProjectManager;
+import memoranda.ResourcesList;
+import memoranda.TaskList;
+import memoranda.busSchedule.models.Bus;
+import memoranda.busSchedule.models.Driver;
+import memoranda.date.CalendarDate;
+import memoranda.date.CurrentDate;
+import memoranda.date.DateListener;
+import memoranda.util.AgendaGenerator;
+import memoranda.util.CurrentStorage;
+import memoranda.util.Local;
+import memoranda.util.Util;
 
 import nu.xom.Element;
 
@@ -78,6 +69,7 @@ public class AgendaPanel extends JPanel {
 		toolBar.setFloatable(false);
 		viewer.setEditable(false);
 		viewer.setOpaque(false);
+
 		viewer.addHyperlinkListener(new HyperlinkListener() {
 
 			public void hyperlinkUpdate(HyperlinkEvent e) {
@@ -194,18 +186,18 @@ public class AgendaPanel extends JPanel {
 					}else if (d.startsWith("memoranda:exportstickerst")) {
 						 /*  Falta agregar el exportar sticker mientras tanto..*/
 						 final JFrame parent = new JFrame();
-						 String name = JOptionPane.showInputDialog(parent,Local.getString("Ingrese nombre de archivo a exportar"),null);
+						 String name = JOptionPane.showInputDialog(parent,Local.getString("Enter file name to export:"),null);
 						 new ExportSticker(name).export("txt");
 						 //JOptionPane.showMessageDialog(null,name);
 					}else if (d.startsWith("memoranda:exportstickersh")) {
 						 /*  Falta agregar el exportar sticker mientras tanto..*/
 						 final JFrame parent = new JFrame();
-						 String name = JOptionPane.showInputDialog(parent,Local.getString("Ingrese nombre de archivo a exportar"),null);
+						 String name = JOptionPane.showInputDialog(parent,Local.getString("Enter file name to export:"),null);
 						 new ExportSticker(name).export("html");
 						 //JOptionPane.showMessageDialog(null,name);
 					}else if (d.startsWith("memoranda:importstickers")) {
 						final JFrame parent = new JFrame();
-						String name = JOptionPane.showInputDialog(parent,Local.getString("Ingrese nombre de archivo a importar"),null);
+						String name = JOptionPane.showInputDialog(parent,Local.getString("Enter file name to import:"),null);
 						new ImportSticker(name).import_file();
 					}
 				}
@@ -262,7 +254,7 @@ public class AgendaPanel extends JPanel {
 					refresh(CurrentDate.get());
 			}});
 		EventsScheduler.addListener(new EventNotificationListener() {
-			public void eventIsOccured(main.java.memoranda.Event ev) {
+			public void eventIsOccured(memoranda.Event ev) {
 				if (isActive)
 					refresh(CurrentDate.get());
 			}
@@ -307,7 +299,11 @@ public class AgendaPanel extends JPanel {
 
 		Util.debug("Summary updated.");
 	}
-
+	private ImageIcon resizeIcon(URL path, int width, int height) {
+		ImageIcon originalIcon = new ImageIcon(path);
+		Image scaledImage = originalIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		return new ImageIcon(scaledImage);
+	}
 	public void setActive(boolean isa) {
 		isActive = isa;
 	}

@@ -1,4 +1,4 @@
-package main.java.memoranda.ui;
+package memoranda.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -20,10 +20,10 @@ import javax.swing.JTextArea;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import main.java.memoranda.date.CalendarDate;
-import main.java.memoranda.ui.StickerDialog.ComboBoxRenderer;
-import main.java.memoranda.util.Context;
-import main.java.memoranda.util.Local;
+import memoranda.date.CalendarDate;
+import memoranda.ui.StickerDialog.ComboBoxRenderer;
+import memoranda.util.Context;
+import memoranda.util.Local;
 
 public class StickerExpand extends JDialog{
 	String txt;

@@ -1,4 +1,4 @@
-package main.java.memoranda.ui;
+package memoranda.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -35,9 +35,9 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import main.java.memoranda.CurrentProject;
-import main.java.memoranda.date.CalendarDate;
-import main.java.memoranda.util.Local;
+import memoranda.CurrentProject;
+import memoranda.date.CalendarDate;
+import memoranda.util.Local;
 
 import javax.swing.JCheckBox;
 
@@ -126,7 +126,7 @@ public class TaskDialog extends JDialog {
         border2 = BorderFactory.createEtchedBorder(Color.white, 
             new Color(142, 142, 142));
         border3 = new TitledBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0), 
-        Local.getString("To Do"), TitledBorder.LEFT, TitledBorder.BELOW_TOP);
+        Local.getString("Bus Route"), TitledBorder.LEFT, TitledBorder.BELOW_TOP);
         border4 = BorderFactory.createEmptyBorder(0, 5, 0, 5);
 //        border5 = BorderFactory.createEmptyBorder();
 //        border6 = BorderFactory.createBevelBorder(BevelBorder.LOWERED,
@@ -174,8 +174,8 @@ public class TaskDialog extends JDialog {
         //dialogTitlePanel.setPreferredSize(new Dimension(159, 52));
         header.setFont(new java.awt.Font("Dialog", 0, 20));
         header.setForeground(new Color(0, 0, 124));
-        header.setText(Local.getString("To do"));
-        header.setIcon(new ImageIcon(main.java.memoranda.ui.TaskDialog.class.getResource(
+        header.setText(Local.getString("Schedule a Bus"));
+        header.setIcon(new ImageIcon(memoranda.ui.TaskDialog.class.getResource(
             "/ui/icons/task48.png")));
         
         GridBagLayout gbLayout = (GridBagLayout) jPanel8.getLayout();
@@ -248,7 +248,7 @@ public class TaskDialog extends JDialog {
             }
         });
 
-        jLabel6.setText(Local.getString("Start date"));
+        jLabel6.setText(Local.getString("Departure Date"));
         //jLabel6.setPreferredSize(new Dimension(60, 16));
         jLabel6.setMinimumSize(new Dimension(60, 16));
         jLabel6.setMaximumSize(new Dimension(100, 16));
@@ -256,7 +256,7 @@ public class TaskDialog extends JDialog {
         setStartDateB.setPreferredSize(new Dimension(24, 24));
         setStartDateB.setText("");
         setStartDateB.setIcon(
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/calendar.png")));
+            new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/calendar.png")));
         setStartDateB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setStartDateB_actionPerformed(e);
@@ -265,7 +265,7 @@ public class TaskDialog extends JDialog {
         jLabel2.setMaximumSize(new Dimension(270, 16));
         //jLabel2.setPreferredSize(new Dimension(60, 16));
         jLabel2.setHorizontalAlignment(SwingConstants.RIGHT);
-        jLabel2.setText(Local.getString("End date"));
+        jLabel2.setText(Local.getString("Arrival Date"));
         endDate.setBorder(border8);
         endDate.setPreferredSize(new Dimension(80, 24));
         
@@ -303,7 +303,7 @@ public class TaskDialog extends JDialog {
         setEndDateB.setPreferredSize(new Dimension(24, 24));
         setEndDateB.setText("");
         setEndDateB.setIcon(
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/calendar.png")));
+            new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/calendar.png")));
         setEndDateB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setEndDateB_actionPerformed(e);
@@ -312,7 +312,7 @@ public class TaskDialog extends JDialog {
         
         setNotifB.setText(Local.getString("Set notification"));
         setNotifB.setIcon(
-            new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
+            new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/notify.png")));
         setNotifB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setNotifB_actionPerformed(e);

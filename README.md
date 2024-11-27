@@ -1,3 +1,20 @@
+# SDT 301 "Memoranda" Project
+
+## Team Name
+Poshtova Ploscha
+
+## Team Members (sorted by last name)
+- Olexandr Danilchenko
+- Mykhailo Kustov
+- Danylo Rybchynskyi
+- Vladyslav Shvets
+- Andrii Tivonenko
+
+## Team Topic
+Bus scheduling
+
+## ASU Provided description
+
 Project SER316
 
 This is the initial dump for the SER316 project. It is a slightly modified version of the Memoranda project from memoranda.sf.net
@@ -20,3 +37,5 @@ Good luck and have fun!
 
 Dr. Mehlhase
 
+## Copyright
+2024

@@ -1,4 +1,4 @@
-package main.java.memoranda.ui;
+package memoranda.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -25,9 +25,9 @@ import javax.swing.ListCellRenderer;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import main.java.memoranda.date.CalendarDate;
-import main.java.memoranda.util.Context;
-import main.java.memoranda.util.Local;
+import memoranda.date.CalendarDate;
+import memoranda.util.Context;
+import memoranda.util.Local;
 
 
 public class StickerConfirmation extends JDialog {
@@ -97,7 +97,7 @@ public class StickerConfirmation extends JDialog {
                 header.setFont(new java.awt.Font("Dialog", 0, 20));
                 header.setForeground(new Color(0, 0, 124));
                 header.setText(Local.getString("Sticker"));
-                header.setIcon(new ImageIcon(main.java.memoranda.ui.StickerDialog.class.getResource(
+                header.setIcon(new ImageIcon(memoranda.ui.StickerDialog.class.getResource(
             "/ui/icons/sticker48.png")));
 
 
