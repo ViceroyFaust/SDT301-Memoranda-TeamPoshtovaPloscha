@@ -7,14 +7,14 @@
  * Copyright (c) 2003 OpenMechanics.org
  */
 package memoranda.ui.htmleditor;
-import java.awt.Dimension;
-import java.awt.Point;
+
+import memoranda.ui.htmleditor.util.Local;
+
+import javax.swing.*;
+import java.awt.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.JOptionPane;
-
-import memoranda.ui.htmleditor.util.Local;
 /**
  *
  */
@@ -30,12 +30,12 @@ public class Finder extends Thread {
      * Constructor for Finder.
      */
     public Finder(
-        HTMLEditor theEditor,
-        String find,
-        boolean wholeWord,
-        boolean matchCase,
-        boolean regexp,
-        String replace) {
+            HTMLEditor theEditor,
+            String find,
+            boolean wholeWord,
+            boolean matchCase,
+            boolean regexp,
+            String replace) {
         super();
         editor = theEditor;
         dispText = find;
@@ -49,8 +49,7 @@ public class Finder extends Thread {
             _find = "[\\s\\p{Punct}]" + _find + "[\\s\\p{Punct}]";
         try {
             pattern = Pattern.compile(_find, flags);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             pattern = null;
         }
@@ -67,8 +66,7 @@ public class Finder extends Thread {
         String text = "";
         try {
             text = editor.editor.getDocument().getText(0, editor.editor.getDocument().getLength() - 1);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             return;
         }
@@ -89,31 +87,27 @@ public class Finder extends Thread {
                     Dimension frmSize = editor.getParent().getSize();
                     Point loc = editor.getLocationOnScreen();
                     dlg.setLocation(
-                        (frmSize.width - dlgSize.width) / 2 + loc.x,
-                        (frmSize.height - dlgSize.height) / 2 + loc.y);
+                            (frmSize.width - dlgSize.width) / 2 + loc.x,
+                            (frmSize.height - dlgSize.height) / 2 + loc.y);
                     dlg.setModal(true);
                     dlg.setVisible(true);
                     int op = dlg.option;
                     if (op == ReplaceOptionsDialog.YES_OPTION) {
                         editor.editor.replaceSelection(_replace);
                         start = matcher.start() + _replace.length();
-                    }
-                    else if (op == ReplaceOptionsDialog.YES_TO_ALL_OPTION) {
+                    } else if (op == ReplaceOptionsDialog.YES_TO_ALL_OPTION) {
                         editor.editor.replaceSelection(_replace);
                         start = matcher.start() + _replace.length();
                         replaceAll = true;
-                    }
-                    else if (op == ReplaceOptionsDialog.CANCEL_OPTION)
+                    } else if (op == ReplaceOptionsDialog.CANCEL_OPTION)
                         return;
                     else
                         start = matcher.end();
-                }
-                else {
+                } else {
                     editor.editor.replaceSelection(_replace);
                     start = matcher.start() + _replace.length();
                 }
-            }
-            else {
+            } else {
                 /*int n = JOptionPane.showConfirmDialog(null, "Continue search?", "Find", JOptionPane.YES_NO_OPTION);
                 if (n == JOptionPane.NO_OPTION)
                     return;*/
@@ -123,7 +117,7 @@ public class Finder extends Thread {
                     editor.showToolsPanel();
                     editor.toolsPanel.addTab(Local.getString("Find"), cdlg);
                     showCdlg = true;
-                }                
+                }
                 this.suspend();
 
                 if (cdlg.cancel) {
@@ -136,15 +130,14 @@ public class Finder extends Thread {
             }
             try {
                 text = editor.editor.getDocument().getText(0, editor.editor.getDocument().getLength() - 1);
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 ex.printStackTrace();
                 return;
             }
             matcher = pattern.matcher(text);
         }
 
-        JOptionPane.showMessageDialog(null, Local.getString("Search complete")+".");
+        JOptionPane.showMessageDialog(null, Local.getString("Search complete") + ".");
         if (showCdlg) {
             editor.toolsPanel.remove(cdlg);
             if (editor.toolsPanel.getTabCount() == 0)

@@ -1,40 +1,39 @@
 package memoranda.ui.table;
 
 /**
- * A sorter for TableModels. The sorter has a model (conforming to TableModel) 
- * and itself implements TableModel. TableSorter does not store or copy 
- * the data in the TableModel, instead it maintains an array of 
- * integers which it keeps the same size as the number of rows in its 
- * model. When the model changes it notifies the sorter that something 
- * has changed eg. "rowsAdded" so that its internal array of integers 
- * can be reallocated. As requests are made of the sorter (like 
- * getValueAt(row, col) it redirects them to its model via the mapping 
- * array. That way the TableSorter appears to hold another copy of the table 
- * with the rows in a different order. The sorting algorthm used is stable 
- * which means that it does not move around rows when its comparison 
- * function returns 0 to denote that they are equivalent. 
+ * A sorter for TableModels. The sorter has a model (conforming to TableModel)
+ * and itself implements TableModel. TableSorter does not store or copy
+ * the data in the TableModel, instead it maintains an array of
+ * integers which it keeps the same size as the number of rows in its
+ * model. When the model changes it notifies the sorter that something
+ * has changed eg. "rowsAdded" so that its internal array of integers
+ * can be reallocated. As requests are made of the sorter (like
+ * getValueAt(row, col) it redirects them to its model via the mapping
+ * array. That way the TableSorter appears to hold another copy of the table
+ * with the rows in a different order. The sorting algorthm used is stable
+ * which means that it does not move around rows when its comparison
+ * function returns 0 to denote that they are equivalent.
  *
  * @version 1.5 12/17/97
  * @author Philip Milne
  */
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.Date;
-import java.util.Vector;
-import java.util.Hashtable;
+import memoranda.util.Local;
 
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
-
-import memoranda.util.Local;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.Vector;
 
 /*$Id: TableSorter.java,v 1.7 2004/10/07 08:52:32 ivanrise Exp $*/
 public class TableSorter extends TableMap {
-    int indexes[];
+    int[] indexes;
     Vector sortingColumns = new Vector();
     boolean ascending = true;
     int compares;
@@ -49,8 +48,8 @@ public class TableSorter extends TableMap {
     }
 
     public void setModel(TableModel model) {
-        super.setModel(model); 
-        reallocateIndexes(); 
+        super.setModel(model);
+        reallocateIndexes();
     }
 
     public int compareRowsByColumn(int row1, int row2, int column) {
@@ -60,15 +59,15 @@ public class TableSorter extends TableMap {
         // Check for nulls.
 
         Object o1 = data.getValueAt(row1, column);
-        Object o2 = data.getValueAt(row2, column); 
+        Object o2 = data.getValueAt(row2, column);
 
         // If both values are null, return 0.
         if (o1 == null && o2 == null) {
-            return 0; 
+            return 0;
         } else if (o1 == null) { // Define null less than everything. 
-            return -1; 
-        } else if (o2 == null) { 
-            return 1; 
+            return -1;
+        } else if (o2 == null) {
+            return 1;
         }
 
         /*
@@ -79,11 +78,11 @@ public class TableSorter extends TableMap {
          * Number might want to do this to save space and avoid
          * unnecessary heap allocation.
          */
-         
-         if (type.getSuperclass() == java.lang.Integer.class) {
-            Integer n1 = (Integer)data.getValueAt(row1, column);
+
+        if (type.getSuperclass() == java.lang.Integer.class) {
+            Integer n1 = (Integer) data.getValueAt(row1, column);
             int i1 = n1.intValue();
-            Integer n2 = (Integer)data.getValueAt(row2, column);
+            Integer n2 = (Integer) data.getValueAt(row2, column);
             int i2 = n2.intValue();
 
             if (i1 < i2) {
@@ -93,12 +92,10 @@ public class TableSorter extends TableMap {
             } else {
                 return 0;
             }
-         }
-
-        else if (type.getSuperclass() == java.lang.Number.class) {
-            Number n1 = (Number)data.getValueAt(row1, column);
+        } else if (type.getSuperclass() == java.lang.Number.class) {
+            Number n1 = (Number) data.getValueAt(row1, column);
             double d1 = n1.doubleValue();
-            Number n2 = (Number)data.getValueAt(row2, column);
+            Number n2 = (Number) data.getValueAt(row2, column);
             double d2 = n2.doubleValue();
 
             if (d1 < d2) {
@@ -109,9 +106,9 @@ public class TableSorter extends TableMap {
                 return 0;
             }
         } else if (type == java.util.Date.class) {
-            Date d1 = (Date)data.getValueAt(row1, column);
+            Date d1 = (Date) data.getValueAt(row1, column);
             long n1 = d1.getTime();
-            Date d2 = (Date)data.getValueAt(row2, column);
+            Date d2 = (Date) data.getValueAt(row2, column);
             long n2 = d2.getTime();
 
             if (n1 < n2) {
@@ -122,51 +119,49 @@ public class TableSorter extends TableMap {
                 return 0;
             }
         } else if (type == String.class) {
-	    int result;
-	    if(data.getColumnName(column).equals(Local.getString("Priority"))) {
-		    Hashtable priority = new Hashtable();
-		    priority.put(Local.getString("Lowest"), new Integer(1));
-		    priority.put(Local.getString("Low"), new Integer(2));
-		    priority.put(Local.getString("Normal"), new Integer(3));
-		    priority.put(Local.getString("High"), new Integer(4));
-		    priority.put(Local.getString("Highest"), new Integer(5));
-	
-		    Integer s1 = (Integer)priority.get((String)data.getValueAt(row1, column));
-		    Integer s2 = (Integer)priority.get((String)data.getValueAt(row2, column));
-		    if (s1==null || s2==null) return 0;
-		    result = s1.compareTo(s2);
-	    }
-	    else if(data.getColumnName(column).equals(Local.getString("Status"))) {
-		    Hashtable priority = new Hashtable();
-		    priority.put(Local.getString("Completed"), new Integer(1));
-		    priority.put(Local.getString("Failed"), new Integer(2));
-		    priority.put(Local.getString("Scheduled"), new Integer(3));
-		    priority.put(Local.getString("Active"), new Integer(4));
-		    priority.put(Local.getString("Deadline"), new Integer(5));
-	
-		    Integer s1 = (Integer)priority.get((String)data.getValueAt(row1, column));
-		    Integer s2 = (Integer)priority.get((String)data.getValueAt(row2, column));
-		    if (s1==null || s2==null) return 0;
-		    result = s1.compareTo(s2);
-	    }		
-	    else {
-		    String s1 = (String)data.getValueAt(row1, column);
-		    String s2    = (String)data.getValueAt(row2, column);
-		    result = s1.compareTo(s2);
-	    }
+            int result;
+            if (data.getColumnName(column).equals(Local.getString("Priority"))) {
+                Hashtable priority = new Hashtable();
+                priority.put(Local.getString("Lowest"), Integer.valueOf(1));
+                priority.put(Local.getString("Low"), Integer.valueOf(2));
+                priority.put(Local.getString("Normal"), Integer.valueOf(3));
+                priority.put(Local.getString("High"), Integer.valueOf(4));
+                priority.put(Local.getString("Highest"), Integer.valueOf(5));
+
+                Integer s1 = (Integer) priority.get(data.getValueAt(row1, column));
+                Integer s2 = (Integer) priority.get(data.getValueAt(row2, column));
+                if (s1 == null || s2 == null) return 0;
+                result = s1.compareTo(s2);
+            } else if (data.getColumnName(column).equals(Local.getString("Status"))) {
+                Hashtable priority = new Hashtable();
+                priority.put(Local.getString("Completed"), Integer.valueOf(1));
+                priority.put(Local.getString("Failed"), Integer.valueOf(2));
+                priority.put(Local.getString("Scheduled"), Integer.valueOf(3));
+                priority.put(Local.getString("Active"), Integer.valueOf(4));
+                priority.put(Local.getString("Deadline"), Integer.valueOf(5));
+
+                Integer s1 = (Integer) priority.get(data.getValueAt(row1, column));
+                Integer s2 = (Integer) priority.get(data.getValueAt(row2, column));
+                if (s1 == null || s2 == null) return 0;
+                result = s1.compareTo(s2);
+            } else {
+                String s1 = (String) data.getValueAt(row1, column);
+                String s2 = (String) data.getValueAt(row2, column);
+                result = s1.compareTo(s2);
+            }
 
 
             if (result < 0) {
-              return -1;
+                return -1;
             } else if (result > 0) {
                 return 1;
             } else {
                 return 0;
             }
         } else if (type == Boolean.class) {
-            Boolean bool1 = (Boolean)data.getValueAt(row1, column);
+            Boolean bool1 = (Boolean) data.getValueAt(row1, column);
             boolean b1 = bool1.booleanValue();
-            Boolean bool2 = (Boolean)data.getValueAt(row2, column);
+            Boolean bool2 = (Boolean) data.getValueAt(row2, column);
             boolean b2 = bool2.booleanValue();
 
             if (b1 == b2) {
@@ -188,7 +183,7 @@ public class TableSorter extends TableMap {
             } else if (result > 0) {
                 return 1;
             } else {
-        	return 0;
+                return 0;
             }
         }
     }
@@ -196,7 +191,7 @@ public class TableSorter extends TableMap {
     public int compare(int row1, int row2) {
         compares++;
         for (int level = 0; level < sortingColumns.size(); level++) {
-            Integer column = (Integer)sortingColumns.elementAt(level);
+            Integer column = (Integer) sortingColumns.elementAt(level);
             int result = compareRowsByColumn(row1, row2, column.intValue());
             if (result != 0) {
                 return ascending ? result : -result;
@@ -238,13 +233,13 @@ public class TableSorter extends TableMap {
         compares = 0;
         // n2sort();
         // qsort(0, indexes.length-1);
-        shuttlesort((int[])indexes.clone(), indexes, 0, indexes.length);
+        shuttlesort(indexes.clone(), indexes, 0, indexes.length);
         //System.out.println("Compares: "+compares);
     }
 
     public void n2sort() {
         for (int i = 0; i < getRowCount(); i++) {
-            for (int j = i+1; j < getRowCount(); j++) {
+            for (int j = i + 1; j < getRowCount(); j++) {
                 if (compare(indexes[i], indexes[j]) == -1) {
                     swap(i, j);
                 }
@@ -259,11 +254,11 @@ public class TableSorter extends TableMap {
     // arrays. The number of compares appears to vary between N-1 and
     // NlogN depending on the initial order but the main reason for
     // using it here is that, unlike qsort, it is stable.
-    public void shuttlesort(int from[], int to[], int low, int high) {
+    public void shuttlesort(int[] from, int[] to, int low, int high) {
         if (high - low < 2) {
             return;
         }
-        int middle = (low + high)/2;
+        int middle = (low + high) / 2;
         shuttlesort(to, from, low, middle);
         shuttlesort(to, from, middle, high);
 
@@ -285,10 +280,8 @@ public class TableSorter extends TableMap {
         find out how the performance drops to Nlog(N) as the initial
         order diminishes - it may drop very quickly.  */
 
-        if (high - low >= 4 && compare(from[middle-1], from[middle]) <= 0) {
-            for (int i = low; i < high; i++) {
-                to[i] = from[i];
-            }
+        if (high - low >= 4 && compare(from[middle - 1], from[middle]) <= 0) {
+            if (high - low >= 0) System.arraycopy(from, low, to, low, high - low);
             return;
         }
 
@@ -297,8 +290,7 @@ public class TableSorter extends TableMap {
         for (int i = low; i < high; i++) {
             if (q >= high || (p < middle && compare(from[p], from[q]) <= 0)) {
                 to[i] = from[p++];
-            }
-            else {
+            } else {
                 to[i] = from[q++];
             }
         }
@@ -324,23 +316,23 @@ public class TableSorter extends TableMap {
     }
 
     public void sortByColumn(int column) {
-       //sortByColumn(column, true);       
-       sortByColumn(column, ascending);
+        //sortByColumn(column, true);
+        sortByColumn(column, ascending);
     }
 
     public void sortByColumn(int column, boolean ascending) {
         sortBy = column;
         this.ascending = ascending;
         sortingColumns.removeAllElements();
-        sortingColumns.addElement(new Integer(column));
+        sortingColumns.addElement(Integer.valueOf(column));
         sort(this);
-        super.tableChanged(new TableModelEvent(this)); 
+        super.tableChanged(new TableModelEvent(this));
     }
-    
+
     public int getSortedBy() {
         return sortBy;
     }
-    
+
     public boolean isAscending() {
         return ascending;
     }
@@ -348,30 +340,31 @@ public class TableSorter extends TableMap {
     // There is no-where else to put this. 
     // Add a mouse listener to the Table to trigger a table sort 
     // when a column heading is clicked in the JTable. 
-    public void addMouseListenerToHeaderInTable(JTable table) { 
-        final TableSorter sorter = this; 
-        final JTable tableView = table; 
-        tableView.setColumnSelectionAllowed(false); 
+    public void addMouseListenerToHeaderInTable(JTable table) {
+        final TableSorter sorter = this;
+        final JTable tableView = table;
+        tableView.setColumnSelectionAllowed(false);
         MouseAdapter listMouseListener = new MouseAdapter() {
             boolean ascending = false;
+
             public void mouseClicked(MouseEvent e) {
                 TableColumnModel columnModel = tableView.getColumnModel();
-                int viewColumn = columnModel.getColumnIndexAtX(e.getX()); 
-                int column = tableView.convertColumnIndexToModel(viewColumn); 
+                int viewColumn = columnModel.getColumnIndexAtX(e.getX());
+                int column = tableView.convertColumnIndexToModel(viewColumn);
                 if (e.getClickCount() == 1 && column != -1) {
                     //System.out.println("Sorting ..."); 
                     //int shiftPressed = e.getModifiers()&InputEvent.SHIFT_MASK; 
                     //boolean ascending = (shiftPressed == 0);
-                    if (column == sortBy)                    
+                    if (column == sortBy)
                         ascending = !ascending;
                     else
-                        ascending = true; 
-                    sorter.sortByColumn(column, ascending);   
-                    tableView.getTableHeader().updateUI();                  
+                        ascending = true;
+                    sorter.sortByColumn(column, ascending);
+                    tableView.getTableHeader().updateUI();
                 }
             }
         };
-        JTableHeader th = tableView.getTableHeader(); 
-        th.addMouseListener(listMouseListener); 
+        JTableHeader th = tableView.getTableHeader();
+        th.addMouseListener(listMouseListener);
     }
 }

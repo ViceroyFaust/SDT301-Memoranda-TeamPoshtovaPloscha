@@ -7,13 +7,14 @@
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
 package memoranda.util;
-import java.util.Vector;
-
-import javax.swing.ImageIcon;
 
 import nu.xom.Attribute;
 import nu.xom.Element;
 import nu.xom.Elements;
+
+import javax.swing.*;
+import java.util.Vector;
+
 /**
  *
  */
@@ -27,9 +28,9 @@ public class MimeType {
     }
 
     public MimeType() {
-      _root = new Element("default-type");
-      _root.addAttribute(new Attribute("id", "__UNKNOWN"));
-      _root.addAttribute(new Attribute("label", "Unknown"));
+        _root = new Element("default-type");
+        _root.addAttribute(new Attribute("id", "__UNKNOWN"));
+        _root.addAttribute(new Attribute("label", "Unknown"));
     }
 
     public String getMimeTypeId() {
@@ -59,23 +60,23 @@ public class MimeType {
     }
 
     public String getLabel() {
-        if ((_root.getAttribute("label") != null) && (_root.getAttribute("label").getValue().length() >0))
-          return _root.getAttribute("label").getValue();
+        if ((_root.getAttribute("label") != null) && (_root.getAttribute("label").getValue().length() > 0))
+            return _root.getAttribute("label").getValue();
         else
-           return _root.getAttribute("id").getValue();
+            return _root.getAttribute("id").getValue();
     }
 
     public void setLabel(String label) {
         if (_root.getAttribute("label") != null)
-         _root.getAttribute("label").setValue(label);
+            _root.getAttribute("label").setValue(label);
         else
-        _root.addAttribute(new Attribute("label", label));
+            _root.addAttribute(new Attribute("label", label));
     }
 
     public String getAppId(String plafCode) {
         Elements apps = _root.getChildElements("app");
         for (int i = 0; i < apps.size(); i++)
-            if (apps.get(i).getAttribute("platform").getValue().toLowerCase().equals(plafCode.toLowerCase()))
+            if (apps.get(i).getAttribute("platform").getValue().equalsIgnoreCase(plafCode))
                 return apps.get(i).getAttribute("appId").getValue();
         return null;
     }
@@ -84,10 +85,9 @@ public class MimeType {
         if (getAppId(plafCode) != null) {
             Elements apps = _root.getChildElements("app");
             for (int i = 0; i < apps.size(); i++)
-                if (apps.get(i).getAttribute("platform").getValue().toLowerCase().equals(plafCode.toLowerCase()))
+                if (apps.get(i).getAttribute("platform").getValue().equalsIgnoreCase(plafCode))
                     apps.get(i).getAttribute("appId").setValue(appId);
-        }
-        else {
+        } else {
             Element app = new Element("app");
             app.addAttribute(new Attribute("appId", appId));
             app.addAttribute(new Attribute("platform", plafCode));
@@ -106,49 +106,44 @@ public class MimeType {
 
     public String getIconPath() {
         if (_root.getAttribute("icon") != null)
-          return _root.getAttribute("icon").getValue();
+            return _root.getAttribute("icon").getValue();
         else
-          return "";
+            return "";
     }
 
     public void setIconPath(String path) {
-         if (_root.getAttribute("icon") != null)
-          _root.getAttribute("icon").setValue(path);
+        if (_root.getAttribute("icon") != null)
+            _root.getAttribute("icon").setValue(path);
         else
-        _root.addAttribute(new Attribute("icon", path));
+            _root.addAttribute(new Attribute("icon", path));
     }
 
     public ImageIcon getIcon() {
-       String ip = getIconPath();
-       ImageIcon icon = null;
-       if (ip.equals("")) {
-        ip = "/ui/icons/mimetypes/"+getMimeTypeId()+".png";
-        try {
-          icon = new ImageIcon(memoranda.ui.AppFrame.class.getResource(ip));
-        }
-        catch (Exception ex) {
-          ip = "/ui/icons/mimetypes/"+getMimeTypeId().split("/")[0]+"/default.png";
-          try {
-            icon = new ImageIcon(memoranda.ui.AppFrame.class.getResource(ip));
-          }
-          catch (Exception ex2) {
-            icon = new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/mimetypes/default.png"));
-          }
-        }
-      }
-      else
-        try {
-            icon = new ImageIcon(ip);
-          }
-          catch (Exception ex) {
-          ip = "/ui/icons/mimetypes/"+getMimeTypeId().split("/")[0]+"/default.png";
-          try {
-            icon = new ImageIcon(memoranda.ui.AppFrame.class.getResource(ip));
-          }
-          catch (Exception ex2) {
-            icon = new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/mimetypes/default.png"));
-          }
-        }
-      return icon;
+        String ip = getIconPath();
+        ImageIcon icon = null;
+        if (ip.equals("")) {
+            ip = "/ui/icons/mimetypes/" + getMimeTypeId() + ".png";
+            try {
+                icon = new ImageIcon(memoranda.ui.AppFrame.class.getResource(ip));
+            } catch (Exception ex) {
+                ip = "/ui/icons/mimetypes/" + getMimeTypeId().split("/")[0] + "/default.png";
+                try {
+                    icon = new ImageIcon(memoranda.ui.AppFrame.class.getResource(ip));
+                } catch (Exception ex2) {
+                    icon = new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/mimetypes/default.png"));
+                }
+            }
+        } else
+            try {
+                icon = new ImageIcon(ip);
+            } catch (Exception ex) {
+                ip = "/ui/icons/mimetypes/" + getMimeTypeId().split("/")[0] + "/default.png";
+                try {
+                    icon = new ImageIcon(memoranda.ui.AppFrame.class.getResource(ip));
+                } catch (Exception ex2) {
+                    icon = new ImageIcon(memoranda.ui.AppFrame.class.getResource("/ui/icons/mimetypes/default.png"));
+                }
+            }
+        return icon;
     }
 }

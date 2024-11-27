@@ -7,10 +7,13 @@
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
 package memoranda.util;
-import java.util.StringTokenizer;
+
 import nu.xom.Attribute;
 import nu.xom.Element;
 import nu.xom.Elements;
+
+import java.util.StringTokenizer;
+
 /**
  *
  */
@@ -33,6 +36,7 @@ public class AppList {
             return OS_SOLARIS;
         return "unknown";
     }
+
     /**
      * Constructor for AppList.
      */
@@ -42,19 +46,19 @@ public class AppList {
 
     public String getCommandLine(String appId, String fPath) {
         Elements apps = _root.getChildElements("app");
-        fPath = fPath.replaceAll("\\\\", "\\\\\\\\");        
+        fPath = fPath.replaceAll("\\\\", "\\\\\\\\");
         for (int i = 0; i < apps.size(); i++)
             if (apps.get(i).getAttribute("id").getValue().equals(appId)) {
                 Element app = apps.get(i);
                 String pt = app.getAttribute("command").getValue();
                 if (fPath.indexOf(' ') >= 0)
-                   fPath = '"' + fPath + '"'; 
+                    fPath = '"' + fPath + '"';
                 pt = pt.replaceAll("\\$1", fPath);
-                return app.getAttribute("findPath").getValue() + "/" + app.getAttribute("exec").getValue()+" "+pt;
+                return app.getAttribute("findPath").getValue() + "/" + app.getAttribute("exec").getValue() + " " + pt;
             }
         return null;
     }
-    
+
     public String[] getCommand(String appId, String fPath) {
         Elements apps = _root.getChildElements("app");
         //fPath = fPath.replaceAll("\\\\", "\\\\\\\\");        
@@ -64,7 +68,7 @@ public class AppList {
                 String command = app.getAttribute("command").getValue();
                 String exec = app.getAttribute("findPath").getValue() + "/" + app.getAttribute("exec").getValue();
                 StringTokenizer st = new StringTokenizer(command);
-                String[] cmdarray = new String[st.countTokens()+1];
+                String[] cmdarray = new String[st.countTokens() + 1];
                 cmdarray[0] = exec;
                 for (int j = 1; st.hasMoreTokens(); j++) {
                     String tk = st.nextToken();
@@ -90,10 +94,10 @@ public class AppList {
         Elements apps = _root.getChildElements("app");
         for (int i = 0; i < apps.size(); i++)
             if (apps.get(i).getAttribute("id").getValue().equals(appId)) {
-              if (apps.get(i).getAttribute("findPath") == null)
-                apps.get(i).addAttribute(new Attribute("findPath", p));
-              else
-                apps.get(i).getAttribute("findPath").setValue(p);
+                if (apps.get(i).getAttribute("findPath") == null)
+                    apps.get(i).addAttribute(new Attribute("findPath", p));
+                else
+                    apps.get(i).getAttribute("findPath").setValue(p);
             }
 
     }
@@ -109,11 +113,11 @@ public class AppList {
     public void setExec(String appId, String e) {
         Elements apps = _root.getChildElements("app");
         for (int i = 0; i < apps.size(); i++)
-            if (apps.get(i).getAttribute("id").getValue().equals(appId)){
-              if (apps.get(i).getAttribute("exec") == null)
-                apps.get(i).addAttribute(new Attribute("exec", e));
-              else
-                apps.get(i).getAttribute("exec").setValue(e);
+            if (apps.get(i).getAttribute("id").getValue().equals(appId)) {
+                if (apps.get(i).getAttribute("exec") == null)
+                    apps.get(i).addAttribute(new Attribute("exec", e));
+                else
+                    apps.get(i).getAttribute("exec").setValue(e);
             }
     }
 
@@ -145,42 +149,41 @@ public class AppList {
         Elements apps = _root.getChildElements("app");
         for (int i = 0; i < apps.size(); i++)
             if (apps.get(i).getAttribute("id").getValue().equals(appId)) {
-                 if (apps.get(i).getAttribute("findPath") == null)
-                  apps.get(i).addAttribute(new Attribute("findPath", fp));
-                 else
-                  apps.get(i).getAttribute("findPath").setValue(fp);
-                 if (apps.get(i).getAttribute("exec") == null)
-                  apps.get(i).addAttribute(new Attribute("exec", exec));
-                 else
-                  apps.get(i).getAttribute("exec").setValue(exec);
-                if (apps.get(i).getAttribute("command") == null)
-                  apps.get(i).addAttribute(new Attribute("command", clp));
+                if (apps.get(i).getAttribute("findPath") == null)
+                    apps.get(i).addAttribute(new Attribute("findPath", fp));
                 else
-                  apps.get(i).getAttribute("command").setValue(clp);
+                    apps.get(i).getAttribute("findPath").setValue(fp);
+                if (apps.get(i).getAttribute("exec") == null)
+                    apps.get(i).addAttribute(new Attribute("exec", exec));
+                else
+                    apps.get(i).getAttribute("exec").setValue(exec);
+                if (apps.get(i).getAttribute("command") == null)
+                    apps.get(i).addAttribute(new Attribute("command", clp));
+                else
+                    apps.get(i).getAttribute("command").setValue(clp);
                 return;
             }
         addApp(appId, fp, exec, clp);
     }
-    
+
     public String getBrowserExec() {
-        Elements els = _root.getChildElements("browser");        
+        Elements els = _root.getChildElements("browser");
         if (els.size() < 1) return null;
         Element el = els.get(0);
         return (el.getAttribute("path").getValue());
     }
-    
+
     public void setBrowserExec(String path) {
         Element el = null;
-        Elements els = _root.getChildElements("browser");    
+        Elements els = _root.getChildElements("browser");
         if (els.size() < 1) {
             el = new Element("browser");
             _root.appendChild(el);
-        }
-        else
+        } else
             el = els.get(0);
         if (el.getAttribute("path") != null)
             el.getAttribute("path").setValue(path);
-        else 
+        else
             el.addAttribute(new Attribute("path", path));
     }
 }

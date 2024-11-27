@@ -8,8 +8,6 @@
  */
 package memoranda;
 
-import java.util.Vector;
-
 import memoranda.date.CalendarDate;
 import memoranda.util.CurrentStorage;
 import memoranda.util.Local;
@@ -18,6 +16,8 @@ import nu.xom.Attribute;
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Elements;
+
+import java.util.Vector;
 
 /**
  *
@@ -28,9 +28,9 @@ public class ProjectManager {
 
     public static Document _doc = null;
     static Element _root = null;
-    
+
     static {
-    	init();
+        init();
     }
 
     public static void init() {
@@ -41,17 +41,16 @@ public class ProjectManager {
 //            _root.appendChild(new Comment("This is JNotes 2 data file. Do not modify."));
             _doc = new Document(_root);
             createProject("__default", Local.getString("Default project"), CalendarDate.today(), null);
-        }
-        else
+        } else
             _root = _doc.getRootElement();
     }
 
     public static Project getProject(String id) {
         Elements prjs = _root.getChildElements("project");
         for (int i = 0; i < prjs.size(); i++) {
-            String pid = ((Element) prjs.get(i)).getAttribute("id").getValue();
+            String pid = prjs.get(i).getAttribute("id").getValue();
             if (pid.equals(id)) {
-                return new ProjectImpl((Element) prjs.get(i));
+                return new ProjectImpl(prjs.get(i));
             }
         }
         return null;
@@ -61,37 +60,36 @@ public class ProjectManager {
         Elements prjs = _root.getChildElements("project");
         Vector v = new Vector();
         for (int i = 0; i < prjs.size(); i++)
-            v.add(new ProjectImpl((Element) prjs.get(i)));
+            v.add(new ProjectImpl(prjs.get(i)));
         return v;
     }
 
     public static int getAllProjectsNumber() {
-		int i;
+        int i;
         try {
-			i = ((Elements)_root.getChildElements("project")).size();
-		}
-		catch (NullPointerException e) {
-			i = 1;
-		}
-		return i;
+            i = _root.getChildElements("project").size();
+        } catch (NullPointerException e) {
+            i = 1;
+        }
+        return i;
     }
 
     public static Vector getActiveProjects() {
         Elements prjs = _root.getChildElements("project");
         Vector v = new Vector();
         for (int i = 0; i < prjs.size(); i++) {
-            Project prj = new ProjectImpl((Element) prjs.get(i));
+            Project prj = new ProjectImpl(prjs.get(i));
             if (prj.getStatus() == Project.ACTIVE)
                 v.add(prj);
         }
         return v;
     }
-		
+
     public static int getActiveProjectsNumber() {
         Elements prjs = _root.getChildElements("project");
         int count = 0;
         for (int i = 0; i < prjs.size(); i++) {
-            Project prj = new ProjectImpl((Element) prjs.get(i));
+            Project prj = new ProjectImpl(prjs.get(i));
             if (prj.getStatus() == Project.ACTIVE)
                 count++;
         }
@@ -113,7 +111,7 @@ public class ProjectManager {
     public static Project createProject(String title, CalendarDate startDate, CalendarDate endDate) {
         return createProject(Util.generateId(), title, startDate, endDate);
     }
-    
+
     public static void removeProject(String id) {
         Project prj = getProject(id);
         if (prj == null)
@@ -122,7 +120,7 @@ public class ProjectManager {
         CurrentStorage.get().removeProjectStorage(prj);
         Elements prjs = _root.getChildElements("project");
         for (int i = 0; i < prjs.size(); i++) {
-            String pid = ((Element) prjs.get(i)).getAttribute("id").getValue();
+            String pid = prjs.get(i).getAttribute("id").getValue();
             if (pid.equals(id)) {
                 _root.removeChild(prjs.get(i));
                 return;

@@ -1,32 +1,30 @@
-
 package memoranda.ui;
 
+import memoranda.util.Local;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-
-import memoranda.util.Local;
-
 /**
- *
- * @author  Alex
+ * @author Alex
  */
 public class FileExportDialog extends javax.swing.JDialog {
-    
+
     public boolean CANCELLED = true;
-    
-    
-    /** Creates new form ExportDialog */
+
+
+    /**
+     * Creates new form ExportDialog
+     */
     public FileExportDialog(java.awt.Frame parent, String title, JFileChooser chooser) {
         super(parent, title, true);
         fileChooser = chooser;
         initComponents();
     }
-    
-   
+
+
     private void initComponents() {//GEN-BEGIN:initComponents
         jPanel2 = new javax.swing.JPanel();
         okB = new javax.swing.JButton();
@@ -64,7 +62,7 @@ public class FileExportDialog extends javax.swing.JDialog {
         cancelB.setText(Local.getString("Cancel"));
         cancelB.setPreferredSize(new java.awt.Dimension(90, 25));
         cancelB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {                
+            public void actionPerformed(ActionEvent e) {
                 dispose();
             }
         });
@@ -80,17 +78,16 @@ public class FileExportDialog extends javax.swing.JDialog {
 
             public void propertyChange(PropertyChangeEvent evt) {
                 chooserActionPerformed();
-                
+
             }
-        
+
         });
         /*fileChooser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chooserActionPerformed();
             }
         });*/
-        
-        
+
 
         filePanel.add(fileChooser, java.awt.BorderLayout.CENTER);
 
@@ -99,7 +96,7 @@ public class FileExportDialog extends javax.swing.JDialog {
         optionsPanel.setBorder(new javax.swing.border.EmptyBorder(new java.awt.Insets(5, 5, 5, 5)));
         encPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 0));
 
-        jLabel2.setText(Local.getString("Encoding")+":");
+        jLabel2.setText(Local.getString("Encoding") + ":");
         encPanel.add(jLabel2);
 
         encCB.setMaximumSize(new java.awt.Dimension(32767, 19));
@@ -107,17 +104,16 @@ public class FileExportDialog extends javax.swing.JDialog {
 
         optionsPanel.add(encPanel);
 
-        usetemplChB.setText(Local.getString("Use template")+":");
+        usetemplChB.setText(Local.getString("Use template") + ":");
         usetemplChB.setMargin(new java.awt.Insets(0, 0, 0, 0));
         usetemplChB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {                
+            public void actionPerformed(ActionEvent e) {
                 if (usetemplChB.isSelected()) {
                     templF.setEnabled(true);
                     templBrowseB.setEnabled(true);
-                }
-                else {
+                } else {
                     templF.setEnabled(false);
-                    templBrowseB.setEnabled(false);                    
+                    templBrowseB.setEnabled(false);
                 }
             }
         });
@@ -140,7 +136,7 @@ public class FileExportDialog extends javax.swing.JDialog {
         templBrowseB.setEnabled(false);
         templBrowseB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-               browseTemplate();
+                browseTemplate();
             }
         });
         templPanel.add(templBrowseB, java.awt.BorderLayout.EAST);
@@ -166,24 +162,24 @@ public class FileExportDialog extends javax.swing.JDialog {
     }
 
     private void chooserActionPerformed() {//GEN-FIRST:event_chooserActionPerformed
-        okB.setEnabled(fileChooser.getSelectedFile() != null);            
+        okB.setEnabled(fileChooser.getSelectedFile() != null);
     }
-    
+
     private void browseTemplate() {
-    	JFileChooser chooser = new JFileChooser();
+        JFileChooser chooser = new JFileChooser();
         chooser.setFileHidingEnabled(false);
         chooser.setDialogTitle(Local.getString("Select file"));
         chooser.setAcceptAllFileFilterUsed(true);
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        if (templF.getText().length() >0)
-        	chooser.setCurrentDirectory(new java.io.File(templF.getText()));
+        if (templF.getText().length() > 0)
+            chooser.setCurrentDirectory(new java.io.File(templF.getText()));
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
-        	templF.setText(chooser.getSelectedFile().getPath());
+            templF.setText(chooser.getSelectedFile().getPath());
     }
-    
+
     private javax.swing.JButton cancelB;
-    private javax.swing.JFileChooser fileChooser;
-    
+    private final javax.swing.JFileChooser fileChooser;
+
     private javax.swing.JPanel encPanel;
     private javax.swing.JPanel filePanel;
     private javax.swing.JLabel jLabel2;
@@ -199,5 +195,5 @@ public class FileExportDialog extends javax.swing.JDialog {
     public javax.swing.JCheckBox xhtmlChB;
     public JComboBox encCB;
     // End of variables declaration//GEN-END:variables
-    
+
 }

@@ -54,7 +54,7 @@ public class Bus implements XMLable, IModel {
     @Override
     public String toString() {
         if (driver != null)
-            return "Bus(id: " + id + ", seats: " + seats + ", DriverID: " + driverId + ", Driver: " + driver.toString() + ")";
+            return "Bus(id: " + id + ", seats: " + seats + ", DriverID: " + driverId + ", Driver: " + driver + ")";
         else
             return "Bus(id: " + id + ", seats: " + seats + ", DriverID: " + driverId + ")";
     }

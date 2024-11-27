@@ -8,24 +8,22 @@
  */
 package memoranda;
 
-import java.util.Vector;
-
 import memoranda.util.Util;
-
-import java.io.File;
-
 import nu.xom.Attribute;
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Elements;
+
+import java.io.File;
+import java.util.Vector;
 
 /**
  *
  */
 /*$Id: ResourcesListImpl.java,v 1.5 2007/03/20 06:21:46 alexeya Exp $*/
 public class ResourcesListImpl implements ResourcesList {
-    
-	private Project _project = null;
+
+    private Project _project = null;
     private Document _doc = null;
     private Element _root = null;
 
@@ -39,9 +37,9 @@ public class ResourcesListImpl implements ResourcesList {
     }
 
     public ResourcesListImpl(Project prj) {
-            _root = new Element("resources-list");
-            _doc = new Document(_root);
-            _project = prj;
+        _root = new Element("resources-list");
+        _doc = new Document(_root);
+        _project = prj;
     }
 
     public Vector getAllResources() {
@@ -73,14 +71,14 @@ public class ResourcesListImpl implements ResourcesList {
         if (taskId != null) el.addAttribute(new Attribute("taskId", taskId));
         _root.appendChild(el);
     }*/
-    
+
     /**
      * @see memoranda.ResourcesList#addResource(java.lang.String, boolean)
      */
     public void addResource(String path, boolean isInternetShortcut, boolean isProjectFile) {
         Element el = new Element("resource");
         el.addAttribute(new Attribute("id", Util.generateId()));
-        el.addAttribute(new Attribute("path", path));  
+        el.addAttribute(new Attribute("path", path));
         if (isInternetShortcut)
             el.addAttribute(new Attribute("isInetShortcut", "true"));
         if (isProjectFile)
@@ -99,15 +97,15 @@ public class ResourcesListImpl implements ResourcesList {
         Elements rs = _root.getChildElements("resource");
         for (int i = 0; i < rs.size(); i++)
             if (rs.get(i).getAttribute("path").getValue().equals(path)) {
-            	if(getResource(path).isProjectFile()) {
-            		File f = new File(path);
-            		System.out.println("[DEBUG] Removing file "+path);
-                	f.delete();
-            	}
-            	_root.removeChild(rs.get(i));
+                if (getResource(path).isProjectFile()) {
+                    File f = new File(path);
+                    System.out.println("[DEBUG] Removing file " + path);
+                    f.delete();
+                }
+                _root.removeChild(rs.get(i));
             }
     }
-        
+
 
     /**
      * @see memoranda.ResourcesList#getAllResourcesCount()
@@ -115,13 +113,14 @@ public class ResourcesListImpl implements ResourcesList {
     public int getAllResourcesCount() {
         return _root.getChildElements("resource").size();
     }
+
     /**
      * @see memoranda.ResourcesList#getXMLContent()
      */
     public Document getXMLContent() {
         return _doc;
     }
-    
+
     /**
      * @see net.sf.memoranda.ResourcesList#getResourcesForTask(java.lang.String)
      */
@@ -133,6 +132,6 @@ public class ResourcesListImpl implements ResourcesList {
                 v.add(rs.get(i).getAttribute("path").getValue());
         return v;
     }*/
-   
+
 
 }

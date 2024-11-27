@@ -1,35 +1,19 @@
 package memoranda.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import memoranda.*;
+import memoranda.util.CurrentStorage;
+import memoranda.util.Local;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.CaretEvent;
 import javax.swing.text.Document;
-
-import memoranda.CurrentProject;
-import memoranda.Note;
-import memoranda.NoteList;
-import memoranda.Project;
-import memoranda.ProjectListener;
-import memoranda.ResourcesList;
-import memoranda.TaskList;
-import memoranda.util.CurrentStorage;
-import memoranda.util.Local;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /*$Id: SearchPanel.java,v 1.5 2004/04/05 10:05:44 alexeya Exp $*/
 public class SearchPanel extends JPanel {
@@ -56,11 +40,11 @@ public class SearchPanel extends JPanel {
     public SearchPanel() {
         try {
             jbInit();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             new ExceptionDialog(ex);
         }
     }
+
     void jbInit() throws Exception {
         border1 = BorderFactory.createEmptyBorder(2, 2, 2, 2);
 
@@ -117,7 +101,9 @@ public class SearchPanel extends JPanel {
             public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl) {
                 notesList.update(new Vector());
             }
-            public void projectWasChanged() {}
+
+            public void projectWasChanged() {
+            }
         });
         //notesList.update(new Vector());
 
@@ -135,8 +121,8 @@ public class SearchPanel extends JPanel {
     void searchField_caretUpdate(CaretEvent e) {
         searchB.setEnabled(searchField.getText().length() > 0);
     }
-    
-    
+
+
     void doSearch() {
         Pattern pattern;
         //this.add(progressBar, BorderLayout.SOUTH);
@@ -150,8 +136,7 @@ public class SearchPanel extends JPanel {
             _find = "[\\s\\p{Punct}]" + _find + "[\\s\\p{Punct}]";
         try {
             pattern = Pattern.compile(_find, flags);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             new ExceptionDialog(ex, "Error in regular expression", "Check the regular expression syntax");
             return;
         }
@@ -171,8 +156,7 @@ public class SearchPanel extends JPanel {
                 Matcher matcher = pattern.matcher(txt);
                 if (matcher.find())
                     found.add(note);
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }

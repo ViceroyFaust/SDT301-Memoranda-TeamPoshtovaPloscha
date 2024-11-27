@@ -60,9 +60,7 @@ public class Route implements XMLable, IModel {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Route(id: ").append(id).append(", nodes: (").append(nodes).append(")");
-        return sb.toString();
+        return "Route(id: " + id + ", nodes: (" + nodes + ")";
     }
 
     @Override
