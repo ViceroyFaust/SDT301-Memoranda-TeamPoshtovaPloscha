@@ -62,94 +62,89 @@ I would also advise you to already fill out the Contributions section (End of sp
 ### Sprint Review
 Answer as a team!
 
-**Screen Cast link**: Your link
-
-> Answer the following questions as a team. 
+**Screen Cast link**: We presented a demo to our professor
 
 **What do you think is the value you created this Sprint?**
-
-> Your Answer
+- We connected our backend functionality with the front end
+- We created a functional UI for our models
+  - We can view the models
+  - We can save/load the models
+  - We can create the models
+- We created a way to save and load our models
+  - One of our teammates implemented an impressive algorithm for saving to and loading from the disk
 
 **Do you think you worked enough and that you did what was expected of you?**
-
-> Your Answer
+- Most of our teammates contributed enough, but there were some that contributed more
+- Better communication and time management could have improved this
 
 **Would you say you met the customers’ expectations? Why, why not?**
-
-> Your Answer
-
+- We met the expectations for this sprint, creating everything that we planned to
+- However, we are still some ways off from finishing the full project
 
 ### Sprint Retrospective
 
 > Include your Sprint retrospective here and answer the following questions in an evidence based manner as a team (I do not want each of your individuals opinion here but the team perspective). By evidence-based manner it means I want a Yes or No on each of these questions, and for you to provide evidence for your answer. That is, don’t just say "Yes we did work at a consistent rate because we tried hard"; say "we worked at a consistent rate because here are the following tasks we completed per team member and the rate of commits in our Git logs."
 
 **Did you meet your sprint goal?**
-
-> Your Answer
+- Yes, our taiga board is fully completed, and we showed it to the professor during our demo
 
 **Did you complete all stories on your Spring Backlog?**
-
-> Your Answer
+- Yes, same as above
 
 **If not, what went wrong?**
-
-> Your Answer
+- Nothing went wrong
 
 **Did you work at a consistent rate of speed, or velocity? (Meaning did you work during the whole Sprint or did you start working when the deadline approached.)**
-
-> Your Answer
+- We did not work at a consistent rate, some things were done during the middle of the sprint and some were done closer to the deadline. This is evident by the commit logs.
 
 **Did you deliver business value?**
-
-> Your Answer
+- Yes, we got closer to our end goal by implementing base functionality - UI and backend for basic schedule model management
 
 **Are there things the team thinks it can do better in the next Sprint?**
-
-> Your Answer
+- Yes
+  - Communicate directly with teammates (not in meetings)
+  - Start on work early
+  - Encourage others to start work early
 
 **How do you feel at this point? Get a pulse on the optimism of the team.**
+- We feel optimisitc, because we were able to finish this sprint in its entirety
 
-> Your Answer
 
 ### Contributions:
 
 > In this section I want you to point me to your main contributions (each of you individually). Some of the topcs are not needed for the first deliverables (you should know which things you should have done in this Sprint, if you don't then you have probably missed something):
 
 #### Team member A -- replace this with your name:
-  **Links to GitHub commits with main code contribution (up to 5 links) - all Sprints:
+  **Links to GitHub commits with main code contribution (up to 5 links) - DANYLO
+- https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/226fd1844ff8369732353feb4b31d00e7f025b3a
+- https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/0fafc8e405d80ed93f94379f500b8682c365ae2e
+- https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/d8ce14183106edb57782970f68caaa371cf3e3f5
+- https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/bc48edc0b1c304b6eb02276eebac85ec3f9e6163
 
-    - link1
-    - link2
+  **Links to GitHub commits with main code contribution (up to 5 links) - VLAD
+- https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/6e2aee3587e66f08a1e1f0bd0d7afbcc557e1b23
+- https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/20652b21a542c32a2973b576c8e7734f8c14a86c
+- https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/8c4be67dbe8b9508d42f4f6b9e3ff01bd3f459cf
+- https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/437b3bab55b747c48668f1b12db36ad679eaf63a
+- https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/90f00981b8ec2e56ebcb0f0aad78ddcd981db103 
+
+  **Links to GitHub commits with main code contribution (up to 5 links) - OLEKSANDR
+- https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/af82aa9384991cc408717a4d63b49cf923819604
+- https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/fb538a70c9586de9d7a5b0008a31c6fd609a13dc
+- https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/278667e8fde8bef7755db046d697a16451ede1a2
+
+  **Links to GitHub commits with main code contribution (up to 5 links) - ANDRII
+- https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/b85d2e4df3d3022e41a1cbb36234e460ef56f367
+- https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/8d00fb2690a7bb281eda158ecde88be28333c4df
 
    **GitHub links to your Unit Tests (up to 3 links) -- Sprint 2 and 3:
-
-    - link1
-    - link2
+- https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/526a7c24f03cbe3e8937b23b7be9c8590b8a2e8b
 
   **GitHub links to your Code Reviews (up to 3 links) -- Sprint 2 and 3:
-
-    - link1
-    - link2
-
-  **How did you contribute to Static Analysis -- Sprint 3:
-
-    - link1
-    - link2
+- https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/pull/7
+- https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/pull/9
+- https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/pull/10
+- https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/pull/11
  
  **What was your main contribution to the Quality Policy documentation?:
-
-    - info
-  
-## 4: Checklist for you to see if you are done (optional just a reminder)
-- [ ] Filled out the complete form from above, all fields are filled and written in full sentences
-- [ ] Read the kickoff again to make sure you have all the details
-- [ ] User Stories that were not completed, were left in the Sprint and a copy created
-- [ ] Your Quality Policies are accurate and up to date
-- [ ] **Individual** Survey was submitted **individually** (create checkboxes below -- see Canvas to get link)
-  - [ ] Team member 1
-  - [ ] Team member 2
-- [ ] The original of this file was copied for the next Sprint (needed for all but last Sprint where you do not need to copy it anymore)
-  - [ ] Basic information (part 1) for next Sprint was included (meaning Spring Planning is complete)
-  - [ ] All User Stories have acceptance tests
-  - [ ] User Stories in your new Sprint Backlog have initial tasks which are in New
-  - [ ] You know how to proceed
+ - Danylo edited the Quality Policy to reflect Sprint 2 requirements
