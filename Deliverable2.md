@@ -1,6 +1,4 @@
 # Deliverable Information
-   > Please include your answers below in a good format so it is easy for me to see. For answers to questions please use these Blockquotes. Make sure you also check the kickoff document for more details. Also make sure this thing is well formatted and the links are links in here. 
-
 ## 1: Basic Information (needed before you start with your Sprint -- Sprint Planning)
 
 **Topic you chose:** Bus topic
@@ -22,40 +20,22 @@ Document your Sprint Planning here. Also check the kickoff document for more det
 - 1
 
 **Why did you add these US, why do you think you can get them done in the next Sprint?**
-
 - To connect UI and backend, so that we have functionality that we can present during our next demo.
 
 **Why do you think these fit well with your Sprint goal? (details)**
-
 - They fit us, because our User story focuses on the doing the minimum viable product.
 
 **Do you have a rough idea what you need to do? (if the answer is no then please let me know on Slack)**
-
 - Yes
 
-
-
 ## 2: During the Sprint
-> Fill out the Meeting minutes during your Sprint and keep track of things. Update your Quality policies when needed, as explained in the lectures and in the Quality Policy documents on Canvas. 
-I would also advise you to already fill out the Contributions section (End of sprint) as you go, to create less work at the end.
-
 ### Meeting minutes of your Daily Scrums (3 per week, should not take longer than 10 minutes):
-> Add as many rows as needed and fill out the table. (Burndown starts with Sprint 2 and Travis CI starts with Sprint 3, not needed before that). 
 
 | Date     | Who did not attend | Meeting notes (very brief)                                       | Burndown Info (on track, ahead behind is enough) | TravisCI info (does the master pass) | Additional Info |
 |----------|--------------------|------------------------------------------------------------------|--------------------------------------------------|--------------------------------------|-----------------|
 | 11/24/24 | Mykhailo           | We discussed the implementation of the models context            | on track                                         | pass                                 |                 |
 | 11/26/24 | Mykhailo           | We discussed the implementation and further steps towards the UI | on track                                         | pass                                 |                 |
 |          |                    |                                                                  |                                                  |                                      |                 |
-
-### Meeting Summary:
-
-> Add rows as needed and add the number how many meetings for each team member:
-
-   Name1 : Num Meetings
-
-   Name2 : Num Meetings
-
 
 ## 3: After the Sprint
 
@@ -82,9 +62,6 @@ Answer as a team!
 - However, we are still some ways off from finishing the full project
 
 ### Sprint Retrospective
-
-> Include your Sprint retrospective here and answer the following questions in an evidence based manner as a team (I do not want each of your individuals opinion here but the team perspective). By evidence-based manner it means I want a Yes or No on each of these questions, and for you to provide evidence for your answer. That is, don’t just say "Yes we did work at a consistent rate because we tried hard"; say "we worked at a consistent rate because here are the following tasks we completed per team member and the rate of commits in our Git logs."
-
 **Did you meet your sprint goal?**
 - Yes, our taiga board is fully completed, and we showed it to the professor during our demo
 
@@ -111,9 +88,6 @@ Answer as a team!
 
 
 ### Contributions:
-
-> In this section I want you to point me to your main contributions (each of you individually). Some of the topcs are not needed for the first deliverables (you should know which things you should have done in this Sprint, if you don't then you have probably missed something):
-
 #### Team member A -- replace this with your name:
   **Links to GitHub commits with main code contribution (up to 5 links) - DANYLO
 - https://github.com/ViceroyFaust/SDT301-Memoranda-TeamPoshtovaPloscha/commit/226fd1844ff8369732353feb4b31d00e7f025b3a
